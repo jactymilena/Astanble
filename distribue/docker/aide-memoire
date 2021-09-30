@@ -1,0 +1,25 @@
+docker-compose  down
+docker-compose up -d
+docker container ls
+docker logs keycloak -f
+docker exec -it  keycloak "/bin/bash"
+   tail -f /opt/jboss/keycloak/standalone/log/server.log
+
+
+  export access_token=$(\
+      curl -X POST http://localhost/auth/realms/exemple/protocol/openid-connect/token \
+      --user backend:bb4e9199-0b7f-4f3c-a0c2-9829d833dba1 \
+      -H 'content-type: application/x-www-form-urlencoded' \
+      -d 'username=beab1802&password=projet&grant_type=password' | jq --raw-output '.access_token' \
+   )
+
+   curl -v -X GET \
+     http://localhost:8080/api/teacher \
+     -H "Authorization: Bearer "$access_token
+
+   curl -v -X GET \
+        http://localhost:8080/api/teacher \
+        -H "Authorization: Bearer "$access_token
+
+
+

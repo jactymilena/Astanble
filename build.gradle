@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'io.quarkus'
+    id 'war'
+}
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+war {
+    manifest { attributes('Logging-Profile': project.name) }
+    rootSpec.exclude 'log4j.properties'
+}
+
+dependencies {
+    
+    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    implementation group: 'io.quarkiverse.mybatis', name: 'quarkus-mybatis', version: '0.0.7'
+    implementation 'io.quarkus:quarkus-resteasy:2.1.3.Final'
+    implementation 'io.quarkus:quarkus-resteasy-jsonb:2.1.3.Final'
+    implementation 'io.quarkus:quarkus-oidc:2.1.3.Final'
+    implementation 'io.quarkus:quarkus-jdbc-postgresql:2.1.3.Final'
+    implementation 'io.quarkus:quarkus-undertow:2.1.3.Final'
+
+}
+
+repositories {
+    maven {
+        url 'https://repo.maven.apache.org/maven2'
+        name 'Maven Central'
+    }
+}

@@ -1,0 +1,158 @@
+/* datatable ProgressBar sometimes show a bad spinning icon */
+.webix_progress_state.wxi-sync.webix_spin {
+    display: none;
+}
+
+.webix_drag_zone {
+    background: transparent !important;
+}
+
+/* grade total header columns
+[section=header]:last-child > :nth-child(n+3) > .webix_hcell {
+    text-align: right;
+}*/
+
+.webix_view .header {
+    background-color: #222;
+}
+
+.webix_sidebar > .webix_overlay > h1 {
+    display: none;
+}
+
+.webix_sidebar.webix_sidebar_expanded > .webix_overlay > h1 {
+    display: block;
+}
+
+.webix_sidebar.webix_sidebar_expanded {
+    overflow-y: scroll;
+}
+
+.webix_sidebar.webix_sidebar_expanded .webix_tree_item {
+    text-overflow: ellipsis;
+}
+
+.webix_view.webix_popup.webix_menu {
+    width: auto !important;
+}
+
+.header.webix_layout_toolbar.webix_toolbar .webix_el_label {
+    color: white;
+}
+
+.webix_view.link > div {
+    color: gold;
+    cursor: pointer;
+}
+
+.indicator {
+    position: relative;
+}
+
+.indicator:before {
+    content: "";
+    border: 5px solid transparent;
+    position: absolute;
+    right: 0;
+}
+
+.indicator.low {
+    color: crimson;
+}
+
+.indicator.high {
+    color: mediumseagreen;
+}
+
+.indicator.outside-range:before {
+    border-color: orangered orangered transparent transparent;
+}
+
+.indicator.modified:before {
+    border-color: #5ce #5ce transparent transparent;
+}
+
+.indicator.modified.outside-range:before {
+    border-color: orangered #5ce transparent transparent;
+}
+
+.indicator.unassigned:before {
+    content: '–';
+    position: relative;
+}
+
+.indicator.unregistered:before {
+    content: 'N.D.';
+    position: relative;
+}
+
+.attention .webix_icon_btn {
+    color: darkorange;
+    animation: blinker 1s linear infinite;
+}
+
+.webix_list_item,
+.webix_view.webix_menu .webix_list_item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.shortcut {
+    color: dimgray;
+    font-variant: all-small-caps;
+    margin-left: 1em;
+}
+
+.student {
+    padding: 2px;
+}
+
+.current-user.student,
+.teacher.student {
+    cursor: grab;
+}
+
+.current-user.student:hover,
+.teacher.student:hover {
+    border-radius: 5px;
+    background-color: #ddd;
+}
+
+.webix_list_item {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+.my_style .webix_hcell {
+    background: #009966;
+    color: white;
+    font-weight: bold;
+
+}
+
+.my_style .webix_column {
+    font-style: italic;
+    background: #ddFFdd;
+}
+
+.my_style .webix_column > div {
+    border-color: #ddd;
+}
+
+.current-user {
+    font-weight: bold;
+}
+
+.label--clickable > div {
+    cursor: hand;
+}
+
+.webix_drag_zone  {
+    background-color: transparent;
+}

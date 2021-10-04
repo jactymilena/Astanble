@@ -193,10 +193,10 @@ CREATE TABLE question
 -- Table Reponse
 CREATE TABLE reponse
 (
-  id_reponse SERIAL PRIMARY KEY NOT NULL,
-  reponse VARCHAR(200) NOT NULL,
+  id_reponse     SERIAL PRIMARY KEY NOT NULL,
+  reponse        VARCHAR(200) NOT NULL,
   bonne_mauvaise BOOLEAN NOT NULL,
-  id_question INT NOT NULL,
+  id_question    INT NOT NULL,
   FOREIGN KEY (id_question) REFERENCES question(id_question)
 );
 
@@ -205,7 +205,7 @@ CREATE TABLE article_question
 (
     id_article_question SERIAL PRIMARY KEY,
     id_article          INT NOT NULL,
-    id_question        INT NOT NULL,
+    id_question         INT NOT NULL,
     FOREIGN KEY (id_article) REFERENCES article(id_article),
     FOREIGN KEY (id_question) REFERENCES question(id_question)
 );
@@ -213,9 +213,11 @@ CREATE TABLE article_question
 -- Table ReponseUsagerQuestion
 CREATE TABLE reponse_usager_question
 (
-    id_question INT NOT NULL,
-    CIP         CHAR(8) NOT NULL,
-    PRIMARY KEY (id_question, CIP),
+    id_reponse_usager_question SERIAL PRIMARY KEY NOT NULL,
+    id_question                INT NOT NULL,
+    id_reponse                 INT NOT NULL,
+    CIP                        CHAR(8) NOT NULL,
     FOREIGN KEY (id_question) REFERENCES question(id_question),
+    FOREIGN KEY (id_reponse) REFERENCES reponse(id_reponse),
     FOREIGN KEY (CIP) REFERENCES usager(CIP)
 );

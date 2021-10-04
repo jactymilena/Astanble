@@ -182,14 +182,22 @@ CREATE TABLE question
 (
     id_question    SERIAL PRIMARY KEY NOT NULL,
     num_question   INT NOT NULL,
-    bonne_mauvaise INT NOT NULL,
-    reponse        VARCHAR(100) NOT NULL,
     id_quiz        INT NOT NULL,
     CIP            CHAR(8) NOT NULL,
     id_type        INT NOT NULL,
     FOREIGN KEY (id_quiz) REFERENCES quiz(id_quiz),
     FOREIGN KEY (CIP) REFERENCES usager(CIP),
     FOREIGN KEY (id_type) REFERENCES type_question(id_type)
+);
+
+-- Table Reponse
+CREATE TABLE reponse
+(
+  id_reponse SERIAL PRIMARY KEY NOT NULL,
+  reponse VARCHAR(200) NOT NULL,
+  bonne_mauvaise BOOLEAN NOT NULL,
+  id_question INT NOT NULL,
+  FOREIGN KEY (id_question) REFERENCES question(id_question)
 );
 
 -- Table ArticleQuestion

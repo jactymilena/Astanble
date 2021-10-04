@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ca.usherbrooke.gegi.server.persistence.TrimesterMapper">
+
+  <select id="select" resultType="ca.usherbrooke.gegi.server.business.Trimester">
+    SELECT
+      trimestre_id,
+      trimester,
+      debut,
+      fin,
+      inscription
+    FROM
+      app.trimester
+  </select>
+
+
+  <insert id="insertTrimester">
+    INSERT INTO app.trimester(
+      trimestre_id,
+      trimester,
+      debut,
+      fin,
+      inscription)
+      VALUES  (#{trimester.trimestreId},
+             #{trimester.trimester},
+             #{trimester.debut},
+             #{trimester.fin},
+             #{trimester.inscription});
+  </insert>
+</mapper>

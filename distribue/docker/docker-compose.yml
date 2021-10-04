@@ -1,0 +1,47 @@
+version: '3.3'
+services:
+  proxy:
+    image: nginx
+    container_name: proxy
+    volumes:
+      - ../proxy/nginx.conf:/etc/nginx/nginx.conf
+      - ../proxy/includes/:/etc/nginx/includes/
+      - ../proxy/html:/usr/share/nginx/html/
+ #     - ../proxy/certs:/etc/nginx/certs
+    ports:
+      - 80:80
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    ports:
+      - 8080
+      - 9990:9990
+    volumes:
+      - ../keycloak/utils:/var/tmp
+      - ../keycloak/startup-scripts:/opt/jboss/startup-scripts
+    command:
+      - -b=0.0.0.0
+      - -bmanagement=0.0.0.0
+    environment:
+      DB_VENDOR: h2
+      KEYCLOAK_USER: ${KEYCLOAK_USER}
+      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    restart: always
+    ports:
+      - 5433:5432
+    volumes:
+      - ../postgres/trimestre.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DATABASE: ${POSTGRES_DATABASE}
+  whoami:
+    image: containous/whoami
+    container_name: whoami
+
+
+
+

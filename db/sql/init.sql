@@ -18,7 +18,7 @@ SET search_path TO Astanble;
 -- Table Usager
 -- Un usager s'identifie à l'aide de son CIP. Un usagé unactif ou supprimé est gardé dans la base de données
 -- avec une date de suppression.
-CREATE TABLE Usager
+CREATE TABLE usager
 (
     CIP              CHAR(8) NOT NULL,
     nom_usager       VARCHAR(50) NOT NULL,
@@ -29,16 +29,16 @@ CREATE TABLE Usager
 
 -- Table Statut
 -- Statut d'un usager.
-CREATE TABLE Statut
+CREATE TABLE statut
 (
     id_statut  SERIAL PRIMARY KEY NOT NULL,
     nom_statut VARCHAR(50) NOT NULL
 );
 
 -- Table Article
-CREATE TABLE Article
+CREATE TABLE article
 (
-    code_article              SERIAL PRIMARY KEY NOT NULL,
+    id_article                SERIAL PRIMARY KEY NOT NULL,
     nom_article               VARCHAR(100) NOT NULL,
     description_robot_article VARCHAR(500),
     description_article       VARCHAR(500)
@@ -46,28 +46,28 @@ CREATE TABLE Article
 
 -- Table Thematique
 -- Thématique pouvant être associée à un article ou à un usager
-CREATE TABLE Thematique
+CREATE TABLE thematique
 (
-    code_thematique SERIAL PRIMARY KEY NOT NULL,
+    id_thematique   SERIAL PRIMARY KEY NOT NULL,
     nom_thematique  VARCHAR(100) NOT NULL
 );
 
 -- Table Reference
-CREATE TABLE Reference
+CREATE TABLE reference
 (
-    code_reference SERIAL PRIMARY KEY NOT NULL,
+    id_reference   SERIAL PRIMARY KEY NOT NULL,
     nom_reference  VARCHAR(100) NOT NULL
 );
 
 -- Table Quiz
-CREATE TABLE Quiz
+CREATE TABLE quiz
 (
-    code_quiz SERIAL PRIMARY KEY NOT NULL,
+    id_quiz   SERIAL PRIMARY KEY NOT NULL,
     nom_quiz  VARCHAR(100) NOT NULL
 );
 
 -- Table TypeQuestion
-CREATE TABLE TypeQuestion
+CREATE TABLE type_question
 (
     id_type  SERIAL PRIMARY KEY NOT NULL,
     nom_type VARCHAR(50) NOT NULL
@@ -75,7 +75,7 @@ CREATE TABLE TypeQuestion
 
 -- Table UsagerStatut
 -- Un usager peut être associé à un ou à plusieurs statuts
-CREATE TABLE UsagerStatut
+CREATE TABLE usager_statut
 (
     id_statut_usager SERIAL PRIMARY KEY NOT NULL,
     statut_show      BOOLEAN NOT NULL,
@@ -89,7 +89,7 @@ CREATE TABLE UsagerStatut
 
 -- Table TypeRelation
 -- Type de relation d'un usager avec un quizz ou avec un article. Ex: auteur, coauteur, collaborateur
-CREATE TABLE TypeRelation
+CREATE TABLE type_relation
 (
   id_relation  SERIAL PRIMARY KEY NOT NULL,
   nom_relation VARCHAR(30)
@@ -97,7 +97,7 @@ CREATE TABLE TypeRelation
 
 -- Table UsagerArticleCollaboration
 -- Collaboration d'un usager avec un article
-CREATE TABLE UsagerArticleCollaboration
+CREATE TABLE usager_article_collaboration
 (
     id_collab           SERIAL PRIMARY KEY NOT NULL,
     debut_collaboration DATE NOT NULL,
@@ -106,68 +106,68 @@ CREATE TABLE UsagerArticleCollaboration
     CIP                 CHAR(8) NOT NULL,
     code_article        INT NOT NULL,
     FOREIGN KEY (CIP) REFERENCES usager(CIP),
-    FOREIGN KEY (code_article) REFERENCES article(code_article),
-    FOREIGN KEY (id_relation) REFERENCES typeRelation(id_relation),
+    FOREIGN KEY (code_article) REFERENCES article(id_article),
+    FOREIGN KEY (id_relation) REFERENCES type_relation(id_relation),
     UNIQUE (CIP, code_article) -- **
 );
 
 -- Table ArticleThematique
-CREATE TABLE ArticleThematique -- **
+CREATE TABLE article_thematique -- **
 (
     numero_ordre    INT NOT NULL,
-    code_article    INT NOT NULL,
-    code_thematique INT NOT NULL,
-    PRIMARY KEY (code_article, code_thematique),
-    FOREIGN KEY (code_article) REFERENCES article(code_article),
-    FOREIGN KEY (code_thematique) REFERENCES thematique(code_thematique)
+    id_article      INT NOT NULL,
+    id_thematique   INT NOT NULL,
+    PRIMARY KEY (id_article, id_thematique),
+    FOREIGN KEY (id_article) REFERENCES article(id_article),
+    FOREIGN KEY (id_thematique) REFERENCES thematique(id_thematique)
 );
 
 -- UsagerThematique
 -- Un usager peut choisir une ou plusieurs thématiques
-CREATE TABLE UsagerThematique
+CREATE TABLE usager_thematique
 (
     CIP             CHAR(8) NOT NULL,
-    code_thematique INT NOT NULL,
-    PRIMARY KEY (CIP, code_thematique),
+    id_thematique   INT NOT NULL,
+    PRIMARY KEY (CIP, id_thematique),
     FOREIGN KEY (CIP) REFERENCES usager(CIP),
-    FOREIGN KEY (code_thematique) REFERENCES thematique(code_thematique)
+    FOREIGN KEY (id_thematique) REFERENCES thematique(id_thematique)
 );
 
 -- Table ReferenceArticle
-CREATE TABLE ReferenceArticle
+CREATE TABLE reference_article
 (
-    code_article   INT NOT NULL,
-    code_reference INT NOT NULL,
-    PRIMARY KEY (code_article, code_reference),
-    FOREIGN KEY (code_article) REFERENCES article(code_article),
-    FOREIGN KEY (code_reference) REFERENCES reference(code_reference)
+    id_article   INT NOT NULL,
+    id_reference INT NOT NULL,
+    PRIMARY KEY (id_article, id_reference),
+    FOREIGN KEY (id_article) REFERENCES article(id_article),
+    FOREIGN KEY (id_reference) REFERENCES reference(id_reference)
 );
 
 -- Table ArticleQuiz
-CREATE TABLE ArticleQuiz
+CREATE TABLE article_quiz
 (
-    code_quiz    INT NOT NULL,
-    code_article INT NOT NULL,
-    PRIMARY KEY (code_quiz, code_article),
-    FOREIGN KEY (code_quiz) REFERENCES quiz(code_quiz),
-    FOREIGN KEY (code_article) REFERENCES article(code_article)
+    id_quiz    INT NOT NULL,
+    id_article INT NOT NULL,
+    PRIMARY KEY (id_quiz, id_article),
+    FOREIGN KEY (id_quiz) REFERENCES quiz(id_quiz),
+    FOREIGN KEY (id_article) REFERENCES article(id_article)
 );
 
 -- Table UsagerQuiz
-CREATE TABLE UsagerQuiz
+CREATE TABLE usager_quiz
 (
-    type_relation INT NOT NULL, -- ??
+    type_relation INT NOT NULL,
     CIP           CHAR(8) NOT NULL,
-    code_quiz     INT NOT NULL,
+    id_quiz       INT NOT NULL,
     id_relation   INT NOT NULL,
-    PRIMARY KEY (CIP, code_quiz),
+    PRIMARY KEY (CIP, id_quiz),
     FOREIGN KEY (CIP) REFERENCES usager(CIP),
-    FOREIGN KEY (code_quiz) REFERENCES quiz(code_quiz),
-    FOREIGN KEY (id_relation) REFERENCES typeRelation(id_relation)
+    FOREIGN KEY (id_quiz) REFERENCES quiz(id_quiz),
+    FOREIGN KEY (id_relation) REFERENCES type_relation(id_relation)
 );
 
 -- Table UsagerCourriel
-CREATE TABLE UsagerCourriel
+CREATE TABLE usager_courriel
 (
     courriel VARCHAR(70) NOT NULL,
     CIP      CHAR(8) NOT NULL,
@@ -176,44 +176,45 @@ CREATE TABLE UsagerCourriel
 );
 
 -- Table ReferenceLien
-CREATE TABLE ReferenceLien
+CREATE TABLE reference_lien
 (
     lien           VARCHAR(100) NOT NULL,
     code_reference INT NOT NULL,
     PRIMARY KEY (lien, code_reference),
-    FOREIGN KEY (code_reference) REFERENCES reference(code_reference)
+    FOREIGN KEY (code_reference) REFERENCES reference(id_reference)
 );
 
 -- Table Question
-CREATE TABLE Question
+CREATE TABLE question
 (
-    num_question   SERIAL PRIMARY KEY NOT NULL,
+    id_question    SERIAL PRIMARY KEY NOT NULL,
+    num_question   INT NOT NULL,
     bonne_mauvaise INT NOT NULL,
     reponse        VARCHAR(100) NOT NULL,
-    code_quiz      INT NOT NULL,
+    id_quiz        INT NOT NULL,
     CIP            CHAR(8) NOT NULL,
     id_type        INT NOT NULL,
-    FOREIGN KEY (code_quiz) REFERENCES quiz(code_quiz),
+    FOREIGN KEY (id_quiz) REFERENCES quiz(id_quiz),
     FOREIGN KEY (CIP) REFERENCES usager(CIP),
-    FOREIGN KEY (id_type) REFERENCES typeQuestion(id_type)
+    FOREIGN KEY (id_type) REFERENCES type_question(id_type)
 );
 
 -- Table ArticleQuestion
-CREATE TABLE ArticleQuestion
+CREATE TABLE article_question
 (
     id_article_question SERIAL PRIMARY KEY,
-    code_article        INT NOT NULL,
+    id_article          INT NOT NULL,
     num_question        INT NOT NULL,
-    FOREIGN KEY (code_article) REFERENCES article(code_article),
+    FOREIGN KEY (id_article) REFERENCES article(id_article),
     FOREIGN KEY (num_question) REFERENCES question(num_question)
 );
 
 -- Table ReponseUsagerQuestion
-CREATE TABLE ReponseUsagerQuestion
+CREATE TABLE reponse_usager_question
 (
-    num_quiz INT NOT NULL,
-    CIP      CHAR(8) NOT NULL,
-    PRIMARY KEY (num_quiz, CIP),
-    FOREIGN KEY (num_quiz) REFERENCES question(num_question),
+    id_question INT NOT NULL,
+    CIP         CHAR(8) NOT NULL,
+    PRIMARY KEY (id_question, CIP),
+    FOREIGN KEY (id_question) REFERENCES question(id_question),
     FOREIGN KEY (CIP) REFERENCES usager(CIP)
 );

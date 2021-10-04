@@ -204,9 +204,9 @@ CREATE TABLE article_question
 (
     id_article_question SERIAL PRIMARY KEY,
     id_article          INT NOT NULL,
-    num_question        INT NOT NULL,
+    id_question        INT NOT NULL,
     FOREIGN KEY (id_article) REFERENCES article(id_article),
-    FOREIGN KEY (num_question) REFERENCES question(num_question)
+    FOREIGN KEY (id_question) REFERENCES question(id_question)
 );
 
 -- Table ReponseUsagerQuestion

@@ -24,6 +24,8 @@ CREATE TABLE usager
     nom_usager       VARCHAR(50) NOT NULL,
     prenom_usager    VARCHAR(50) NOT NULL,
     date_suppression DATE,
+    courriel1 VARCHAR(70) NOT NULL,
+    courriel2 VARCHAR(70),
     PRIMARY KEY (CIP)
 );
 
@@ -164,15 +166,6 @@ CREATE TABLE usager_quiz
     FOREIGN KEY (CIP) REFERENCES usager(CIP),
     FOREIGN KEY (id_quiz) REFERENCES quiz(id_quiz),
     FOREIGN KEY (id_relation) REFERENCES type_relation(id_relation)
-);
-
--- Table UsagerCourriel
-CREATE TABLE usager_courriel
-(
-    courriel VARCHAR(70) NOT NULL,
-    CIP      CHAR(8) NOT NULL,
-    PRIMARY KEY (courriel, CIP),
-    FOREIGN KEY (CIP) REFERENCES usager(CIP)
 );
 
 -- Table ReferenceLien

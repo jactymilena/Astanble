@@ -33,7 +33,8 @@ services:
     ports:
       - 5433:5432
     volumes:
-      - ../postgres/trimestre.sql:/docker-entrypoint-initdb.d/init.sql
+      - ../postgres/trimestre.sql:/docker-entrypoint-initdb.d/init_trimestre.sql
+      - ../postgres/astanble.sql:/docker-entrypoint-initdb.d/init_astanble.sql
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}

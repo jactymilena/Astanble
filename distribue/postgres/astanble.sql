@@ -84,8 +84,8 @@ CREATE TABLE usager_statut
     id_statut        INT NOT NULL,
     debut_statut     DATE NOT NULL,
     CIP              CHAR(8) NOT NULL,
-    FOREIGN KEY (CIP) REFERENCES usager(CIP),
-    FOREIGN KEY (id_statut) REFERENCES statut(id_statut),
+    FOREIGN KEY (CIP) REFERENCES usager(CIP) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_statut) REFERENCES statut(id_statut) ON UPDATE CASCADE ON DELETE CASCADE,
     UNIQUE (CIP, id_statut)
 );
 
@@ -107,9 +107,9 @@ CREATE TABLE usager_article_collaboration
     id_relation         INT NOT NULL,
     CIP                 CHAR(8) NOT NULL,
     code_article        INT NOT NULL,
-    FOREIGN KEY (CIP) REFERENCES usager(CIP),
-    FOREIGN KEY (code_article) REFERENCES article(id_article),
-    FOREIGN KEY (id_relation) REFERENCES type_relation(id_relation),
+    FOREIGN KEY (CIP) REFERENCES usager(CIP) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (code_article) REFERENCES article(id_article) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_relation) REFERENCES type_relation(id_relation) ON UPDATE CASCADE ON DELETE RESTRICT,
     UNIQUE (CIP, code_article) -- **
 );
 
@@ -120,8 +120,8 @@ CREATE TABLE article_thematique -- **
     id_article      INT NOT NULL,
     id_thematique   INT NOT NULL,
     PRIMARY KEY (id_article, id_thematique),
-    FOREIGN KEY (id_article) REFERENCES article(id_article),
-    FOREIGN KEY (id_thematique) REFERENCES thematique(id_thematique)
+    FOREIGN KEY (id_article) REFERENCES article(id_article) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_thematique) REFERENCES thematique(id_thematique) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 -- UsagerThematique
@@ -131,8 +131,8 @@ CREATE TABLE usager_thematique
     CIP             CHAR(8) NOT NULL,
     id_thematique   INT NOT NULL,
     PRIMARY KEY (CIP, id_thematique),
-    FOREIGN KEY (CIP) REFERENCES usager(CIP),
-    FOREIGN KEY (id_thematique) REFERENCES thematique(id_thematique)
+    FOREIGN KEY (CIP) REFERENCES usager(CIP) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_thematique) REFERENCES thematique(id_thematique) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 -- Table ReferenceArticle
@@ -141,8 +141,8 @@ CREATE TABLE reference_article
     id_article   INT NOT NULL,
     id_reference INT NOT NULL,
     PRIMARY KEY (id_article, id_reference),
-    FOREIGN KEY (id_article) REFERENCES article(id_article),
-    FOREIGN KEY (id_reference) REFERENCES reference(id_reference)
+    FOREIGN KEY (id_article) REFERENCES article(id_article) ON UPDATE CASCADE ON DELETE CASCADE ,
+    FOREIGN KEY (id_reference) REFERENCES reference(id_reference) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 -- Table ArticleQuiz
@@ -151,8 +151,8 @@ CREATE TABLE article_quiz
     id_quiz    INT NOT NULL,
     id_article INT NOT NULL,
     PRIMARY KEY (id_quiz, id_article),
-    FOREIGN KEY (id_quiz) REFERENCES quiz(id_quiz),
-    FOREIGN KEY (id_article) REFERENCES article(id_article)
+    FOREIGN KEY (id_quiz) REFERENCES quiz(id_quiz) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_article) REFERENCES article(id_article) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 -- Table UsagerQuiz
@@ -163,9 +163,9 @@ CREATE TABLE usager_quiz
     id_quiz       INT NOT NULL,
     id_relation   INT NOT NULL,
     PRIMARY KEY (CIP, id_quiz),
-    FOREIGN KEY (CIP) REFERENCES usager(CIP),
-    FOREIGN KEY (id_quiz) REFERENCES quiz(id_quiz),
-    FOREIGN KEY (id_relation) REFERENCES type_relation(id_relation)
+    FOREIGN KEY (CIP) REFERENCES usager(CIP) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_quiz) REFERENCES quiz(id_quiz) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_relation) REFERENCES type_relation(id_relation) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 -- Table ReferenceLien
@@ -174,7 +174,7 @@ CREATE TABLE reference_lien
     lien           VARCHAR(100) NOT NULL,
     code_reference INT NOT NULL,
     PRIMARY KEY (lien, code_reference),
-    FOREIGN KEY (code_reference) REFERENCES reference(id_reference)
+    FOREIGN KEY (code_reference) REFERENCES reference(id_reference) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 -- Table Question
@@ -183,11 +183,11 @@ CREATE TABLE question
     id_question    SERIAL PRIMARY KEY NOT NULL,
     num_question   INT NOT NULL,
     id_quiz        INT NOT NULL,
-    CIP            CHAR(8) NOT NULL,
-    id_type        INT NOT NULL,
-    FOREIGN KEY (id_quiz) REFERENCES quiz(id_quiz),
-    FOREIGN KEY (CIP) REFERENCES usager(CIP),
-    FOREIGN KEY (id_type) REFERENCES type_question(id_type)
+    CIP            CHAR(8),
+    id_type        INT, --NOT NULL BESOIN DU DEFAULT TYPE,
+    FOREIGN KEY (id_quiz) REFERENCES quiz(id_quiz) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (CIP) REFERENCES usager(CIP) ON UPDATE CASCADE ON DELETE SET NULL,
+    FOREIGN KEY (id_type) REFERENCES type_question(id_type) ON UPDATE CASCADE ON DELETE SET NULL
 );
 
 -- Table Reponse
@@ -197,7 +197,7 @@ CREATE TABLE reponse
   reponse        VARCHAR(200) NOT NULL,
   bonne_mauvaise BOOLEAN NOT NULL,
   id_question    INT NOT NULL,
-  FOREIGN KEY (id_question) REFERENCES question(id_question)
+  FOREIGN KEY (id_question) REFERENCES question(id_question) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 -- Table ArticleQuestion
@@ -206,8 +206,8 @@ CREATE TABLE article_question
     id_article_question SERIAL PRIMARY KEY,
     id_article          INT NOT NULL,
     id_question         INT NOT NULL,
-    FOREIGN KEY (id_article) REFERENCES article(id_article),
-    FOREIGN KEY (id_question) REFERENCES question(id_question)
+    FOREIGN KEY (id_article) REFERENCES article(id_article) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_question) REFERENCES question(id_question) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 -- Table ReponseUsagerQuestion
@@ -215,9 +215,9 @@ CREATE TABLE reponse_usager_question
 (
     id_reponse_usager_question SERIAL PRIMARY KEY NOT NULL,
     id_question                INT NOT NULL,
-    id_reponse                 INT NOT NULL,
+    id_reponse                 INT,
     CIP                        CHAR(8) NOT NULL,
-    FOREIGN KEY (id_question) REFERENCES question(id_question),
-    FOREIGN KEY (id_reponse) REFERENCES reponse(id_reponse),
-    FOREIGN KEY (CIP) REFERENCES usager(CIP)
+    FOREIGN KEY (id_question) REFERENCES question(id_question) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_reponse) REFERENCES reponse(id_reponse) ON UPDATE CASCADE ON DELETE SET NULL,
+    FOREIGN KEY (CIP) REFERENCES usager(CIP) ON UPDATE CASCADE ON DELETE CASCADE
 );

@@ -35,6 +35,7 @@ services:
     volumes:
       - ../postgres/trimestre.sql:/docker-entrypoint-initdb.d/init_trimestre.sql
       - ../postgres/astanble.sql:/docker-entrypoint-initdb.d/init_astanble.sql
+      - ../postgres/feed.sql:/docker-entrypoint-initdb.d/init_feed.sql
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}

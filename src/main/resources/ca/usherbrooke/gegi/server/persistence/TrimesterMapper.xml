@@ -29,4 +29,12 @@
              #{trimester.fin},
              #{trimester.inscription});
   </insert>
+
+  <select id="select" resultType="server.business.Wiki">
+    SELECT
+      id_article,
+      nom_article
+    FROM
+      astanble.article
+  </select>
 </mapper>

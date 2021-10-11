@@ -43,7 +43,8 @@ CREATE TABLE article
     id_article                SERIAL PRIMARY KEY NOT NULL,
     nom_article               VARCHAR(100) NOT NULL,
     description_robot_article VARCHAR(500),
-    description_article       VARCHAR(500)
+    description_article       VARCHAR(500),
+    content VARCHAR(500)
 );
 
 -- Table Thematique

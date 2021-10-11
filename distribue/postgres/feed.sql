@@ -70,11 +70,11 @@ VALUES ('Créateur');
 
 --usager_quiz
 INSERT INTO usager_quiz(cip, id_quiz, type_relation, id_relation)
-VALUES ('larn5378', 1, 'Créateur', 1);
+VALUES ('larn5378', 1, 1, 1);
 
 --usager_article_collaboration
 INSERT INTO usager_article_collaboration(debut_collaboration, fin_collaboration, id_relation, cip, code_article)
-VALUES (CURRENT_DATE, CURRENT_DATE, 1, 'larn5378', 1)
+VALUES (CURRENT_DATE, CURRENT_DATE, 1, 'larn5378', 1);
 
 --reponse
 INSERT INTO reponse(reponse, bonne_mauvaise, id_question)

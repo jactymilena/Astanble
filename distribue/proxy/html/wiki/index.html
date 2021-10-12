@@ -1,6 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+<header>
+    <a href = "//localhost/astanble"> Accueil</a>
+    <a href = "index.html"> Wiki</a>
+    <a href = "forum"> Forum</a>
+    <a href = "Quiz"> Quiz</a>
+</header>
 <head>
+    <style>
+        body {
+            width: 65em;
+            margin: 0 auto;
+            font-family: Tahoma, Verdana, Arial, sans-serif;
+        }
+        footer {
+            position: fixed;
+            left:0;
+            bottom :0;
+            width: 100%;
+            background: orange;
+            color: black;
+            text-align: center;
+        }
+        header{
+            position: fixed;
+            height: 5%;
+            top:0;
+            right: 0;
+            width: 100%;
+            background: orange;
+            color: black;
+            text-align: left;
+        }
+        .sidenav {
+            height: 90%;
+            width: 100px;
+            position: fixed;
+            z-index: 1;
+            top: 5%;
+            left: 0;
+            background-color: grey;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+    </style>
+
     <meta charset="UTF-8">
     <title>Wiki</title>
 
@@ -96,7 +140,16 @@
     <p>Some initial <strong>bold</strong> text</p>
     <p><br></p>
 </div>
+<div class="sidenav">
+    <a href="#about">Thème 1</a>
+    <a href="#services">Thème 2</a>
+    <a href="#clients">Thème 3</a>
+    <a href="#contact">Thème 4</a>
+    <a href="#contact">Thème 5</a>
+</div>
 <button id="saveButton">Save</button>
 
 </body>
+
+<footer>Info que tu as manqué</footer>
 </html>

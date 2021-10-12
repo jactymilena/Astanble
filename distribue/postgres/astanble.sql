@@ -183,6 +183,7 @@ CREATE TABLE question
 (
     id_question    SERIAL PRIMARY KEY NOT NULL,
     num_question   INT NOT NULL,
+    question_content TEXT,
     id_quiz        INT NOT NULL,
     CIP            CHAR(8),
     id_type        INT, --NOT NULL BESOIN DU DEFAULT TYPE,

@@ -88,5 +88,13 @@ VALUES (1, 1, 'larn5378');
 
 
 
-
+-- ==
+-- Creation de la vue des wiki et usager
+-- ==
+CREATE OR REPLACE VIEW  view_usager_wiki as
+SELECT article.id_article, article.nom_article, article.description_article, article.content, type_relation.nom_relation,
+       usager.cip, usager.prenom_usager, usager.nom_usager FROM article, usager_article_collaboration, type_relation, usager
+WHERE article.id_article = usager_article_collaboration.code_article AND
+        type_relation.id_relation = usager_article_collaboration.id_relation AND
+        usager_article_collaboration.cip = usager.cip;
 

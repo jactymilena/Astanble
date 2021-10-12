@@ -15,4 +15,21 @@
             astanble.article
     </select>
 
+    <select id="selectByName" resultType="ca.usherbrooke.gegi.server.business.Wiki">
+    </select>
+
+    <select id="selectByAuthor" resultType="ca.usherbrooke.gegi.server.business.Wiki">
+    </select>
+
+    <select id="selectByThematique" resultType="ca.usherbrooke.gegi.server.business.Wiki">
+    </select>
+
+    <select id="selectById" resultType="ca.usherbrooke.gegi.server.business.Wiki">
+    </select>
+
+    <select id="insert" resultType="ca.usherbrooke.gegi.server.business.Wiki">
+    </select>
+
+    <select id="update" resultType="ca.usherbrooke.gegi.server.business.Wiki">
+    </select>
 </mapper>

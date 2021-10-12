@@ -90,6 +90,6 @@
 
     <delete id="delete" >
     DELETE FROM astanble.article
-    WHERE id_article = #{article.id_article};
+    WHERE id_article = #{id_article};
     </delete>
 </mapper>

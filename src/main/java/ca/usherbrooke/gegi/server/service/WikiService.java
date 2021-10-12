@@ -32,4 +32,13 @@ public class WikiService {
         return wikis;
     }
 
+    @GET
+    @Path("wikiByName/{name}")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Wiki> getWikiByName(@PathParam("name") String name) {
+        List<Wiki> wikis = wikiMapper.selectByName(name);
+        return wikis;
+    }
+
 }

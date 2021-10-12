@@ -15,7 +15,7 @@ SET search_path TO Astanble;
 
 -- Article
 INSERT INTO article(nom_article, description_robot_article, description_article, content)
-VALUES ('Nébuleuse','description robot', 'Amas de gaz et de poussières interstellaires.',
+VALUES ('Nebuleuse','description robot', 'Amas de gaz et de poussières interstellaires.',
         'Une nébuleuse est, en astronomie, un objet céleste composé de gaz raréfié, ' ||
         'de plasma ou de poussières interstellaires. Avant les années 1920, ' ||
         'le terme désignait tout objet du ciel d’aspect diffus');

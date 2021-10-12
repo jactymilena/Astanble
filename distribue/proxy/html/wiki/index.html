@@ -98,7 +98,7 @@
         }
 
         function requestWikis() {
-            axios.get("http://localhost:8888/api/wiki", {
+            axios.get("http://localhost:8888/api/wikiByName" + "/Nebuleuse", {
                 headers: {
                     'Authorization': 'Bearer ' + keycloak.token
                 }

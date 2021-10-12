@@ -1,10 +1,10 @@
-package server.service;
+package ca.usherbrooke.gegi.server.service;
 
-import server.business.Wiki;
-import server.persistence.WikiMapper;
+import ca.usherbrooke.gegi.server.business.Wiki;
+import ca.usherbrooke.gegi.server.persistence.WikiMapper;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
-import javax.annotation.security.RolesAllowed;
+import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -24,7 +24,8 @@ public class WikiService {
     WikiMapper wikiMapper;
 
     @GET
-    @Path("/wiki")
+    @Path("wiki")
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public List<Wiki> getWiki() {
         List<Wiki> wikis = wikiMapper.select();

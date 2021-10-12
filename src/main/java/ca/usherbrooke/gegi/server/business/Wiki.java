@@ -1,4 +1,4 @@
-package server.business;
+package ca.usherbrooke.gegi.server.business;
 
 public class Wiki {
 

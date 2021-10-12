@@ -37,9 +37,9 @@ services:
       - ../postgres/astanble.sql:/docker-entrypoint-initdb.d/init_astanble.sql
       - ../postgres/feed.sql:/docker-entrypoint-initdb.d/init_feed.sql
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DATABASE: ${POSTGRES_DATABASE}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DATABASE: postgres
   whoami:
     image: containous/whoami
     container_name: whoami

@@ -2,12 +2,15 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="server.persistence.WikiMapper">
+<mapper namespace="ca.usherbrooke.gegi.server.persistence.WikiMapper">
 
-    <select id="select" resultType="server.business.Wiki">
+    <select id="select" resultType="ca.usherbrooke.gegi.server.business.Wiki">
         SELECT
             id_article,
-            nom_article
+            nom_article,
+            content,
+            description_robot_article,
+            description_article
         FROM
             astanble.article
     </select>

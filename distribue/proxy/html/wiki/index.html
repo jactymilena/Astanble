@@ -2,12 +2,101 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Wiki</title>
+
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="http://localhost/auth/js/keycloak.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
     <script>
-        axios.get("http://localhost:8888/api/wiki")
+        // variables
+        var keycloak;
+        var quill;
+
+        // roule après que le body est loadé
+        function loadPage() {
+            initKeycloak();
+
+            // Initialize Quill editor
+            quill = new Quill('#editor', {
+                theme: 'snow'
+            });
+
+
+
+            let saveBtn = document.getElementById('saveButton');
+
+            saveBtn.addEventListener('click', function() {
+                quill.save().then((outputData) => {
+                    console.log('Article data: ', outputData)
+                }).catch((error) => {
+                    console.log('Saving failed: ', error)
+                });
+            })
+        }
+
+        function initKeycloak() {
+            console.log("Initializing Keycloack");
+            keycloak = new Keycloak({
+                "realm": "usager",
+                "auth-server-url": "https://localhost/auth/",
+                "ssl-required": "external",
+                "clientId": "frontend",
+                "public-client": true,
+                "confidential-port": 0
+            });
+            keycloak.init({onLoad: 'login-required'}).then(function (authenticated) {
+                // alert(authenticated ? 'authenticated' : 'not authenticated');
+            }).catch(function () {
+                alert('failed to initialize');
+            });
+        }
+
+        function requestWikis() {
+            axios.get("http://localhost:8888/api/wiki", {
+                headers: {
+                    'Authorization': 'Bearer ' + keycloak.token
+                }
+            })
+                .then(function (response) {
+                    var article;
+                    var h1_nom_article;
+
+                    console.log("Response: ", response.status);
+                    console.log(response.data);
+                    article = response.data[0];
+
+                    h1_nom_article = document.getElementById("nom_article");
+                    h1_nom_article.innerHTML = article.nom_article;
+                    quill.setText(article.content);
+                })
+                .catch(function (error) {
+                    console.log('refreshing');
+                    keycloak.updateToken(5).then(function () {
+                        console.log('Token refreshed');
+                    }).catch(function () {
+                        console.log('Failed to refresh token');
+                    })
+                    alert(error);
+                });
+        }
     </script>
 </head>
-<body>
+
+<!-- appel loadPage() après que le body ait loader -->
+<body onload="loadPage()">
 <h1>Test API</h1>
+<button onclick="requestWikis()">Request wiki!</button>
+
+<!-- Create the editor container -->
+<h1 id="nom_article"></h1>
+<div id="editor">
+    <p>Hello World!</p>
+    <p>Some initial <strong>bold</strong> text</p>
+    <p><br></p>
+</div>
+<button id="saveButton">Save</button>
+
 </body>
 </html>

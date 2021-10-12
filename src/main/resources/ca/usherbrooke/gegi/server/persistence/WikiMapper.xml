@@ -32,7 +32,7 @@
             id_article,
             nom_article,
             content,
-            description_robot_article,
+--             description_robot_article,
             description_article
         FROM
             astanble.view_usager_wiki
@@ -67,7 +67,7 @@
             description_article
         FROM
             astanble.article
-        WHERE id_article = #{article.id_article}
+        WHERE id_article = #{id_article}
     </select>
 
     <insert id="insert" >
@@ -84,7 +84,8 @@
     UPDATE astanble.article
     SET nom_article = #{article.nom_article},
         content = #{article.content},
-        description_article = #{article.description_article};
+        description_article = #{article.description_article}
+    WHERE id_article = #{article.id_article};
     </update>
 
     <delete id="delete" >

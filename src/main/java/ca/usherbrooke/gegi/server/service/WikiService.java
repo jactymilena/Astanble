@@ -1,7 +1,9 @@
 package ca.usherbrooke.gegi.server.service;
 
+import ca.usherbrooke.gegi.server.business.Article;
 import ca.usherbrooke.gegi.server.business.Wiki;
 import ca.usherbrooke.gegi.server.persistence.WikiMapper;
+import org.apache.ibatis.annotations.Param;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import javax.annotation.security.PermitAll;
@@ -33,12 +35,61 @@ public class WikiService {
     }
 
     @GET
-    @Path("wikiByName/{name}")
+    @Path("wikiByName/{article}")
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Wiki> getWikiByName(@PathParam("name") String name) {
-        List<Wiki> wikis = wikiMapper.selectByName(name);
+    public List<Wiki> getWikiByName(@PathParam("article") String article) {
+        List<Wiki> wikis = wikiMapper.selectByName(article);
         return wikis;
     }
 
+    @GET
+    @Path("wikiByAuthor/{auteur}")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Wiki> getwikiByAuthor(@PathParam("auteur") String auteur) {
+        List<Wiki> wikis = wikiMapper.selectByAuthor(auteur);
+        return wikis;
+    }
+
+    @GET
+    @Path("wikiByThematique/{id_thematique}")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Wiki> getwikiByThematique(@PathParam("id_thematique") Integer id_thematique) {
+        List<Wiki> wikis = wikiMapper.selectByThematique(id_thematique);
+        return wikis;
+    }
+
+    @GET
+    @Path("wikiByIdArticle/{id_article}")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Wiki> getwikiByIdArticle(@PathParam("id_article") Integer id_article) {
+        List<Wiki> wikis = wikiMapper.selectById(id_article);
+        return wikis;
+    }
+
+    @POST
+    @Path("wikiInsert")
+    @PermitAll
+    public void insertArticle(Article article){
+        System.out.println(article.getNom_article());
+        wikiMapper.insert(article);
+    }
+
+    @PUT
+    @Path("wikiUpdate")
+    @PermitAll
+    public void updateArticle(Integer id_article){
+        wikiMapper.update(id_article);
+    }
+
+//    @DELETE
+//    @Path("wikiDelete/{articleDelete}")
+//    @PermitAll
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public void deleteArticle(@PathParam("articleDelete") Article article){
+//        wikiMapper.delete(article);
+//    }
 }

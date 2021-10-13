@@ -7,66 +7,10 @@
     <a href = "Quiz"> Quiz</a>
 </header>
 <head>
-    <style>
-        body {
-            background: rgb(233, 233, 233);
-            height: 100%;
-            width: 65em;
-            margin: 0 auto;
-            padding: 3em;
-            font-family: Tahoma, Verdana, Arial, sans-serif;
-
-        }
-
-        #editor {
-            height: 200px;
-            background: white;
-        }
-
-        #saveButton {
-            background: rgb(0,174,255);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            text-transform: uppercase;
-            padding: 1em;
-            margin-top: 2em;
-        }
-        footer {
-            position: fixed;
-            left:0;
-            bottom :0;
-            width: 100%;
-            background: orange;
-            color: black;
-            text-align: center;
-        }
-        header{
-            position: fixed;
-            height: 5%;
-            top:0;
-            right: 0;
-            width: 100%;
-            background: orange;
-            color: black;
-            text-align: left;
-        }
-        .sidenav {
-            height: 90%;
-            width: 100px;
-            position: fixed;
-            z-index: 1;
-            top: 5%;
-            left: 0;
-            background-color: grey;
-            overflow-x: hidden;
-            padding-top: 20px;
-        }
-    </style>
-
     <meta charset="UTF-8">
     <title>Wiki</title>
 
+    <link rel="stylesheet" href="style.css">
     <link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="http://localhost/auth/js/keycloak.js"></script>
@@ -76,6 +20,7 @@
         // variables
         var keycloak;
         var quill;
+
 
         // roule après que le body est loadé
         function loadPage() {
@@ -95,7 +40,9 @@
 
             saveBtn.addEventListener('click', function() {
                 let text = quill.getText();
-                console.log(text);
+                let delta = quill.getContents();
+                let content = quillGetHTML(delta);
+                console.log(content);
 
                 // let article = {
                 //     "nom_article" : "Test",
@@ -136,6 +83,13 @@
 
                     });
             })
+        }
+
+        // conversion d'un objet Delta en HTML
+        function quillGetHTML(inputDelta) {
+            let tempQuill=new Quill(document.createElement("div"));
+            tempQuill.setContents(inputDelta);
+            return tempQuill.root.innerHTML;
         }
 
         function initKeycloak() {

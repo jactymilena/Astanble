@@ -9,9 +9,28 @@
 <head>
     <style>
         body {
+            background: rgb(233, 233, 233);
+            height: 100%;
             width: 65em;
             margin: 0 auto;
+            padding: 3em;
             font-family: Tahoma, Verdana, Arial, sans-serif;
+
+        }
+
+        #editor {
+            height: 200px;
+            background: white;
+        }
+
+        #saveButton {
+            background: rgb(0,174,255);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            text-transform: uppercase;
+            padding: 1em;
+            margin-top: 2em;
         }
         footer {
             position: fixed;
@@ -48,7 +67,7 @@
     <meta charset="UTF-8">
     <title>Wiki</title>
 
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="http://localhost/auth/js/keycloak.js"></script>
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
@@ -64,7 +83,12 @@
 
             // Initialize Quill editor
             quill = new Quill('#editor', {
-                theme: 'snow'
+                toolbar: [
+                    [{header: [1, 2, false]}],
+                    ['bold', 'italic', 'underline'],
+                    ['image', 'code-block']
+                ],
+                theme: 'bubble'
             });
 
             let saveBtn = document.getElementById('saveButton');

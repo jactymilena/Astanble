@@ -32,13 +32,14 @@
             id_article,
             nom_article,
             content,
+            nom_complet_usager,
 --             description_robot_article,
             description_article
         FROM
             astanble.view_usager_wiki
 
         WHERE lower(nom_complet_usager) like lower('%'|| #{auteur}||'%')
-        AND type_relation.nom_relation = 'Auteur'
+        AND nom_relation = 'Auteur'
 --relation = author?
     </select>
 

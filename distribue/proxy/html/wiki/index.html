@@ -67,16 +67,50 @@
                 theme: 'snow'
             });
 
-
-
             let saveBtn = document.getElementById('saveButton');
 
             saveBtn.addEventListener('click', function() {
-                quill.save().then((outputData) => {
-                    console.log('Article data: ', outputData)
-                }).catch((error) => {
-                    console.log('Saving failed: ', error)
-                });
+                let text = quill.getText();
+                console.log(text);
+
+                // let article = {
+                //     "nom_article" : "Test",
+                //     "content" : text,
+                //     "description_article" : "Description"
+                // }
+
+                // axios.post("http://localhost:8888/api/wikiInsert" + JSON.stringify(article), {
+                //     headers: {
+                //         'Authorization': 'Bearer ' + keycloak.token,
+                //         'Content-Type' : 'application/json'
+                //     }
+                // })
+                axios.get("http://localhost:8888/api/wiki", {
+                    headers: {
+                        'Authorization': 'Bearer ' + keycloak.token,
+                        'Content-Type' : 'application/json'
+                    }
+                })
+                    .then(function (response) {
+                        var article;
+                        var h1_nom_article;
+
+                        console.log("Response: ", response.status);
+                        console.log("Yeeah ça fonctionne");
+
+                        quill.enable(false);
+                    })
+                    .catch(function (error) {
+                        console.log('refreshing');
+                        keycloak.updateToken(5).then(function () {
+                            console.log('Token refreshed');
+                        }).catch(function () {
+                            console.log('Failed to refresh token');
+                        })
+                        console.log('Sad ça fonctionne pas :(');
+                        alert(error);
+
+                    });
             })
         }
 
@@ -105,10 +139,10 @@
                 "description_article" : "alloooooo"
             }
 
-            axios.get("http://localhost:8888/api/wikiByIdArticle" + "/3", {
+            axios.post("http://localhost:8888/api/wikiInsert" + JSON.stringify(article), {
                 headers: {
-                    'Authorization': 'Bearer ' + keycloak.token
-                    // 'Content-Type' : 'application/json'
+                    'Authorization': 'Bearer ' + keycloak.token,
+                    'Content-Type' : 'application/json'
                 }
             })
                 .then(function (response) {
@@ -155,7 +189,7 @@
     <a href="#contact">Thème 4</a>
     <a href="#contact">Thème 5</a>
 </div>
-<button id="saveButton">Save</button>
+<button id="saveButton" >Save</button>
 
 </body>
 

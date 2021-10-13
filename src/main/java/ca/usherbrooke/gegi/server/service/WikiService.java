@@ -85,10 +85,10 @@ public class WikiService {
         wikiMapper.update(article);
     }
 
-//    @DELETE
-//    @Path("wikiDelete/{article}")
-//    @PermitAll
-//    public void deleteArticle(@PathParam("article") int id_article){
-//        wikiMapper.delete(id_article);
-//    }
+    @DELETE
+    @Path("wiki/delete/{id_article}")
+    @PermitAll
+    public void deleteArticle(@PathParam("id_article") int id_article){
+        wikiMapper.delete(id_article);
+    }
 }

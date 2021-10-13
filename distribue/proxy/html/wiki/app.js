@@ -32,30 +32,21 @@ function saveEditorContent() {
 
     console.log(content);
 
-    // let article = {
-    //     "nom_article" : "Test",
-    //     "content" : text,
-    //     "description_article" : "Description"
-    // }
+    let article = {
+        "id_article" : 2,
+        "nom_article" : "Test",
+        "content" : content,
+        "description_article" : "Description"
+    }
 
-    // axios.post("http://localhost:8888/api/wikiInsert" + JSON.stringify(article), {
-    //     headers: {
-    //         'Authorization': 'Bearer ' + keycloak.token,
-    //         'Content-Type' : 'application/json'
-    //     }
-    // })
-    axios.get("http://localhost:8888/api/wiki", {
+    axios.put("http://localhost:8888/api/wiki/update", JSON.stringify(article), {
         headers: {
             'Authorization': 'Bearer ' + keycloak.token,
             'Content-Type' : 'application/json'
         }
     })
         .then(function (response) {
-            var article;
-            var h1_nom_article;
-
             console.log("Response: ", response.status);
-            console.log("Yeeah ça fonctionne");
 
             quill.enable(false);
         })
@@ -90,14 +81,14 @@ function initKeycloak() {
 }
 
 function requestWikis() {
-    let article = {
-        "id_article" : 2,
-        "nom_article" : "Test5",
-        "content" : "Allo",
-        "description_article" : "alloooooo"
-    }
+    // let article = {
+    //     "id_article" : 2,
+    //     "nom_article" : "Test5",
+    //     "content" : "Allo",
+    //     "description_article" : "alloooooo"
+    // }
 
-    axios.put("http://localhost:8888/api/wiki/update", JSON.stringify(article), {
+    axios.delete("http://localhost:8888/api/wiki/delete" + "/1", {
         headers: {
             'Authorization': 'Bearer ' + keycloak.token,
             'Content-Type' : 'application/json'

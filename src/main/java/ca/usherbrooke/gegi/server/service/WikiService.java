@@ -78,12 +78,12 @@ public class WikiService {
         wikiMapper.insert(article);
     }
 
-//    @PUT
-//    @Path("wikiUpdate")
-//    @PermitAll
-//    public void updateArticle(int id_article){
-//        wikiMapper.update(id_article);
-//    }
+    @PUT
+    @Path("wiki/update")
+    @PermitAll
+    public void updateArticle(Article article){
+        wikiMapper.update(article);
+    }
 
 //    @DELETE
 //    @Path("wikiDelete/{article}")

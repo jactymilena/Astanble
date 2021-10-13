@@ -16,7 +16,7 @@ public interface WikiMapper {
     List<Wiki> selectByThematique(@Param("id_thematique")Integer id_thematique);
     List<Wiki> selectById(@Param("id_article")Integer id_article);
     void insert(@Param("article") Article article);
-    void update(@Param("article") int id_article);
+    void update(@Param("article") Article article);
     void delete(@Param("article") int id_article);
 
 }

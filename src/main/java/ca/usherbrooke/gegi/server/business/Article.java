@@ -1,11 +1,22 @@
 package ca.usherbrooke.gegi.server.business;
 
 public class Article {
-    private int id_article;
+    private Integer id_article;
     private String nom_article;
     private String content;
     private String description_robot_article;
     private String description_article;
+
+    public Article(int id_article, String nom_article, String content, String description_robot_article, String description_article) {
+        this.id_article = id_article;
+        this.nom_article = nom_article;
+        this.content = content;
+        this.description_robot_article = description_robot_article;
+        this.description_article = description_article;
+    }
+
+    public Article() {
+    }
 
     public int getId_article() {
         return id_article;

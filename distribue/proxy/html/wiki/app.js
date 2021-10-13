@@ -3,7 +3,6 @@ var keycloak;
 var quill;
 
 
-
 // roule après que le body est loadé
 function loadPage() {
     initKeycloak();
@@ -93,28 +92,29 @@ function initKeycloak() {
 function requestWikis() {
     let article = {
         "id_article" : 2,
-        "nom_article" : "Test2",
+        "nom_article" : "Test5",
         "content" : "Allo",
         "description_article" : "alloooooo"
     }
 
-    axios.post("http://localhost:8888/api/wikiInsert" + JSON.stringify(article), {
+    axios.put("http://localhost:8888/api/wiki/update", JSON.stringify(article), {
         headers: {
             'Authorization': 'Bearer ' + keycloak.token,
             'Content-Type' : 'application/json'
         }
     })
         .then(function (response) {
-            var article;
-            var h1_nom_article;
+            // var article;
+            // var h1_nom_article;
+            console.log("ca fonctionnneee");
 
             console.log("Response: ", response.status);
-            console.log(response.data);
-            article = response.data[0];
-
-            h1_nom_article = document.getElementById("nom_article");
-            h1_nom_article.innerHTML = article.nom_article;
-            quill.setText(article.content);
+            // console.log(response.data);
+            // article = response.data[0];
+            //
+            // h1_nom_article = document.getElementById("nom_article");
+            // h1_nom_article.innerHTML = article.nom_article;
+            // quill.setText(article.content);
         })
         .catch(function (error) {
             console.log('refreshing');

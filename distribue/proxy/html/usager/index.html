@@ -82,6 +82,27 @@
             window.location.href = logoutURL;
         }
 
+        function requestWikis() {
+            const span = div.firstElementChild;
+            axios.get("http://localhost:8888/api/wiki", {
+                headers: {
+                    'Authorization': 'Bearer ' + keycloak.token
+                }
+            })
+                .then(function (response) {
+                    console.log("Response: ", response.status);
+                    console.log(response.data);
+                })
+                .catch(function (error) {
+                    console.log('refreshing');
+                    keycloak.updateToken(5).then(function () {
+                        console.log('Token refreshed');
+                    }).catch(function () {
+                        console.log('Failed to refresh token');
+                    })
+                });
+            span.innerHTML = '<br> <strong>' + "Oops something went wrong :(" + '</strong> </br>'
+        }
 
     </script>
 </head>

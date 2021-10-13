@@ -42,6 +42,7 @@ CREATE TABLE article
 (
     id_article                SERIAL PRIMARY KEY NOT NULL,
     nom_article               VARCHAR(100) NOT NULL,
+    content                   TEXT,
     description_robot_article VARCHAR(500),
     description_article       VARCHAR(500)
 );
@@ -182,6 +183,7 @@ CREATE TABLE question
 (
     id_question    SERIAL PRIMARY KEY NOT NULL,
     num_question   INT NOT NULL,
+    question_content TEXT,
     id_quiz        INT NOT NULL,
     CIP            CHAR(8),
     id_type        INT, --NOT NULL BESOIN DU DEFAULT TYPE,

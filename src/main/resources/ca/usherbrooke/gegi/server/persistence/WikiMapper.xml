@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ca.usherbrooke.gegi.server.persistence.WikiMapper">
+
+    <select id="select" resultType="ca.usherbrooke.gegi.server.business.Wiki">
+        SELECT
+            id_article,
+            nom_article,
+            content,
+            description_robot_article,
+            description_article
+        FROM
+            astanble.article
+    </select>
+
+    <select id="selectByName" resultType="ca.usherbrooke.gegi.server.business.Wiki">
+        SELECT
+            id_article,
+            nom_article,
+            content,
+            description_robot_article,
+            description_article
+        FROM
+            astanble.article
+        WHERE LOWER(nom_article) LIKE lower('%'||#{article}||'%')
+    </select>
+
+    <select id="selectByAuthor" resultType="ca.usherbrooke.gegi.server.business.Wiki">
+        SELECT
+            id_article,
+            nom_article,
+            content,
+--             description_robot_article,
+            description_article
+        FROM
+            astanble.view_usager_wiki
+
+        WHERE lower(nom_complet_usager) like lower('%'|| #{auteur}||'%')
+        AND type_relation.nom_relation = 'Auteur'
+--relation = author?
+    </select>
+
+    <select id="selectByThematique" resultType="ca.usherbrooke.gegi.server.business.Wiki">
+        SELECT
+            a.id_article,
+            a.nom_article,
+            a.content,
+            a.description_robot_article,
+            a.description_article
+        FROM
+            astanble.article AS a
+
+        JOIN astanble.article_thematique AS at
+        ON at.id_article = a.id_article
+
+        WHERE at.id_thematique = #{id_thematique}
+    </select>
+
+    <select id="selectById" resultType="ca.usherbrooke.gegi.server.business.Wiki">
+        SELECT
+            id_article,
+            nom_article,
+            content,
+            description_robot_article,
+            description_article
+        FROM
+            astanble.article
+        WHERE id_article = #{id_article}
+    </select>
+
+    <insert id="insert" >
+        INSERT INTO astanble.article(
+            nom_article,
+            content,
+            description_article)
+        VALUES  (#{article.nom_article},
+                 #{article.content},
+                 #{article.description_article});
+    </insert>
+
+    <update id="update" >
+    UPDATE astanble.article
+    SET nom_article = #{article.nom_article},
+        content = #{article.content},
+        description_article = #{article.description_article}
+    WHERE id_article = #{article.id_article};
+    </update>
+
+    <delete id="delete" >
+    DELETE FROM astanble.article
+    WHERE id_article = #{id_article};
+    </delete>
+</mapper>

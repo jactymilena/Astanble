@@ -37,7 +37,8 @@ function userProfil() {
 
             // prep user on ui
             var user_profil_html = document.getElementById("user_profil_nav");
-            user_profil_html.innerText = user_profil.first_name + " " + user_profil.last_name;
+            if(user_profil_html && user_profil)
+                user_profil_html.innerText = user_profil.first_name + " " + user_profil.last_name;
         })
         .catch(function (error) {
             console.log('refreshing');

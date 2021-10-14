@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ca.usherbrooke.gegi.server.persistence.WikiMapper">
 
-    <select id="select" resultType="ca.usherbrooke.gegi.server.business.Wiki">
+    <select id="select" resultType="ca.usherbrooke.gegi.server.business.ArticleAuthor">
         SELECT
             id_article,
             nom_article,
@@ -13,9 +13,18 @@
             description_article
         FROM
             astanble.article
+        ORDER BY id_article
     </select>
 
-    <select id="selectByName" resultType="ca.usherbrooke.gegi.server.business.Wiki">
+    <select id="selectAuthorOfArticle" resultType="ca.usherbrooke.gegi.server.business.Usager">
+        SELECT usager.cip, usager.nom_usager, usager.prenom_usager, usager.courriel1, usager.courriel2, nom_complet_usager
+        FROM astanble.view_usager_wiki
+                 LEFT JOIN astanble.usager ON astanble.view_usager_wiki.cip = astanble.usager.cip
+        WHERE id_article = #{id}::int
+          AND nom_relation = 'Auteur'
+    </select>
+
+    <select id="selectByName" resultType="ca.usherbrooke.gegi.server.business.Article">
         SELECT
             id_article,
             nom_article,
@@ -27,7 +36,7 @@
         WHERE LOWER(nom_article) LIKE lower('%'||#{article}||'%')
     </select>
 
-    <select id="selectByAuthor" resultType="ca.usherbrooke.gegi.server.business.Wiki">
+    <select id="selectByAuthor" resultType="ca.usherbrooke.gegi.server.business.Article">
         SELECT
             id_article,
             nom_article,
@@ -44,7 +53,7 @@
 --relation = author?
     </select>
 
-    <select id="selectByThematique" resultType="ca.usherbrooke.gegi.server.business.Wiki">
+    <select id="selectByThematique" resultType="ca.usherbrooke.gegi.server.business.Article">
         SELECT
             a.id_article,
             a.nom_article,
@@ -57,10 +66,10 @@
         JOIN astanble.article_thematique AS at
         ON at.id_article = a.id_article
 
-        WHERE at.id_thematique = #{id_thematique}
+        WHERE at.id_thematique = #{id_thematique}::int;
     </select>
 
-    <select id="selectById" resultType="ca.usherbrooke.gegi.server.business.Wiki">
+    <select id="selectById" resultType="ca.usherbrooke.gegi.server.business.Article">
         SELECT
             id_article,
             nom_article,
@@ -69,7 +78,7 @@
             description_article
         FROM
             astanble.article
-        WHERE id_article = #{id_article}
+        WHERE id_article = #{id_article}::int;
     </select>
 
     <insert id="insert" >
@@ -87,11 +96,12 @@
     SET nom_article = #{article.nom_article},
         content = #{article.content},
         description_article = #{article.description_article}
-    WHERE id_article = #{article.id_article};
+    WHERE id_article = #{article.id_article}::int;
     </update>
 
     <delete id="delete" >
     DELETE FROM astanble.article
-    WHERE id_article = #{id_article};
+    WHERE id_article = #{id_article}::int;
     </delete>
+
 </mapper>

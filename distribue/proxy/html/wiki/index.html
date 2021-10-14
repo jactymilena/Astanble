@@ -5,7 +5,7 @@
     <title>Wiki</title>
 
     <!-- style sheet personnel -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="shared/style.css">
 
     <!-- script basic externe + keycloack -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -13,7 +13,8 @@
 
     <!-- script personnel pour la page -->
     <script src="../shared/app.js"></script>
-    <script src="index.js"></script>
+    <script src="./shared/app.js"></script>
+    <script src="./index.js"></script>
 </head>
 <header>
     <div style="float: left">
@@ -30,12 +31,8 @@
 <body onload="loadIndex()">
 
 <!-- side navigation bar -->
-<div class="sidenav">
-    <a href="#about">Thème 1</a>
-    <a href="#services">Thème 2</a>
-    <a href="#clients">Thème 3</a>
-    <a href="#contact">Thème 4</a>
-    <a href="#contact">Thème 5</a>
+<div id="sidenav" class="sidenav">
+
 </div>
 
 <!-- section central -->

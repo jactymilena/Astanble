@@ -119,11 +119,11 @@ VALUES ('larn5378', 1, 1, 1);
 INSERT INTO usager_article_collaboration(debut_collaboration, fin_collaboration, id_relation, cip, code_article)
 VALUES
        (CURRENT_DATE, CURRENT_DATE, 1, 'larn5378', 1),
-       (CURRENT_DATE, CURRENT_DATE, 1, 'rouy2404', 1),
-       (CURRENT_DATE, CURRENT_DATE, 1, 'mill3003', 1),
-       (CURRENT_DATE, CURRENT_DATE, 1, 'paqv2407', 1),
-       (CURRENT_DATE, CURRENT_DATE, 1, 'saej3101', 1),
-       (CURRENT_DATE, CURRENT_DATE, 1, 'stgt0901', 1);
+       (CURRENT_DATE, CURRENT_DATE, 1, 'rouy2404', 3),
+       (CURRENT_DATE, CURRENT_DATE, 1, 'mill3003', 3),
+       (CURRENT_DATE, CURRENT_DATE, 1, 'paqv2407', 4),
+       (CURRENT_DATE, CURRENT_DATE, 1, 'saej3101', 5),
+       (CURRENT_DATE, CURRENT_DATE, 1, 'stgt0901', 6);
 
 --reponse
 INSERT INTO reponse(reponse, bonne_mauvaise, id_question)
@@ -142,7 +142,7 @@ VALUES (1, 1, 'larn5378');
 -- ==
 CREATE OR REPLACE VIEW  view_usager_wiki as
 SELECT article.id_article, article.nom_article, article.description_article, article.content, type_relation.nom_relation,
-       usager.cip, usager.prenom_usager, usager.nom_usager, usager.prenom_usager || '_' || usager.nom_usager AS nom_complet_usager
+       usager.cip, usager.prenom_usager, usager.nom_usager, usager.prenom_usager || ' ' || usager.nom_usager AS nom_complet_usager
 FROM article, usager_article_collaboration, type_relation, usager
 WHERE article.id_article = usager_article_collaboration.code_article AND
         type_relation.id_relation = usager_article_collaboration.id_relation AND

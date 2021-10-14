@@ -1,6 +1,7 @@
 package ca.usherbrooke.gegi.server.service;
 
 import ca.usherbrooke.gegi.server.business.Article;
+import ca.usherbrooke.gegi.server.business.ArticleAuthor;
 import ca.usherbrooke.gegi.server.business.Wiki;
 import ca.usherbrooke.gegi.server.persistence.WikiMapper;
 import org.apache.ibatis.annotations.Param;
@@ -29,8 +30,12 @@ public class WikiService {
     @Path("wiki")
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Wiki> getWiki() {
-        List<Wiki> wikis = wikiMapper.select();
+    public List<ArticleAuthor> getWiki() {
+        List<ArticleAuthor> wikis = wikiMapper.select();
+        for (ArticleAuthor a : wikis) {
+            String id_article = a.getId_article();
+            a.setAuthors(wikiMapper.selectAuthorOfArticle(id_article));
+        }
         return wikis;
     }
 
@@ -38,8 +43,8 @@ public class WikiService {
     @Path("wikiByName/{article}")
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Wiki> getWikiByName(@PathParam("article") String article) {
-        List<Wiki> wikis = wikiMapper.selectByName(article);
+    public List<Article> getWikiByName(@PathParam("article") String article) {
+        List<Article> wikis = wikiMapper.selectByName(article);
         return wikis;
     }
 
@@ -47,8 +52,8 @@ public class WikiService {
     @Path("wikiByAuthor/{auteur}")
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Wiki> getwikiByAuthor(@PathParam("auteur") String auteur) {
-        List<Wiki> wikis = wikiMapper.selectByAuthor(auteur);
+    public List<Article> getwikiByAuthor(@PathParam("auteur") String auteur) {
+        List<Article> wikis = wikiMapper.selectByAuthor(auteur);
         return wikis;
     }
 
@@ -56,8 +61,8 @@ public class WikiService {
     @Path("wikiByThematique/{id_thematique}")
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Wiki> getwikiByThematique(@PathParam("id_thematique") Integer id_thematique) {
-        List<Wiki> wikis = wikiMapper.selectByThematique(id_thematique);
+    public List<Article> getwikiByThematique(@PathParam("id_thematique") Integer id_thematique) {
+        List<Article> wikis = wikiMapper.selectByThematique(id_thematique);
         return wikis;
     }
 
@@ -65,8 +70,8 @@ public class WikiService {
     @Path("wikiByIdArticle/{id_article}")
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Wiki> getwikiByIdArticle(@PathParam("id_article") Integer id_article) {
-        List<Wiki> wikis = wikiMapper.selectById(id_article);
+    public List<Article> getwikiByIdArticle(@PathParam("id_article") String id_article) {
+        List<Article> wikis = wikiMapper.selectById(id_article);
         return wikis;
     }
 
@@ -82,12 +87,12 @@ public class WikiService {
     @Path("wiki/update")
     @PermitAll
     public void updateArticle(Article article){
-        Wiki dbArticle =  wikiMapper.selectById(article.getId_article()).get(0);
+        Article dbArticle =  wikiMapper.selectById(article.getId_article()).get(0);
 
         if(article.getNom_article() == null)
             article.setNom_article(dbArticle.getNom_article());
-        if(article.getGetDescription_article() == null)
-            article.setGetDescription_article(dbArticle.getDescription_article());
+        if(article.getDescription_article() == null)
+            article.setDescription_article(dbArticle.getDescription_article());
         if(article.getDescription_robot_article() == null)
             article.setDescription_robot_article(dbArticle.getDescription_robot_article());
 

@@ -1,13 +1,13 @@
 package ca.usherbrooke.gegi.server.business;
 
 public class Article {
-    private Integer id_article;
+    private String id_article;
     private String nom_article;
     private String content;
     private String description_robot_article;
     private String description_article;
 
-    public Article(int id_article, String nom_article, String content, String description_robot_article, String description_article) {
+    public Article(String id_article, String nom_article, String content, String description_robot_article, String description_article) {
         this.id_article = id_article;
         this.nom_article = nom_article;
         this.content = content;
@@ -18,11 +18,11 @@ public class Article {
     public Article() {
     }
 
-    public int getId_article() {
+    public String getId_article() {
         return id_article;
     }
 
-    public void setId_article(int id_article) {
+    public void setId_article(String id_article) {
         this.id_article = id_article;
     }
 
@@ -50,11 +50,12 @@ public class Article {
         this.description_robot_article = description_robot_article;
     }
 
-    public String getGetDescription_article() {
+    public String getDescription_article() {
         return description_article;
     }
 
-    public void setGetDescription_article(String description_article) {
+    public void setDescription_article(String description_article) {
         this.description_article = description_article;
     }
 }
+

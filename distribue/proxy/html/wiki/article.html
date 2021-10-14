@@ -5,7 +5,7 @@
     <title>Article</title>
 
     <!-- style sheet personnel -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="shared/style.css">
 
     <!-- quill -->
     <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
@@ -18,7 +18,8 @@
 
     <!-- script personnel pour la page -->
     <script src="../shared/app.js"></script>
-    <script src="article.js"></script>
+    <script src="./shared/app.js"></script>
+    <script src="./article.js"></script>
 </head>
 <header>
     <div style="float: left">
@@ -35,12 +36,8 @@
 <body onload="loadArticle()">
 
 <!-- side navigation bar -->
-<div class="sidenav">
-    <a href="#about">Thème 1</a>
-    <a href="#services">Thème 2</a>
-    <a href="#clients">Thème 3</a>
-    <a href="#contact">Thème 4</a>
-    <a href="#contact">Thème 5</a>
+<div id="sidenav" class="sidenav">
+
 </div>
 
 <!-- section central -->

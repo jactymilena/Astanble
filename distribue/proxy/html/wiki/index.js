@@ -2,6 +2,8 @@
 function loadIndex() {
     // call init from app.js
     init();
+    // load all themes on side nav
+    loadThemesOnSideNav();
     // load all wikis to list on page
     loadWikis();
 }
@@ -9,7 +11,7 @@ function loadIndex() {
 function createArticleLink (article) {
     return '<span><a href="article.html?article=' + article.id_article + '">' +
                 article.nom_article +
-            '</a><br>' + article.description_article + '</span><br>'
+            '</a>[' + article.authors.map(a => a.nom_complet_usager).join(', ')  + ']<br>' + article.description_article + '</span><br>'
 }
 
 function loadWikis() {

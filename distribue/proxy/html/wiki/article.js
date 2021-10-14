@@ -5,6 +5,8 @@ var quill;
 async function loadArticle() {
     // call init from app.js
     await init();
+    // load all themes on side nav
+    loadThemesOnSideNav();
     // Initialize Quill editor
     quill = new Quill('#editor', {
         toolbar: [

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ca.usherbrooke.gegi.server.persistence.ThematiqueMapper">
+    <select id="select" resultType="ca.usherbrooke.gegi.server.business.Thematique">
+        SELECT
+            id_thematique,
+            nom_thematique
+        FROM
+            astanble.thematique
+    </select>
+</mapper>

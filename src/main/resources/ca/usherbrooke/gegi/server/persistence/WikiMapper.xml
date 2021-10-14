@@ -32,6 +32,8 @@
             id_article,
             nom_article,
             content,
+            cip,
+            nom_complet_usager,
 --             description_robot_article,
             description_article
         FROM

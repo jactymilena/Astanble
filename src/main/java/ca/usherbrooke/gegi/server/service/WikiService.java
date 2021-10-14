@@ -43,14 +43,14 @@ public class WikiService {
         return wikis;
     }
 
-//    @GET
-//    @Path("wikiByAuthor/{auteur}")
-//    @PermitAll
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public List<Wiki> getwikiByAuthor(@PathParam("auteur") String auteur) {
-//        List<Wiki> wikis = wikiMapper.selectByAuthor(auteur);
-//        return wikis;
-//    }
+    @GET
+    @Path("wikiByAuthor/{auteur}")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Wiki> getwikiByAuthor(@PathParam("auteur") String auteur) {
+        List<Wiki> wikis = wikiMapper.selectByAuthor(auteur);
+        return wikis;
+    }
 
     @GET
     @Path("wikiByThematique/{id_thematique}")
@@ -82,6 +82,15 @@ public class WikiService {
     @Path("wiki/update")
     @PermitAll
     public void updateArticle(Article article){
+        Wiki dbArticle =  wikiMapper.selectById(article.getId_article()).get(0);
+
+        if(article.getNom_article() == null)
+            article.setNom_article(dbArticle.getNom_article());
+        if(article.getGetDescription_article() == null)
+            article.setGetDescription_article(dbArticle.getDescription_article());
+        if(article.getDescription_robot_article() == null)
+            article.setDescription_robot_article(dbArticle.getDescription_robot_article());
+
         wikiMapper.update(article);
     }
 

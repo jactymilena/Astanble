@@ -5,7 +5,9 @@ body {
     margin: 0 auto;
     padding: 3em;
     font-family: Tahoma, Verdana, Arial, sans-serif;
-
+    /* flex horizontalement */
+    display: flex;
+    flex-wrap: wrap;
 }
 
 #editor {
@@ -44,6 +46,7 @@ header{
 .sidenav {
     height: 90%;
     width: 100px;
+    margin-right: 100px;
     position: fixed;
     z-index: 1;
     top: 5%;
@@ -51,4 +54,9 @@ header{
     background-color: grey;
     overflow-x: hidden;
     padding-top: 20px;
+}
+
+#liste_article {
+    display: flex;
+    flex-direction: column;
 }

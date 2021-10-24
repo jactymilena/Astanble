@@ -12,7 +12,7 @@
         SELECT * FROM question WHERE id_quiz = {#id_quiz}
     </select>
 
-    <select id="selectReponsesByQuestion" resultType="ca.usherbrooke.gegi.server.business.Question">
+    <select id="selectReponsesByQuestion" resultType="ca.usherbrooke.gegi.server.business.Reponse">
         SELECT * FROM reponse WHERE id_question = {#id_question}
     </select>
 

@@ -1,8 +1,9 @@
 package ca.usherbrooke.gegi.server.service;
 
 import ca.usherbrooke.gegi.server.business.*;
+import ca.usherbrooke.gegi.server.persistence.QuestionMapper;
 import ca.usherbrooke.gegi.server.persistence.QuizMapper;
-import ca.usherbrooke.gegi.server.persistence.WikiMapper;
+import ca.usherbrooke.gegi.server.persistence.ReponseMapper;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import javax.annotation.security.PermitAll;
@@ -24,6 +25,12 @@ public class QuizService {
     @Inject
     QuizMapper quizMapper;
 
+    @Inject
+    QuestionMapper questionMapper;
+
+    @Inject
+    ReponseMapper reponseMapper;
+
     @GET
     @Path("quiz")
     @PermitAll
@@ -32,9 +39,9 @@ public class QuizService {
         List<Quiz> quiz = quizMapper.select();
         for (Quiz q : quiz) {
             int id_quiz = q.getId_quiz();
-            List<Question> questions = quizMapper.selectQuestionsByQuiz(id_quiz);
+            List<Question> questions = questionMapper.selectByQuiz(id_quiz);
             for (Question question : questions) {
-                question.setReponses(quizMapper.selectReponsesByQuestion(question.getId_question()));
+                question.setReponses(reponseMapper.selectByQuestion(question.getId_question()));
             }
             q.setQuestions(questions);
         }

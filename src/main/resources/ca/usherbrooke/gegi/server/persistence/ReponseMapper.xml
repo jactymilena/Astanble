@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ca.usherbrooke.gegi.server.persistence.ReponseMapper">
+
+    <select id="select" resultType="ca.usherbrooke.gegi.server.business.Reponse">
+        SELECT * FROM reponse
+    </select>
+
+    <select id="selectByQuestion" resultType="ca.usherbrooke.gegi.server.business.Reponse">
+        SELECT * FROM reponse WHERE id_question = {#id_question}
+    </select>
+
+    <select id="selectByName" resultType="ca.usherbrooke.gegi.server.business.Reponse">
+        SELECT * FROM reponse WHERE nom_quiz = {#name}
+
+    </select>
+
+    <select id="selectByID" resultType="ca.usherbrooke.gegi.server.business.Reponse">
+
+    </select>
+
+    <select id="selectByAuthor" resultType="ca.usherbrooke.gegi.server.business.Reponse">
+
+    </select>
+
+    <insert id="insert">
+
+    </insert>
+
+    <update id="update">
+
+    </update>
+
+    <delete id="delete">
+
+    </delete>
+
+
+</mapper>

@@ -196,7 +196,7 @@ CREATE TABLE question
 CREATE TABLE reponse
 (
   id_reponse     SERIAL PRIMARY KEY NOT NULL,
-  reponse        VARCHAR(200) NOT NULL,
+  reponse_content        VARCHAR(200) NOT NULL,
   bonne_mauvaise BOOLEAN NOT NULL,
   id_question    INT NOT NULL,
   FOREIGN KEY (id_question) REFERENCES question(id_question) ON UPDATE CASCADE ON DELETE CASCADE

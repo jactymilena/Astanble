@@ -7,18 +7,18 @@ function loadIndex() {
     // load all wikis to list on page
     loadWikis();
 
-    // let searchBtn = document.getElementById('clickMe');
-    // console.log(searchBtn);
-    // searchBtn.addEventListener("click", function () {
-    //     console.log("allo");
-    //     alert('helloooo');
-    // });
-
-    // searchBtn.onclick = searchByName();
 }
+
+function closeSearch() {
+    const closeButton = document.getElementById('searchCloseButton');
+    closeButton.toggleAttribute("hidden")
+    liste_article.innerHTML = "";
+    loadWikis();
+}
+
 function searchByName() {
     console.log('Search by name');
-    let strToSearch = document.getElementById('champSearch');
+    const strToSearch = document.getElementById('champSearch');
     console.log(strToSearch.value);
     if (champSearch.value == null || champSearch.value == "Rechercher un article") {
         alert('Rentrer quelque chose dans le champ de recherche');
@@ -27,10 +27,17 @@ function searchByName() {
             .then(function (response) {
                 console.log(response.status);
                 console.log(response.data);
-                var liste_article = document.getElementById("liste_article");
-                liste_article.innerHTML = "";
+                const articles = response.data;
 
-                response.data.forEach(article => {
+                // Vider liste d'articles
+                const liste_article = document.getElementById("liste_article");
+                liste_article.innerHTML = "";
+                // Show button de fermeture de la recherche
+                const closeButton = document.getElementById('searchCloseButton');
+                closeButton.toggleAttribute("hidden")
+                // Mettre data trouvé dans la liste
+
+                articles.forEach(article => {
                     var htmlLink = createArticleLink(article);
                     liste_article.innerHTML += (htmlLink);
                     console.log(article.nom_article);

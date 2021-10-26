@@ -20,7 +20,7 @@ function searchByName() {
     console.log('Search by name');
     const strToSearch = document.getElementById('champSearch');
     console.log(strToSearch.value);
-    if (champSearch.value == null || champSearch.value == "Rechercher un article") {
+    if (champSearch.value == "" || champSearch.value == "Rechercher un article") {
         alert('Rentrer quelque chose dans le champ de recherche');
     } else {
         axios.get("http://localhost:8888/api/wiki/searchByName/" + strToSearch.value)

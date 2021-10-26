@@ -4,33 +4,44 @@
         <meta charset="UTF-8">
         <title>Quiz</title>
 
-        <link rel="stylesheet" href="style.css" />
+        <!-- style sheet personnel -->
+        <link rel="stylesheet" href="shared/style.css">
 
+        <!-- script basic externe + keycloack -->
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="http://localhost/auth/js/keycloak.js"></script>
+
+        <!-- script personnel pour la page -->
+        <script src=""></script>
     </head>
     <header>
-        <a href = "index.html"> Accueil</a>
-        <a href = "/wiki"> Wiki</a>
-        <a href = "forum"> Forum</a>
-        <a href = "Quiz"> Quiz</a>
+        <div style="float: left">
+            <a href = "//localhost/astanble"> Accueil</a>
+            <a href = "index.html"> Wiki</a>
+            <a href = "forum"> Forum</a>
+            <a href = "Quiz"> Quiz</a>
+        </div>
+        <div style="float: right">
+            <span id="user_profil_nav"></span>
+        </div>
     </header>
-
-
     <body>
-<!-- section principal -->
-    <h1>Quiz</h1>
-
-    <!-- section 1 -->
-    <h2>Vos cours</h2>
-    <p>section des quiz d'un cours</p>
-
-    <!-- section 2 -->
-    <h2>Historique</h2>
-    <p>section de l'historique</p>
-
-    <!-- section 3 -->
-    <h2>Création</h2>
-    <p>section de la creation de quiz</p>
-
+        <h1>Quiz</h1>
+        <section>
+            <h2>Vos cours</h2>
+            <p>section des quiz d'un cours</p>
+        </section>
+        <section>
+            <h2>Historique</h2>
+            <p>section de l'historique</p>
+        </section>
+        <section>
+            <h2>Création</h2>
+            <p>
+                section de la creation de quiz <br/>
+                <button type="button">Créer un quiz</button>
+            </p>
+        </section>
     </body>
 
     <footer>Info que tu as manqué</footer>

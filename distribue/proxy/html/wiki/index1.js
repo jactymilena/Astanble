@@ -16,27 +16,34 @@ function loadIndex() {
 
     // searchBtn.onclick = searchByName();
 }
-function searchByName(nom_article) {
+function searchByName() {
     console.log('Search by name');
-    axios.get("http://localhost:8888/api/wiki/searchByName/" + nom_article)
-        .then(function (response) {
-            console.log(response.status);
-            console.log(response.data);
+    let strToSearch = document.getElementById('champSearch');
+    console.log(strToSearch.value);
+    if (champSearch.value == null || champSearch.value == "Rechercher un article") {
+        alert('Rentrer quelque chose dans le champ de recherche');
+    } else {
+        axios.get("http://localhost:8888/api/wiki/searchByName/" + strToSearch.value)
+            .then(function (response) {
+                console.log(response.status);
+                console.log(response.data);
 
-            response.data.forEach(article => {
-                console.log(article.nom_article);
-            })
+                response.data.forEach(article => {
+                    console.log(article.nom_article);
+                })
 
-        })
-        .catch(function (error) {
-            console.log('refreshing');
-            keycloak.updateToken(5).then(function () {
-                console.log('Token refreshed');
-            }).catch(function () {
-                console.log('Failed to refresh token');
             })
-            alert(error);
-        });
+            .catch(function (error) {
+                console.log('refreshing');
+                keycloak.updateToken(5).then(function () {
+                    console.log('Token refreshed');
+                }).catch(function () {
+                    console.log('Failed to refresh token');
+                })
+                alert(error);
+            });
+    }
+
 }
 
 function createArticleLink (article) {

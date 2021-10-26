@@ -25,6 +25,7 @@ function quillGetHTML(inputDelta) {
     return tempQuill.root.innerHTML;
 }
 
+
 // sauvegarde du contenu de l'éditeur
 function saveEditorContent() {
     let delta = quill.getContents();

@@ -75,6 +75,15 @@ public class WikiService {
         return wikis;
     }
 
+    @GET
+    @Path("wiki/searchByName/{nom_article}")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Article> getArticleSearch(@PathParam("nom_article") String nom_article) {
+        List<Article> wikis = wikiMapper.selectSearchArticle(nom_article);
+        return wikis;
+    }
+
     @POST
     @Path("wikiInsert")
     @PermitAll

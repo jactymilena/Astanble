@@ -81,6 +81,12 @@
         WHERE id_article = #{id_article}::int;
     </select>
 
+    <select id="selectSearchArticle" resultType="ca.usherbrooke.gegi.server.business.Article">
+        SELECT * FROM astanble.article
+        WHERE SIMILARITY(nom_article,  #{nom_article}) > 0.1
+        LIMIT 100;
+    </select>
+
     <insert id="insert" >
         INSERT INTO astanble.article(
             nom_article,
@@ -103,5 +109,7 @@
     DELETE FROM astanble.article
     WHERE id_article = #{id_article}::int;
     </delete>
+
+
 
 </mapper>

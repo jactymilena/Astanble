@@ -12,6 +12,11 @@ CREATE SCHEMA IF NOT EXISTS Astanble;
 SET search_path TO Astanble;
 
 -- ==
+-- Module de recherche
+-- ==
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
+-- ==
 -- Définition des tables
 -- ==
 

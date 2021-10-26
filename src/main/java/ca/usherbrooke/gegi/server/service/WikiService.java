@@ -79,8 +79,12 @@ public class WikiService {
     @Path("wiki/searchByName/{nom_article}")
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Article> getArticleSearch(@PathParam("nom_article") String nom_article) {
-        List<Article> wikis = wikiMapper.selectSearchArticle(nom_article);
+    public List<ArticleAuthor> getArticleSearch(@PathParam("nom_article") String nom_article) {
+        List<ArticleAuthor> wikis = wikiMapper.selectSearchArticle(nom_article);
+        for (ArticleAuthor a : wikis) {
+            String id_article = a.getId_article();
+            a.setAuthors(wikiMapper.selectAuthorOfArticle(id_article));
+        }
         return wikis;
     }
 

@@ -81,9 +81,10 @@
         WHERE id_article = #{id_article}::int;
     </select>
 
-    <select id="selectSearchArticle" resultType="ca.usherbrooke.gegi.server.business.Article">
+    <select id="selectSearchArticle" resultType="ca.usherbrooke.gegi.server.business.ArticleAuthor">
         SELECT * FROM astanble.article
         WHERE SIMILARITY(nom_article,  #{nom_article}) > 0.1
+        ORDER BY SIMILARITY(nom_article,   #{nom_article}) DESC
         LIMIT 100;
     </select>
 

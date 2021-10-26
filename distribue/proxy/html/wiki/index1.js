@@ -27,8 +27,12 @@ function searchByName() {
             .then(function (response) {
                 console.log(response.status);
                 console.log(response.data);
+                var liste_article = document.getElementById("liste_article");
+                liste_article.innerHTML = "";
 
                 response.data.forEach(article => {
+                    var htmlLink = createArticleLink(article);
+                    liste_article.innerHTML += (htmlLink);
                     console.log(article.nom_article);
                 })
 

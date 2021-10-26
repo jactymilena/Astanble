@@ -16,3 +16,8 @@ SELECT SIMILARITY('objet', 'objet');
 SELECT content % 'the' FROM astanble.article;
 
 CREATE INDEX CONCURRENTLY ON astanble.article USING GIN (content gin_trgm_ops);
+
+SELECT * FROM astanble.article
+WHERE SIMILARITY(nom_article,  'mi') > 0.1
+ORDER BY SIMILARITY(nom_article,  'mi') DESC
+LIMIT 100;

@@ -110,7 +110,8 @@ VALUES (1,1);
 --type_relation
 INSERT INTO type_relation(nom_relation)
 VALUES ('Auteur'),
-       ('Co-auteur');
+       ('Co-auteur'),
+       ('Éditeur');
 
 --usager_quiz
 INSERT INTO usager_quiz(cip, id_quiz, type_relation, id_relation)
@@ -136,7 +137,9 @@ VALUES ('Amas de gaz et de poussières interstellaires.', true, 1),
 INSERT INTO reponse_usager_question(id_question, id_reponse, cip)
 VALUES (1, 1, 'larn5378');
 
-
+-- ============================================================================
+--                          Creation des vues
+-- ============================================================================
 
 -- ==
 -- Creation de la vue des articles et usager
@@ -220,4 +223,9 @@ SELECT u.cip, u.prenom_usager, u.nom_usager, u.prenom_usager || ' ' || u.nom_usa
        t.id_thematique, t.nom_thematique
 FROM usager_thematique ut
 LEFT JOIN usager u on ut.cip = u.cip
-LEFT JOIN thematique t on ut.id_thematique = t.id_thematique
+LEFT JOIN thematique t on ut.id_thematique = t.id_thematique;
+
+
+-- ============================================================================
+--                          Creation des triggers
+-- ============================================================================

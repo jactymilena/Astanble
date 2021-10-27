@@ -11,14 +11,13 @@ function loadIndex() {
 
 function closeSearch() {
     document.getElementById('searchCloseButton').style.visibility = 'hidden';
-    liste_article.innerHTML = "";
+    document.getElementById('champSearch').value = "";
     loadWikis();
 }
 
 function searchByName() {
     console.log('Search by name');
     const strToSearch = document.getElementById('champSearch');
-    console.log(strToSearch.value);
     if (champSearch.value == "") {
         alert('Rentrer quelque chose dans le champ de recherche.');
     } else {

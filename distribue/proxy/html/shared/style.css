@@ -1,0 +1,32 @@
+body {
+    background: rgb(233, 233, 233);
+    height: 100%;
+    width: 65em;
+    margin: 0 auto;
+    padding: 3em;
+    font-family: Tahoma, Verdana, Arial, sans-serif;
+    /* flex horizontalement */
+    display: flex;
+    flex-wrap: wrap;
+}
+
+footer {
+    position: fixed;
+    left:0;
+    bottom :0;
+    height: 5%;
+    width: 100%;
+    background: orange;
+    color: black;
+    text-align: center;
+}
+header{
+    position: fixed;
+    height: 15%;
+    top:0;
+    right: 0;
+    width: 100%;
+    background: orange;
+    color: black;
+    text-align: left;
+}

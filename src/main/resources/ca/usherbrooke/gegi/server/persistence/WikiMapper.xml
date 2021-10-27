@@ -81,11 +81,27 @@
         WHERE id_article = #{id_article}::int;
     </select>
 
-    <select id="selectSearchArticle" resultType="ca.usherbrooke.gegi.server.business.ArticleAuthor">
+
+    <select id="selectSearchByName" resultType="ca.usherbrooke.gegi.server.business.ArticleAuthor">
         SELECT * FROM astanble.article
         WHERE astanble.SIMILARITY(nom_article,  #{nom_article}) > 0.1
         ORDER BY astanble.SIMILARITY(nom_article,   #{nom_article}) DESC
-        LIMIT 100;
+            LIMIT 100;
+    </select>
+
+    <select id="selectSearchByAuthor" resultType="ca.usherbrooke.gegi.server.business.ArticleAuthor">
+        SELECT * FROM astanble.usager
+        WHERE astanble.SIMILARITY(prenom_usager,  #{prenom_usager}) > 0.3 or
+              astanble.SIMILARITY(nom_usager, #{prenom_usager}) > 0.3
+        ORDER BY astanble.SIMILARITY(prenom_usager,   #{prenom_usager}) DESC
+            LIMIT 100;
+    </select>
+
+    <select id="selectSearchByDescription" resultType="ca.usherbrooke.gegi.server.business.ArticleAuthor">
+        SELECT * FROM astanble.article
+        WHERE astanble.SIMILARITY(description_article,  #{description_article}) > 0.1
+        ORDER BY astanble.SIMILARITY(description_article,   #{description_article}) DESC
+            LIMIT 100;
     </select>
 
     <insert id="insert" >

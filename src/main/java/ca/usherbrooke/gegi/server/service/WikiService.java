@@ -2,9 +2,7 @@ package ca.usherbrooke.gegi.server.service;
 
 import ca.usherbrooke.gegi.server.business.Article;
 import ca.usherbrooke.gegi.server.business.ArticleAuthor;
-import ca.usherbrooke.gegi.server.business.Wiki;
 import ca.usherbrooke.gegi.server.persistence.WikiMapper;
-import org.apache.ibatis.annotations.Param;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import javax.annotation.security.PermitAll;
@@ -86,8 +84,30 @@ public class WikiService {
     @Path("wiki/searchByName/{nom_article}")
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ArticleAuthor> getArticleSearch(@PathParam("nom_article") String nom_article) {
-        List<ArticleAuthor> wikis = wikiMapper.selectSearchArticle(nom_article);
+    public List<ArticleAuthor> getArticleSearchByName(@PathParam("nom_article") String nom_article) {
+        List<ArticleAuthor> wikis = wikiMapper.selectSearchByName(nom_article);
+        setListAuthors(wikis);
+
+        return wikis;
+    }
+
+    @GET
+    @Path("wiki/searchByAuthor/{prenom_usager}")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ArticleAuthor> getArticleSearchByAuthor(@PathParam("prenom_usager") String prenom_usager) {
+        List<ArticleAuthor> wikis = wikiMapper.selectSearchByAuthor(prenom_usager);
+        setListAuthors(wikis);
+
+        return wikis;
+    }
+
+    @GET
+    @Path("wiki/searchByDescription/{description_article}")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ArticleAuthor> getArticleSearchByDescription(@PathParam("description_article") String description_article) {
+        List<ArticleAuthor> wikis = wikiMapper.selectSearchByDescription(description_article);
         setListAuthors(wikis);
 
         return wikis;

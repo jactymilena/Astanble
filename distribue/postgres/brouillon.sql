@@ -23,10 +23,17 @@ WHERE SIMILARITY(nom_article,  'mi'::varchar) > 0.1
 ORDER BY SIMILARITY(nom_article,  'mi'::varchar) DESC
 LIMIT 100;
 
-SELECT * FROM astanble.article_thematique;
+SELECT * FROM astanble.usager;
 
 SELECT * FROM astanble.view_usager_wiki;
 
 SHOW search_path;
 SET search_path TO Astanble;
 
+
+
+SELECT astanble.SIMILARITY(prenom_usager,  'vero'), prenom_usager, nom_usager FROM astanble.usager;
+WHERE astanble.SIMILARITY(prenom_usager,  'mil') > 0.3 or
+        astanble.SIMILARITY(nom_usager, 'mil') > 0.3
+ORDER BY astanble.SIMILARITY(prenom_usager,   'mil') DESC
+LIMIT 100;

@@ -17,7 +17,9 @@ public interface WikiMapper {
     List<Article> selectByAuthor(@Param("auteur")String auteur);
     List<ArticleAuthor> selectByThematique(@Param("id_thematique")Integer id_thematique);
     List<Article> selectById(@Param("id_article")String id_article);
-    List<ArticleAuthor> selectSearchArticle(@Param("nom_article")String nom_article);
+    List<ArticleAuthor> selectSearchByName(@Param("nom_article")String nom_article);
+    List<ArticleAuthor> selectSearchByAuthor(@Param("prenom_usager")String prenom_usager);
+    List<ArticleAuthor> selectSearchByDescription(@Param("description_article")String description_article);
     void insert(@Param("article") Article article);
     void update(@Param("article") Article article);
     void delete(@Param("id_article") int id_article);

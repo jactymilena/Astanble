@@ -26,9 +26,28 @@
 <header> </header>
 <!-- appel loadPage() après que le body ait loader -->
 <body onload="loadIndex()">
+<!-- side navigation bar -->
+<div id="sidenav" class="sidenav">
+
+</div>
+
+<!-- section central -->
+<div id="main">
+    <h1>Wiki</h1>
+    <h2>Liste des articles</h2>
+    <div id="liste_article"></div>
+</div>
+
+<!-- logo side navigation bar-->
+<div id="logo">
+    <img src="../trimestre/images/A.PNG" alt="Logo Astanble" style="width:300px;height:150px;">
+</div>
+
 <script type="text/javascript" charset="utf-8">
     webix.ui({
         rows:[
+
+            //premiere ligne: toolbar avec colonnes de boutons
             {view: "toolbar", paddingY: 2,
                 cols: [
                     { view:"button", type:"image",
@@ -45,20 +64,28 @@
                             window.location.href= "//localhost/Quiz";
                         }, css: "webix_transparent"}
                 ]
-            }]
+            },
+
+            //deuxieme ligne: label wiki
+            {cols: [
+                {rows:[
+                    {view: "template", content: "logo", height: 150},
+                    {view: "accordion",
+                        multi: true,
+                        rows:[
+                            {header: "Thème 1", body: "Content 1"},
+                            {header: "Thème 2", body: "Content 2"},
+                            {header: "Thème 3", body: "Content 3"}
+                        ],
+                        width: 300
+                    }
+                ]},
+                {view: "template", content: "main"}
+            ]}
+        ]
     });
 </script>
-<!-- side navigation bar -->
-<div id="sidenav" class="sidenav">
 
-</div>
-
-<!-- section central -->
-<div id="main">
-    <h1>Wiki</h1>
-    <h3>Liste des articles</h3>
-    <div id="liste_article"></div>
-</div>
 </body>
 
 <footer>

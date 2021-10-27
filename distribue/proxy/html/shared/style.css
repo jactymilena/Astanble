@@ -22,7 +22,7 @@ footer {
 }
 header{
     position: fixed;
-    height: 15%;
+    height: 17%;
     top:0;
     right: 0;
     width: 100%;
@@ -30,3 +30,4 @@ header{
     color: black;
     text-align: left;
 }
+

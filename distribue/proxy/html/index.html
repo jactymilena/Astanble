@@ -17,10 +17,34 @@
 </head>
 <header></header>
 <body>
+    <div id="main", align="center">
+        <h1>Accueil</h1>
+        <h2>Bienvenue sur Astanble!</h2>
+    </div>
+
+    <div id="wiki", align="left">
+        <h2>Wiki</h2>
+        <div id="wikicontent", align="center">
+            <h3>Sujet aimé numéro 1</h3>
+            <h3>Article aimé numéro 1</h3>
+        </div>
+    </div>
+
+
+    <div id="quiz", align="left">
+        <h2>Quiz</h2>
+        <div id="quizcontent", align="center">
+            <h3>Quiz fait par l'usager</h3>
+        </div>
+    </div>
+
+
+
     <script type="text/javascript" charset="utf-8">
         webix.ui({
+            rows: [
 
-            rows:[
+                //premiere ligne: toolbar compose de colonnes de boutons
                 {view: "toolbar", paddingY: 2,
                     cols: [
                         { view:"button", type:"image",
@@ -38,16 +62,15 @@
                             }, css: "webix_transparent"}
                     ]
                 },
-                {view: "template", template: "Accueil" +
-                        "Bienvenue sur Astanble!"},
-                {cols: [
-                    {view: "template", template: "Wiki"},
-                    {view: "template", template: "Sujet aimé numéro 1"}
-                    ]},
-                {cols: [
-                        {view: "template", template: "Quiz"},
-                        {view: "template", template: "Quiz fait par usager"}
-                    ]}
+
+                //deuxieme ligne: label daccueil
+                {view: "template", content: "main"},
+
+                //troisieme ligne: partie du wiki
+                {view: "template", content: "wiki"},
+
+                //quatrieme ligne: partie du quiz
+                {view: "template", content: "quiz"}
             ]
         });
     </script>

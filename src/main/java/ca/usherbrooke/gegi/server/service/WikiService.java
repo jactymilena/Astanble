@@ -26,16 +26,24 @@ public class WikiService {
     @Inject
     WikiMapper wikiMapper;
 
+
+    public List<ArticleAuthor> setListAuthors(List<ArticleAuthor> wikis) {
+        for (ArticleAuthor a : wikis) {
+            String id_article = a.getId_article();
+            a.setAuthors(wikiMapper.selectAuthorOfArticle(id_article));
+        }
+
+        return wikis;
+    }
+
     @GET
     @Path("wiki")
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public List<ArticleAuthor> getWiki() {
         List<ArticleAuthor> wikis = wikiMapper.select();
-        for (ArticleAuthor a : wikis) {
-            String id_article = a.getId_article();
-            a.setAuthors(wikiMapper.selectAuthorOfArticle(id_article));
-        }
+        setListAuthors(wikis);
+
         return wikis;
     }
 
@@ -44,8 +52,7 @@ public class WikiService {
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public List<Article> getWikiByName(@PathParam("article") String article) {
-        List<Article> wikis = wikiMapper.selectByName(article);
-        return wikis;
+        return wikiMapper.selectByName(article);
     }
 
     @GET
@@ -53,16 +60,17 @@ public class WikiService {
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public List<Article> getwikiByAuthor(@PathParam("auteur") String auteur) {
-        List<Article> wikis = wikiMapper.selectByAuthor(auteur);
-        return wikis;
+        return wikiMapper.selectByAuthor(auteur);
     }
 
     @GET
     @Path("wikiByThematique/{id_thematique}")
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Article> getwikiByThematique(@PathParam("id_thematique") Integer id_thematique) {
-        List<Article> wikis = wikiMapper.selectByThematique(id_thematique);
+    public List<ArticleAuthor> getwikiByThematique(@PathParam("id_thematique") Integer id_thematique) {
+        List<ArticleAuthor> wikis = wikiMapper.selectByThematique(id_thematique);
+        setListAuthors(wikis);
+
         return wikis;
     }
 
@@ -71,8 +79,7 @@ public class WikiService {
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public List<Article> getwikiByIdArticle(@PathParam("id_article") String id_article) {
-        List<Article> wikis = wikiMapper.selectById(id_article);
-        return wikis;
+        return wikiMapper.selectById(id_article);
     }
 
     @GET
@@ -81,10 +88,8 @@ public class WikiService {
     @Produces(MediaType.APPLICATION_JSON)
     public List<ArticleAuthor> getArticleSearch(@PathParam("nom_article") String nom_article) {
         List<ArticleAuthor> wikis = wikiMapper.selectSearchArticle(nom_article);
-        for (ArticleAuthor a : wikis) {
-            String id_article = a.getId_article();
-            a.setAuthors(wikiMapper.selectAuthorOfArticle(id_article));
-        }
+        setListAuthors(wikis);
+
         return wikis;
     }
 
@@ -92,7 +97,6 @@ public class WikiService {
     @Path("wikiInsert")
     @PermitAll
     public void insertArticle(Article article){
-        System.out.println(article.getNom_article());
         wikiMapper.insert(article);
     }
 

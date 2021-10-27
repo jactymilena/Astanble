@@ -1,6 +1,6 @@
 // roule après que le body est loadé
 function loadIndex() {
-    // call init from app.js
+    // call init from app1.js
     init();
     // load all themes on side nav
     loadThemesOnSideNav();
@@ -11,8 +11,37 @@ function loadIndex() {
 
 function closeSearch() {
     document.getElementById('searchCloseButton').style.visibility = 'hidden';
+    const liste_article = document.getElementById("liste_article");
+    liste_article.innerHTML = "";
     document.getElementById('champSearch').value = "";
     loadWikis();
+}
+
+function searchArticle() {
+    const searchRadioBtn = document.getElementsByName('searchChoice');
+    searchRadioBtn.forEach(btn => {
+        if(btn.checked == true) {
+            switch (btn.value) {
+                case "name" :
+                    searchByName();
+                    break;
+                case "author" :
+                    searchByAuthor();
+                    break;
+                case "description" :
+                    searchByDescription();
+                    break;
+            }
+        }
+    })
+}
+
+function searchByAuthor() {
+    console.log('Search by author');
+}
+
+function searchByDescription() {
+    console.log('Search by description');
 }
 
 function searchByName() {

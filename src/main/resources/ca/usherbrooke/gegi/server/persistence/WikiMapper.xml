@@ -53,7 +53,7 @@
 --relation = author?
     </select>
 
-    <select id="selectByThematique" resultType="ca.usherbrooke.gegi.server.business.Article">
+    <select id="selectByThematique" resultType="ca.usherbrooke.gegi.server.business.ArticleAuthor">
         SELECT
             a.id_article,
             a.nom_article,
@@ -83,8 +83,8 @@
 
     <select id="selectSearchArticle" resultType="ca.usherbrooke.gegi.server.business.ArticleAuthor">
         SELECT * FROM astanble.article
-        WHERE SIMILARITY(nom_article,  #{nom_article}) > 0.1
-        ORDER BY SIMILARITY(nom_article,   #{nom_article}) DESC
+        WHERE astanble.SIMILARITY(nom_article,  #{nom_article}) > 0.1
+        ORDER BY astanble.SIMILARITY(nom_article,   #{nom_article}) DESC
         LIMIT 100;
     </select>
 

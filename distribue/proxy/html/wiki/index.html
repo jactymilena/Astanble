@@ -13,7 +13,7 @@
 
     <!-- script personnel pour la page -->
     <script src="../shared/app.js"></script>
-    <script src="./shared/app.js"></script>
+    <script src="shared/app1.js"></script>
     <script src="index1.js"></script>
 
 </head>
@@ -42,8 +42,17 @@
     <form action="" class="formulaire">
         <input id="champSearch" class="champ" type="text" placeholder="Rechercher un article"/>
         <input id="searchCloseButton" type="button" value="x" onclick="closeSearch()" style="visibility: hidden"/>
-        <input id="searchByNameButton" type="button" value="Recherche" onclick="searchByName()"/>
+        <input id="searchByNameButton" type="button" value="Recherche" onclick="searchArticle()"/>
     </form>
+    <div>
+        <input type="radio" id="radioBtnByName" name="searchChoice" value="name" checked>
+        <label for="radioBtnByName">Par nom</label>
+        <input type="radio" id="radioBtnByAuthor" name="searchChoice" value="author">
+        <label for="radioBtnByAuthor">Par auteur</label>
+        <input type="radio" id="radioBtnByDes" name="searchChoice" value="description"
+        <label for="radioBtnByDes">Par description</label>
+    </div>
+
     <h3>Liste des articles</h3>
     <div id="liste_article"></div>
 </div>

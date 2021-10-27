@@ -3,7 +3,7 @@ var keycloak;
 var quill;
 
 async function loadArticle() {
-    // call init from app.js
+    // call init from app1.js
     await init();
     // load all themes on side nav
     loadThemesOnSideNav();

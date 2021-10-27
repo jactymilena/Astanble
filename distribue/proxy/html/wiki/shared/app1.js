@@ -1,5 +1,6 @@
 function createSideNavLink(theme) {
-    return '<a onclick="getArticleByTheme(\'' + theme.id_thematique + '\')" href="#' + theme.id_thematique + '">' + theme.nom_thematique + '</a>'
+    console.log("id : " + theme.id_thematique)
+    return '<a onclick="getArticleByTheme(\'' + theme.id_thematique + '\')" href="#' + theme.id_thematique + '">' + theme.nom_thematique + '</a> <br>'
 
 }
 
@@ -36,6 +37,9 @@ function getArticleByTheme(id_theme) {
             const articles = response.data;
             const list_articles = document.getElementById('liste_article');
             list_articles.innerHTML = "";
+
+            document.getElementById('searchCloseButton').style.visibility = 'hidden';
+            document.getElementById('champSearch').value = "";
 
             // Mettre data trouvé dans la liste
             articles.forEach(article => {

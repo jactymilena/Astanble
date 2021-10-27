@@ -10,8 +10,7 @@ function loadIndex() {
 }
 
 function closeSearch() {
-    const closeButton = document.getElementById('searchCloseButton');
-    closeButton.toggleAttribute("hidden")
+    document.getElementById('searchCloseButton').style.visibility = 'hidden';
     liste_article.innerHTML = "";
     loadWikis();
 }
@@ -20,8 +19,8 @@ function searchByName() {
     console.log('Search by name');
     const strToSearch = document.getElementById('champSearch');
     console.log(strToSearch.value);
-    if (champSearch.value == "" || champSearch.value == "Rechercher un article") {
-        alert('Rentrer quelque chose dans le champ de recherche');
+    if (champSearch.value == "") {
+        alert('Rentrer quelque chose dans le champ de recherche.');
     } else {
         axios.get("http://localhost:8888/api/wiki/searchByName/" + strToSearch.value)
             .then(function (response) {
@@ -32,11 +31,11 @@ function searchByName() {
                 // Vider liste d'articles
                 const liste_article = document.getElementById("liste_article");
                 liste_article.innerHTML = "";
-                // Show button de fermeture de la recherche
-                const closeButton = document.getElementById('searchCloseButton');
-                closeButton.toggleAttribute("hidden")
-                // Mettre data trouvé dans la liste
 
+                // Show button de fermeture de la recherche
+                document.getElementById('searchCloseButton').style.visibility = 'visible';
+
+                // Mettre data trouvé dans la liste
                 articles.forEach(article => {
                     var htmlLink = createArticleLink(article);
                     liste_article.innerHTML += (htmlLink);

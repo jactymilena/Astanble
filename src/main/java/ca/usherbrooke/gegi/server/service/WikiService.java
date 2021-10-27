@@ -4,11 +4,13 @@ import ca.usherbrooke.gegi.server.business.Article;
 import ca.usherbrooke.gegi.server.business.ArticleAuthor;
 import ca.usherbrooke.gegi.server.persistence.WikiMapper;
 import org.eclipse.microprofile.jwt.JsonWebToken;
+import io.quarkus.security.identity.SecurityIdentity;
 
 import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
+import java.security.Principal;
 import java.util.List;
 
 
@@ -17,6 +19,9 @@ public class WikiService {
 
     @Context
     SecurityContext securityContext;
+
+    @Inject
+    SecurityIdentity identity;
 
     @Inject
     JsonWebToken jwt;
@@ -109,7 +114,6 @@ public class WikiService {
     public List<ArticleAuthor> getArticleSearchByDescription(@PathParam("description_article") String description_article) {
         List<ArticleAuthor> wikis = wikiMapper.selectSearchByDescription(description_article);
         setListAuthors(wikis);
-
         return wikis;
     }
 
@@ -117,14 +121,31 @@ public class WikiService {
     @Path("wikiInsert")
     @PermitAll
     public void insertArticle(Article article){
-        wikiMapper.insert(article);
+        System.out.println("New article: " + article.getNom_article());
+        String user_cip = securityContext.getUserPrincipal().getName();
+
+        // TODO: Pas encore testé je ne sais pas si renvoit bien le ID
+        int id_article = wikiMapper.insert(article);
+        if(id_article != null)
+            wikiMapper.insertArticleCollab(user_cip, id_article, 1);
     }
 
     @PUT
     @Path("wiki/update")
     @PermitAll
     public void updateArticle(Article article){
-        Article dbArticle =  wikiMapper.selectById(article.getId_article()).get(0);
+        String user_cip = securityContext.getUserPrincipal().getName();
+        String id_article = article.getId_article();
+        int id_article_int = Integer.parseInt(id_article);
+
+        ArticleAuthor dbArticle =  wikiMapper.selectById(article.getId_article());
+        dbArticle.setAuthors(wikiMapper.selectAllCollabOfArticle(id_article));
+
+        List<Usager> authors = dbArticle.getAuthors();
+        Usager user = authors.stream().filter(usager -> usager.getCip() == user_cip).findFirst().orElse(null);
+        if(user == null) {
+            wikiMapper.insertArticleCollab(user_cip, id_article_int, 3);
+        }
 
         if(article.getNom_article() == null)
             article.setNom_article(dbArticle.getNom_article());

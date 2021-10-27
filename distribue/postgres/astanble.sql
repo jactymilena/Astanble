@@ -108,8 +108,8 @@ CREATE TABLE type_relation
 CREATE TABLE usager_article_collaboration
 (
     id_collab           SERIAL PRIMARY KEY NOT NULL,
-    debut_collaboration DATE NOT NULL,
-    fin_collaboration   DATE NOT NULL,
+    debut_collaboration DATE NOT NULL DEFAULT CURRENT_DATE,
+    fin_collaboration   DATE,
     id_relation         INT NOT NULL,
     CIP                 CHAR(8) NOT NULL,
     code_article        INT NOT NULL,

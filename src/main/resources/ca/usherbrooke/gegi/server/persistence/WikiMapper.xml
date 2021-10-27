@@ -24,6 +24,21 @@
           AND nom_relation = 'Auteur'
     </select>
 
+    <select id="selectAuthorAndCoAuthorOfArticle" resultType="ca.usherbrooke.gegi.server.business.Usager">
+        SELECT usager.cip, usager.nom_usager, usager.prenom_usager, usager.courriel1, usager.courriel2, nom_complet_usager
+        FROM astanble.view_usager_wiki
+                 LEFT JOIN astanble.usager ON astanble.view_usager_wiki.cip = astanble.usager.cip
+        WHERE id_article = #{id}::int
+          AND nom_relation = 'Auteur' OR nom_relation = 'Co-Auteur'
+    </select>
+
+    <select id="selectAllCollabOfArticle" resultType="ca.usherbrooke.gegi.server.business.Usager">
+        SELECT usager.cip, usager.nom_usager, usager.prenom_usager, usager.courriel1, usager.courriel2, nom_complet_usager
+        FROM astanble.view_usager_wiki
+                 LEFT JOIN astanble.usager ON astanble.view_usager_wiki.cip = astanble.usager.cip
+        WHERE id_article = #{id}::int
+    </select>
+
     <select id="selectByName" resultType="ca.usherbrooke.gegi.server.business.Article">
         SELECT
             id_article,
@@ -69,7 +84,7 @@
         WHERE at.id_thematique = #{id_thematique}::int;
     </select>
 
-    <select id="selectById" resultType="ca.usherbrooke.gegi.server.business.Article">
+    <select id="selectById" resultType="ca.usherbrooke.gegi.server.business.ArticleAuthor">
         SELECT
             id_article,
             nom_article,
@@ -103,8 +118,8 @@
         ORDER BY astanble.SIMILARITY(description_article,   #{description_article}) DESC
             LIMIT 100;
     </select>
-
-    <insert id="insert" >
+    
+    <insert id="insert" useGeneratedKeys="true" keyProperty="article.id_article" keyColumn="id_article">
         INSERT INTO astanble.article(
             nom_article,
             content,
@@ -122,11 +137,19 @@
     WHERE id_article = #{article.id_article}::int;
     </update>
 
-    <delete id="delete" >
+    <delete id="delete">
     DELETE FROM astanble.article
     WHERE id_article = #{id_article}::int;
     </delete>
 
-
+    <insert id="insertArticleCollab">
+        INSERT INTO astanble.usager_article_collaboration(
+            id_relation,
+            cip,
+            code_article)
+        VALUES  (#{id_relation},
+                 #{cip},
+                 #{code_article});
+    </insert>
 
 </mapper>

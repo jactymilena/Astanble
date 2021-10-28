@@ -9,7 +9,9 @@ body {
     display: flex;
     flex-wrap: wrap;
 }
-
+meta{
+    display:none;
+}
 footer {
     position: fixed;
     left:0;

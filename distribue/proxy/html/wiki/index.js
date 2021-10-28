@@ -24,10 +24,13 @@ function loadWikis() {
         articles = response.data;
 
         var liste_article = document.getElementById("liste_article");
-        articles.forEach(function(article) {
-            var htmlLink = createArticleLink(article);
-            liste_article.innerHTML += (htmlLink);
-        });
+        if(liste_article)
+            articles.forEach(function(article) {
+                var htmlLink = createArticleLink(article);
+                    liste_article.innerHTML += (htmlLink);
+            });
+        else
+            console.log("elem.id=list_article not found.")
     })
     .catch(function (error) {
         console.log('refreshing');

@@ -32,8 +32,13 @@ SET search_path TO Astanble;
 
 
 
-SELECT astanble.SIMILARITY(prenom_usager,  'vero'), prenom_usager, nom_usager FROM astanble.usager;
-WHERE astanble.SIMILARITY(prenom_usager,  'mil') > 0.3 or
-        astanble.SIMILARITY(nom_usager, 'mil') > 0.3
-ORDER BY astanble.SIMILARITY(prenom_usager,   'mil') DESC
+SELECT astanble.SIMILARITY(prenom_usager,  'vero'), prenom_usager, nom_usager FROM astanble.view_usager_wiki
+WHERE astanble.SIMILARITY(prenom_usager,  'vero') > 0.3 or
+        astanble.SIMILARITY(nom_usager, 'vero') > 0.3
+ORDER BY astanble.SIMILARITY(prenom_usager,   'vero') DESC
 LIMIT 100;
+
+SELECT astanble.SIMILARITY(prenom_usager,  'mil'), astanble.SIMILARITY(nom_usager,  'mil'), prenom_usager, nom_usager FROM astanble.view_usager_wiki
+LIMIT 100;
+
+SELECT * FROM astanble.view_usager_wiki;

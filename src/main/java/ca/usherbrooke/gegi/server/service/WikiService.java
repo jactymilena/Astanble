@@ -2,6 +2,7 @@ package ca.usherbrooke.gegi.server.service;
 
 import ca.usherbrooke.gegi.server.business.Article;
 import ca.usherbrooke.gegi.server.business.ArticleAuthor;
+import ca.usherbrooke.gegi.server.business.Usager;
 import ca.usherbrooke.gegi.server.persistence.WikiMapper;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import io.quarkus.security.identity.SecurityIdentity;
@@ -10,7 +11,6 @@ import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
-import java.security.Principal;
 import java.util.List;
 
 
@@ -81,7 +81,7 @@ public class WikiService {
     @Path("wikiByIdArticle/{id_article}")
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Article> getwikiByIdArticle(@PathParam("id_article") String id_article) {
+    public ArticleAuthor getwikiByIdArticle(@PathParam("id_article") String id_article) {
         return wikiMapper.selectById(id_article);
     }
 
@@ -126,8 +126,8 @@ public class WikiService {
 
         // TODO: Pas encore testé je ne sais pas si renvoit bien le ID
         int id_article = wikiMapper.insert(article);
-        if(id_article != null)
-            wikiMapper.insertArticleCollab(user_cip, id_article, 1);
+//        if(id_article != null)
+//            wikiMapper.insertArticleCollab(user_cip, id_article, 1);
     }
 
     @PUT

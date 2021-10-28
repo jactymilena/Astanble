@@ -28,19 +28,33 @@
 <body onload="loadIndex()">
 <!-- side navigation bar -->
 <div id="sidenav" class="sidenav">
-
+    <datalist>
+        liste de thèmes
+    </datalist>
 </div>
 
 <!-- section central -->
-<div id="main">
+<div id="main" align="center">
     <h1>Wiki</h1>
     <h2>Liste des articles</h2>
-    <div id="liste_article"></div>
+</div>
+<div id="listearticle">
+    <datalist>
+
+    </datalist>
 </div>
 
 <!-- logo side navigation bar-->
 <div id="logo">
-    <img src="../trimestre/images/A.PNG" alt="Logo Astanble" style="width:300px;height:150px;">
+    <img src="../trimestre/images/A.PNG"
+         alt="Logo Astanble"
+         style="width:300px;height:150px;">
+</div>
+
+<div id="usericon" align="right">
+    <img src="../trimestre/images/UserIcon.png"
+         alt="Icone utilisateur"
+         style="width:60px; height: 60px; background: orange; margin-top:20px">
 </div>
 
 <script type="text/javascript" charset="utf-8">
@@ -62,7 +76,8 @@
                         }, css: "webix_transparent"},
                     {view: "button", value: "Quiz", width: 100, click: function (id, event) {
                             window.location.href= "//localhost/Quiz";
-                        }, css: "webix_transparent"}
+                        }, css: "webix_transparent"},
+                    {view: "template", borderless: true, content: "usericon", css: {"background":"orange"}}
                 ]
             },
 
@@ -70,25 +85,19 @@
             {cols: [
                 {rows:[
                     {view: "template", content: "logo", height: 150},
-                    {view: "accordion",
+                        {view: "template",
                         multi: true,
-                        rows:[
-                            {header: "Thème 1", body: "Content 1"},
-                            {header: "Thème 2", body: "Content 2"},
-                            {header: "Thème 3", body: "Content 3"}
-                        ],
-                        width: 300
-                    }
+                        content: "sidenav",
+                        width:300}
                 ]},
-                {view: "template", content: "main"}
+                    {rows:[
+                        {view: "template", content: "main", height: 150},
+                            {view: "search", placeholder:"Recherche..."},
+                            {view: "template", content: "listearticle"}]}
             ]}
         ]
     });
 </script>
 
 </body>
-
-<footer>
-
-</footer>
 </html>

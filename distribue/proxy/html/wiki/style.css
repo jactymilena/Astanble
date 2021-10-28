@@ -14,18 +14,6 @@
     margin-top: 2em;
 }
 
-/*.sidenav {
-    bottom: 5%;
-    width: 40%;
-    position: fixed;
-    z-index: 1;
-    top: 15%;
-    left: 0;
-    background-color: grey;
-    overflow-x: hidden;
-    padding-top: 20px;
-}*/
-
 #liste_article {
     display: flex;
     flex-direction: column;

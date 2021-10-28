@@ -22,23 +22,45 @@
         <h2>Bienvenue sur Astanble!</h2>
     </div>
 
-    <div id="wiki", align="left">
-        <h2>Wiki</h2>
-        <div id="wikicontent", align="center">
-            <h3>Sujet aimé numéro 1</h3>
-            <h3>Article aimé numéro 1</h3>
+    <div id="pAccueil", align="left">
+        <p>
+            Astanble est une plateforme d'apprentissage qui a été créé par Mastronète. Le but de la plateforme
+            est de permettre un accès facile à l'information pour les étudiants de l'Université de Sherbrooke.
+            Astanble est composée d'un Wiki et d'un Quiz. Le Wiki regroupe plusieurs articles pertinents sur différents
+            sujets et thèmes sur lesquels les étudiants peuvent s'instruire. L'outil de Quiz permet d'assimiler
+            de nouvelles notions et de confirmer les connaissances.
+        </p>
+    </div>
+
+    <div id="mastronete", align="left">
+        <h2>Mastronète</h2>
+        <h3>Mais qui est Mastronète?</h3>
+        <p>Mastronète est une équipe d'étudiants motivés et talentueux de l'Université de Sherbrooke
+            en génie informatique qui ont à coeur la réussite des étudiants.
+            L'équipe est formée de: <br></p>
+        <div align="center">
+            <p>
+                    1- Yan Ha Routhier Chevrier <br>
+                    2- Jacty Milena Saenz Rosales<br>
+                    3- Thomas St-Gelais <br>
+                    4- Laurence Milette <br>
+                    5- Véronique Paquin <br>
+                    6- Naomie L'Archevêque-Carrière <br>
+            </p>
         </div>
     </div>
 
-
-    <div id="quiz", align="left">
-        <h2>Quiz</h2>
-        <div id="quizcontent", align="center">
-            <h3>Quiz fait par l'usager</h3>
-        </div>
+    <div id="usericon" align="right">
+        <img src="../trimestre/images/UserIcon.png"
+             alt="Icone utilisateur"
+             style="width:60px; height: 60px; background: orange; margin-top:20px">
     </div>
 
-
+    <div id="logo2" align="center">
+        <img src="../trimestre/images/D.jpg"
+        alt="Logo Astanble"
+        style="width:300px; height: 200px">
+    </div>
 
     <script type="text/javascript" charset="utf-8">
         webix.ui({
@@ -59,22 +81,32 @@
                             }, css: "webix_transparent"},
                         {view: "button", value: "Quiz", width: 100, click: function (id, event) {
                                     window.location.href= "//localhost/Quiz";
-                            }, css: "webix_transparent"}
+                            }, css: "webix_transparent"},
+                        {view: "template", borderless: true, content: "usericon", css: {"background":"orange"}}
                     ]
                 },
 
-                //deuxieme ligne: label daccueil
-                {view: "template", content: "main"},
+                {view: "scrollview",
+                    scroll: "y",
+                    body:
+                        {rows: [
+                            //deuxieme ligne: label daccueil
+                            {view: "template", content: "main", autoheight: true},
 
-                //troisieme ligne: partie du wiki
-                {view: "template", content: "wiki"},
+                            //troisieme ligne: astanble explication
+                            {view: "template", content: "pAccueil", autoheight: true},
 
-                //quatrieme ligne: partie du quiz
-                {view: "template", content: "quiz"}
+                            //quatrieme ligne: mastronete explication
+                            {view: "template", content: "mastronete", autoheight: true},
+
+                                //cinquieme ligne: logo 2
+                                {view: "template", content: "logo2", autoheight: true}
+                            ], autoheight: true
+                        }
+                }
             ]
         });
     </script>
 
 </body>
-<footer></footer>
 </html>

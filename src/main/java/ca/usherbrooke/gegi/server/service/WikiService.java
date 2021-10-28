@@ -124,10 +124,11 @@ public class WikiService {
         System.out.println("New article: " + article.getNom_article());
         String user_cip = securityContext.getUserPrincipal().getName();
 
-        // TODO: Pas encore testé je ne sais pas si renvoit bien le ID
-        int id_article = wikiMapper.insert(article);
-//        if(id_article != null)
-//            wikiMapper.insertArticleCollab(user_cip, id_article, 1);
+        int numOfRows = wikiMapper.insert(article);
+        if(numOfRows != 0) {
+            String id_article = article.getId_article();
+            wikiMapper.insertArticleCollab(user_cip, Integer.parseInt(id_article), 1);
+        }
     }
 
     @PUT

@@ -229,6 +229,10 @@ CREATE TABLE reponse_usager_question
     FOREIGN KEY (CIP) REFERENCES usager(CIP) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+-- =============
+-- LOG
+-- =============
+
 -- Table type_log
 CREATE TABLE log_type
 (

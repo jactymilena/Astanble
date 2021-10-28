@@ -119,7 +119,7 @@
             LIMIT 100;
     </select>
     
-    <insert id="insert" useGeneratedKeys="true" keyProperty="article.id_article" keyColumn="id_article">
+    <insert id="insert" parameterType="ca.usherbrooke.gegi.server.business.Article" useGeneratedKeys="true" keyProperty="article.id_article" keyColumn="id_article">
         INSERT INTO astanble.article(
             nom_article,
             content,

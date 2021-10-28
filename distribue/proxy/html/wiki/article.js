@@ -94,6 +94,36 @@ function saveEditorContent() {
         });
 }
 
+function createArticle() {
+    let article = {
+        "nom_article": "Nom de l'article",
+        "description_robot_article" : "Description robot de l'article.",
+        "content" : "Le contenu d'un article",
+        "description_article" : "La description de l'article."
+    }
+
+    axios.post("http://localhost:8888/api/wikiInsert", JSON.stringify(article), {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token,
+            'Content-Type' : 'application/json'
+        }
+    })
+        .then(function (response) {
+            console.log("Response: ", response.status);
+        })
+        .catch(function (error) {
+            console.log('refreshing');
+            keycloak.updateToken(5).then(function () {
+                console.log('Token refreshed');
+            }).catch(function () {
+                console.log('Failed to refresh token');
+            })
+            console.log('Sad ça fonctionne pas :(');
+            alert(error);
+
+        });
+}
+
 function toggleContentEdition() {
     var toggleContentEditionBtn = document.getElementById("toggleEditButton");
     var saveEditorBtn = document.getElementById("saveButton");

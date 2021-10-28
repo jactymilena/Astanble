@@ -2,18 +2,27 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <meta name="responsiveness" content="width=device-width, initial-scale=1">
         <title>Quiz</title>
 
         <!-- style sheet personnel -->
-        <link rel="stylesheet" href="../shared/style.css">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- webix -->
+        <link rel="stylesheet" href="//cdn.webix.com/edge/webix.css" type="text/css">
+        <script src="//cdn.webix.com/edge/webix.js" type="text/javascript"></script>
 
         <!-- script basic externe + keycloack -->
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="http://localhost/auth/js/keycloak.js"></script>
 
         <!-- script personnel pour la page -->
-        <script src=""></script>
+        <script src="../shared/app.js"></script>
+        <script src="./shared/app.js"></script>
+       <!-- <script src="./index.js"></script> -->
+
     </head>
+
     <header>
         <div style="float: left">
             <a href = "//localhost"> Accueil</a>
@@ -24,26 +33,26 @@
             <span id="user_profil_nav"></span>
         </div>
     </header>
-    <body>
-    <div id="sidenav" class="sidenav">
 
-    </div>
+    <body>
+    <div id="main">
         <h1>Quiz</h1>
-        <section>
-            <h2>Vos cours</h2>
-            <p>section des quiz d'un cours</p>
-        </section>
-        <section>
-            <h2>Historique</h2>
-            <p>section de l'historique</p>
-        </section>
-        <section>
-            <h2>Création</h2>
-            <p>
-                section de la creation de quiz <br/>
-                <button type="button">Créer un quiz</button>
-            </p>
-        </section>
+        <br>
+    </div>
+    <div id="pCours">
+        <h2>Vos cours</h2>
+        <p>section des quiz d'un cours</p>
+    </div>
+    <div id="pHistorique">
+        <h2>Historique</h2>
+        <p>section de l'historique</p>
+    </div>
+    <div id="pCreation">
+        <h2>Création</h2>
+        <p>
+            section de la creation de quiz <br/>
+            <button type="button">Créer un quiz</button>
+        </p>
+    </div>
     </body>
-    <footer>Info que tu as manqué</footer>
 </html>

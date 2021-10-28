@@ -1,24 +1,3 @@
-body {
-    background: rgb(233, 233, 233);
-    height: 100%;
-    width: 65em;
-    margin: 0 auto;
-    padding: 3em;
-    font-family: Tahoma, Verdana, Arial, sans-serif;
-}
-
-p
-{
-    border: 0.5px black solid;
-    border-radius:5px;
-    margin: auto;
-}
-section
-{
-    background-color:gray;
-    margin: 10px 10px 10px 10px;
-}
-
 header{
     position: fixed;
     height: 5%;
@@ -30,24 +9,14 @@ header{
     text-align: left;
 }
 
-footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background: orange;
-    color: black;
-    text-align: center;
-}
-
-.sidenav {
-    height: 90%;
-    width: 100px;
-    position: fixed;
-    z-index: 1;
-    top: 5%;
-    left: 0;
-    background-color: grey;
-    overflow-x: hidden;
-    padding-top: 20px;
+body {
+    background: white;
+    height: 100%;
+    width: 65em;
+    margin: 0 auto;
+    padding: 3em;
+    font-family: Tahoma, Verdana, Arial, sans-serif;
+    /* flex horizontalement */
+    display: flex;
+    flex-wrap: wrap;
 }

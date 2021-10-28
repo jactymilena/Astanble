@@ -70,11 +70,17 @@ function search(searchBy) {
                 document.getElementById('searchCloseButton').style.visibility = 'visible';
 
                 // Mettre data trouvé dans la liste
-                articles.forEach(article => {
-                    var htmlLink = createArticleLink(article);
-                    liste_article.innerHTML += (htmlLink);
-                    console.log(article.nom_article);
-                })
+                if(articles.length > 0) {
+                    articles.forEach(article => {
+                        var htmlLink = createArticleLink(article);
+                        liste_article.innerHTML += (htmlLink);
+                        console.log(article.nom_article);
+                    });
+                } else {
+                    liste_article.innerHTML = "Aucun article ne correspond à cette recherche."
+                }
+
+
 
             })
             .catch(function (error) {

@@ -171,6 +171,20 @@ VALUES ('Amas de gaz et de poussières interstellaires.', true, 1),
 INSERT INTO reponse_usager_question(id_question, id_reponse, cip)
 VALUES (1, 1, 'larn5378');
 
+--type de log
+INSERT INTO log_type(nom_type)
+VALUES ('CREATE'),
+       ('READ'),
+       ('UPDATE'),
+       ('DELETE');
+
+--type de field for log
+INSERT INTO field_log_type(nom_field, description_field)
+VALUES ('TITRE', 'Nom ou prenom d''un utilisateur, titre d''un article, nom d''un quiz.'),
+       ('DESCRIPTION', 'Description d''un article, ou d''un quiz.'),
+       ('CONTENU', 'Contenu d''un article, question d''un quiz.'),
+       ('AUTEUR', 'Changement des auteurs d''un article, d''un quiz.');
+
 -- ============================================================================
 --                          Creation des vues
 -- ============================================================================

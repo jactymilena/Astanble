@@ -228,3 +228,63 @@ CREATE TABLE reponse_usager_question
     FOREIGN KEY (id_reponse) REFERENCES reponse(id_reponse) ON UPDATE CASCADE ON DELETE SET NULL,
     FOREIGN KEY (CIP) REFERENCES usager(CIP) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+-- Table type_log
+CREATE TABLE log_type
+(
+    id_type SERIAL PRIMARY KEY NOT NULL,
+    nom_type varchar(255) NOT NULL
+);
+
+-- Table field_log_type
+CREATE TABLE field_log_type
+(
+    id_field SERIAL PRIMARY KEY NOT NULL,
+    nom_field varchar(255) NOT NULL,
+    description_field text
+);
+
+-- Table article_user_interaction_log
+CREATE TABLE article_user_interaction_log
+(
+    CIP                 CHAR(8) NOT NULL,
+    action_timestamp    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+    id_article          INT NOT NULL,
+    id_type             INT NOT NULL,
+    id_field            INT,
+    PRIMARY KEY(CIP, action_timestamp),
+    FOREIGN KEY (CIP) REFERENCES usager(CIP) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_article) REFERENCES article(id_article) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_type) REFERENCES log_type(id_type) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_field) REFERENCES field_log_type(id_field) ON UPDATE CASCADE ON DELETE SET NULL
+);
+
+-- Table quiz_user_interaction_log
+CREATE TABLE quiz_user_interaction_log
+(
+    CIP                 CHAR(8) NOT NULL,
+    action_timestamp    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+    id_quiz          INT NOT NULL,
+    id_question         INT NOT NULL,
+    id_type             INT NOT NULL,
+    id_field            INT,
+    PRIMARY KEY(CIP, action_timestamp),
+    FOREIGN KEY (CIP) REFERENCES usager(CIP) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_quiz) REFERENCES quiz(id_quiz) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_question) REFERENCES question(id_question) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_type) REFERENCES log_type(id_type) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_field) REFERENCES field_log_type(id_field) ON UPDATE CASCADE ON DELETE SET NULL
+);
+
+-- Table user_profil_interaction_log
+CREATE TABLE user_profil_interaction_log
+(
+    CIP                 CHAR(8) NOT NULL,
+    action_timestamp    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+    id_type             INT NOT NULL,
+    id_field            INT,
+    PRIMARY KEY(CIP, action_timestamp),
+    FOREIGN KEY (CIP) REFERENCES usager(CIP) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_type) REFERENCES log_type(id_type) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_field) REFERENCES field_log_type(id_field) ON UPDATE CASCADE ON DELETE SET NULL
+);

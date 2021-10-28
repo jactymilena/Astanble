@@ -6,6 +6,7 @@ body {
     padding: 3em;
     font-family: Tahoma, Verdana, Arial, sans-serif;
 }
+
 p
 {
     border: 0.5px black solid;
@@ -37,4 +38,16 @@ footer {
     background: orange;
     color: black;
     text-align: center;
+}
+
+.sidenav {
+    height: 90%;
+    width: 100px;
+    position: fixed;
+    z-index: 1;
+    top: 5%;
+    left: 0;
+    background-color: grey;
+    overflow-x: hidden;
+    padding-top: 20px;
 }

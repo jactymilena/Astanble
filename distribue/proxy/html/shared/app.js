@@ -59,8 +59,8 @@ function choixThemes(list_themes, idBalise, preselected_theme = [], ) {
             disabled: false
         }
     }
-    var choice = make_choice(list_themes, idBalise, selection_formater_delegate, preselected_theme);
-    return choice;
+    // var choice = make_choice(list_themes, idBalise, selection_formater_delegate, preselected_theme);
+    // return choice;
 }
 
 function make_choice(list, idBalise, selection_formater_delegate, preselected = []) {

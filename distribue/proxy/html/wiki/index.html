@@ -110,7 +110,9 @@
                             rows: [
                                 {view: "template", content: "main", height: 150},
                                 {view: "search", placeholder: "Recherche..."},
-                                {view: "template", content: "listearticle"}]
+                                {view: "scrollview",
+                                scroll: "y",
+                                body:{view: "template", content: "listearticle"}}]
                         }
                     ]
                 }

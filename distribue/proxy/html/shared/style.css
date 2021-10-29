@@ -33,3 +33,8 @@ header{
     text-align: left;
 }
 
+.choix-theme-container {
+    width: 46%;
+    max-width: 500px;
+    min-width: 350px;
+}

@@ -14,6 +14,7 @@ function loadThemesOnSideNav() {
                 var htmlLink = createSideNavLink(thematique);
                 sideNav.innerHTML += (htmlLink);
             });
+            choixThemes(thematiques, "choix-theme");
         })
         .catch(function (error) {
             console.log('refreshing');

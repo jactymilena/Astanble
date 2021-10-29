@@ -60,3 +60,13 @@ header{
     display: flex;
     flex-direction: column;
 }
+
+#champSearch {
+    height: 25px;
+    padding-left: 10px;
+    border: 0.5px black solid;
+    border-radius: 20px;
+    width: 40%;
+    min-width: 200px;
+    max-width: 325px;
+}

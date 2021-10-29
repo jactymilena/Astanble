@@ -8,15 +8,16 @@
     <link rel="stylesheet" href="shared/style.css">
 
     <!-- JQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-        <!-- script basic externe + keycloack -->
+    <!-- script basic externe + keycloack -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="http://localhost/auth/js/keycloak.js"></script>
 
+
     <!-- script personnel pour la page -->
     <script src="../shared/app.js"></script>
-    <script src="shared/app1.js"></script>
+    <script src="./shared/app1.js"></script>
     <script src="index.js"></script>
 
 </head>
@@ -40,13 +41,13 @@
 </div>
 
 <!-- section central -->
-<div id="main">
+<div id="main" style="width: 100%">
     <h1>Wiki</h1>
-    <form action="" class="formulaire">
-        <input id="champSearch" class="champ" type="text" placeholder="Rechercher un article"/>
+    <div class="formulaire">
+        <input id="champSearch" class="champ" type="text" onkeydown="searchOnKeyDown(event);" placeholder="Rechercher un article"/>
         <input id="searchCloseButton" type="button" value="x" onclick="closeSearch()" style="visibility: hidden"/>
         <input id="searchByNameButton" type="button" value="Recherche" onclick="searchArticle()"/>
-    </form>
+    </div>
     <div>
         <input type="radio" id="radioBtnByName" name="searchChoice" value="name" checked>
         <label for="radioBtnByName">Par nom</label>

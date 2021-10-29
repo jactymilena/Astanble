@@ -30,7 +30,7 @@
 
     <!-- script personnel pour la page -->
     <script src="../shared/app.js"></script>
-    <script src="./shared/app1.js"></script>
+    <script src="./shared/app.js"></script>
     <script src="index.js"></script>
 
 </head>
@@ -56,7 +56,7 @@
         <input id="searchCloseButton" type="button" value="x" onclick="closeSearch()" style="visibility: hidden"/>
         <input id="searchByNameButton" type="button" value="Recherche" onclick="searchArticle()"/>
     </div>
-    <div class="choix-theme-container">
+    <div class="choix-theme-container" hidden>
         <select id="choix-theme" class="selection-theme" placeholder="Selectionner des thèmes." multiple>
         </select>
     </div>
@@ -71,9 +71,8 @@
     </div>
 </div>
 
-<div id="liste_article"></div>
-
 <div id="listearticle">
+    <div id="liste_article"></div>
     <datalist>
 
     </datalist>

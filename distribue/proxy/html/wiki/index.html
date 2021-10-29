@@ -28,8 +28,8 @@
 <body onload="loadIndex()">
 <!-- side navigation bar -->
 <div id="sidenav" class="sidenav">
+    <h3>Thèmes</h3>
     <datalist>
-        liste de thèmes
     </datalist>
 </div>
 
@@ -38,6 +38,24 @@
     <h1>Wiki</h1>
     <h2>Liste des articles</h2>
 </div>
+
+<div id="formulaire" align="center">
+    <form action="" class="formulaire">
+        <input id="champSearch" class="champ" type="text" placeholder="Rechercher un article"/>
+        <input id="searchCloseButton" type="button" value="x" onclick="closeSearch()" style="visibility: hidden"/>
+        <input id="searchByNameButton" type="button" value="Recherche" onclick="searchArticle()"/>
+    </form>
+    <br>
+    <div id="radiobutton">
+        <input type="radio" id="radioBtnByName" name="searchChoice" value="name" checked>
+        <label for="radioBtnByName">Par nom</label>
+        <input type="radio" id="radioBtnByAuthor" name="searchChoice" value="author">
+        <label for="radioBtnByAuthor">Par auteur</label>
+        <input type="radio" id="radioBtnByDes" name="searchChoice" value="description">
+        <label for="radioBtnByDes">Par description</label>
+    </div>
+</div>
+
 <div id="listearticle">
     <datalist>
 
@@ -108,8 +126,9 @@
                         },
                         {
                             rows: [
-                                {view: "template", content: "main", height: 150},
-                                {view: "search", placeholder: "Recherche..."},
+                                {view: "template", content: "main",autoheight: true},
+                                //{view: "search", placeholder: "Recherche..."},
+                                {view: "template", content: "formulaire", autoheight: true},
                                 {view: "scrollview",
                                 scroll: "y",
                                 body:{view: "template", content: "listearticle"}}]

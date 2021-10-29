@@ -23,8 +23,9 @@
 
     </head>
 
-    <body>
-    <div id="quiz">
+    <!-- appel loadPage() après que le body ait loader -->
+    <body onload="loadIndex()" style="width: 100%;">
+    <div id="quiz" style="width: 100%;">
         <h1>Quiz</h1>
         <h2>Vos cours</h2>
         <p>section des quiz d'un cours</p>
@@ -32,13 +33,13 @@
     </div>
 
 
-    <div id="historique">
+    <div id="historique" align="left" style="width: 100%;">
         <h2>Historique</h2>
         <p>section de l'historique</p>
         <br>
     </div>
 
-    <div id="creation">
+    <div id="creation"align="left" style="width: 100%;">
         <h2>Création</h2>
         <p>section de la creation de quiz</p>
             <a href = "creation.html">
@@ -46,7 +47,7 @@
             </a>
     </div>
 
-    <div id="usericon" align="right">
+    <div id="usericon" align="right" style="width: 100%;">
         <img src="../trimestre/images/UserIcon.png"
              alt="Icone utilisateur"
              style="width:60px; height: 60px; background: orange; margin-top:20px">

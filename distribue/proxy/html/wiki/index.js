@@ -17,6 +17,14 @@ function closeSearch() {
     loadWikis();
 }
 
+function searchOnKeyDown(event)
+{
+    if(event.keyCode === 13)
+    {
+        $("#searchByNameButton").click();
+    }
+}
+
 function searchArticle() {
     const searchRadioBtn = document.getElementsByName('searchChoice');
     searchRadioBtn.forEach(btn => {

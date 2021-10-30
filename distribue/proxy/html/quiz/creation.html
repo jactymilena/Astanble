@@ -2,31 +2,82 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <link rel="stylesheet" href="shared/style.css" />
-        <title>Title</title>
-    </head>
-    <header>
-        <div style="float: left">
-            <a href = "//localhost"> Accueil</a>
-            <a href = "/wiki"> Wiki</a>
-            <a href = "Quiz"> Quiz</a>
-        </div>
-        <div style="float: right">
-            <span id="user_profil_nav"></span>
-        </div>
-    </header>
-    <body>
-    <div id="sidenav" class="sidenav">
+        <meta name="viewport" content="width=device-width">
 
-    </div>
-        <h1>Création de quiz</h1>
-        <h4>Titre</h4>
-        <input type="titre" id="titre" name="titre">
-        <h4>Description</h4>
-        <input type="description" id="description" name="description">
-        <h4>nom du cours</h4>
-        <input type="nom" id="nom" name="nom">
-        <h4>ajout cartes</h4>
-        <button>Ajouter des cartes</button>
+        <title>Title</title>
+
+        <!-- style -->
+        <link rel="stylesheet" href="shared/style.css" />
+
+        <!-- webix -->
+        <link rel="stylesheet" href="//cdn.webix.com/edge/webix.css" type="text/css">
+        <script src="//cdn.webix.com/edge/webix.js" type="text/javascript"></script>
+
+        <!-- script basic externe + keycloack -->
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="http://localhost/auth/js/keycloak.js"></script>
+
+        <!-- script personnel pour la page -->
+        <script src="../shared/header.js"></script>
+
+    </head>
+
+    <body style="width: 100%;">
+        <div id="creation">
+            <h1>Création de quiz</h1>
+        </div>
+        <div id="1">
+            <h4>Titre</h4>
+            <input type="titre" id="titre" name="titre">
+        </div>
+        <div id="descript">
+            <h4>Description</h4>
+            <input type="description" id="description" name="description">
+        </div>
+        <div id="name">
+            <h4>nom du cours</h4>
+            <input type="nom" id="nom" name="nom">
+        </div>
+        <div id="add">
+            <h4>ajout cartes</h4>
+            <button>Ajouter des cartes</button>
+        </div>
+
+        <div id="usericon" align="right" style="width: 100%;">
+            <img src="../trimestre/images/UserIcon.png"
+                 alt="Icone utilisateur"
+                 style="width:50px; height: 50px; background: #FF8921; margin-top:20px">
+        </div>
+        <script type="text/javascript" charset="utf-8">
+            webix.ready(function () {
+                webix.ui.fullScreen();
+                webix.ui({
+                    rows: [
+                        header,
+                        {
+                            view: "scrollview",
+                            scroll: "y",
+                            body:
+                                {
+                                    rows: [
+                                        //deuxieme ligne: quiz
+                                        {view: "template", content: "creation", autoheight: true},
+
+                                        {view: "template", content: "1", autoheight: true},
+
+                                        //troisieme ligne
+                                        {view: "template", content: "descript", autoheight: true},
+
+                                        //quatrieme ligne
+                                        {view: "template", content: "name", autoheight: true},
+
+                                        {view: "template", content: "add", autoheight: true}
+                                    ]
+                                }
+                        }
+                    ]
+                });
+            })
+        </script>
     </body>
 </html>

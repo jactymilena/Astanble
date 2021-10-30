@@ -3,7 +3,7 @@ const header = {
     cols: [
         {
             view: "button", type: "image",
-            image: "../trimestre/images/A.PNG", width: 100, height: 100, click: function (id, event) {
+            image: "../trimestre/images/1-removebg-preview.png", width: 100, height: 100, click: function (id, event) {
                 window.location.href = "//localhost";
             }, css: "webix_transparent"
         },

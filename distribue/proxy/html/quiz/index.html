@@ -19,6 +19,7 @@
         <!-- script personnel pour la page -->
         <script src="../shared/app.js"></script>
         <script src="./shared/app.js"></script>
+        <script src="../shared/header.js"></script>
         <!-- <script src="./index.js"></script> -->
 
     </head>
@@ -58,35 +59,7 @@
             webix.ui.fullScreen();
             webix.ui({
                 rows: [
-
-                    //premiere ligne: toolbar avec colonnes de boutons
-                    {
-                        view: "toolbar", paddingY: 2, css: {"background": "#FF8921"},
-                        cols: [
-                            {
-                                view: "button", type: "image",
-                                image: "../trimestre/images/A.PNG", width: 100, height: 100, click: function (id, event) {
-                                    window.location.href = "//localhost";
-                                }, css: "webix_transparent"
-                            },
-                            {
-                                view: "button", value: "Accueil", width: 100, height: 60, click: function (id, event) {
-                                    window.location.href = "//localhost";
-                                }, css: "webix_transparent"
-                            },
-                            {
-                                view: "button", value: "Wiki", width: 100, click: function (id, event) {
-                                    window.location.href = "//localhost/wiki";
-                                }, css: "webix_transparent"
-                            },
-                            {
-                                view: "button", value: "Quiz", width: 100, click: function (id, event) {
-                                    window.location.href = "//localhost/Quiz";
-                                }, css: "webix_transparent"
-                            },
-                            {view: "template", borderless: true, content: "usericon", css: {"background": "#FF8921"}}
-                        ]
-                    },
+                   header,
                     {
                         view: "scrollview",
                         scroll: "y",

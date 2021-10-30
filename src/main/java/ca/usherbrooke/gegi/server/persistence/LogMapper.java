@@ -8,7 +8,9 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface LogMapper {
-    void insertArticleUserLog(@Param("log") ArticleUserLog log);
-    //void insertQuizUserLog(@Param("log") QuizUserLog log);
-    //void insertUserUserLog(@Param("log") UserLog log);
+    int insertArticleUserLog(@Param("log") ArticleUserLog log);
+
+    // TODO: Test the 2 functions
+    int insertQuizUserLog(@Param("log") QuizUserLog log);
+    int insertUserUserLog(@Param("log") UserLog log);
 }

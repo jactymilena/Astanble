@@ -15,8 +15,34 @@
                  #{log.id_type},
                  #{log.id_field});
     </insert>
-    <insert id="insertQuizUserLog">
+    <insert id="insertQuizUserLog" parameterType="ca.usherbrooke.gegi.server.business.log.QuizUserLog"
+            useGeneratedKeys="true" keyProperty="log.action_timestamp" keyColumn="action_timestamp">
+        INSERT INTO astanble.quiz_user_interaction_log(
+            cip,
+            id_quiz,
+            <if test="log.id_question != 0">
+                id_question,
+            </if>
+            id_type,
+            id_field)
+        VALUES  (#{log.cip},
+                 #{log.id_quiz},
+                <if test="log.id_question != 0">
+                    #{log.id_question},
+                </if>
+                 #{log.id_type},
+                 #{log.id_field});
     </insert>
-    <insert id="insertUserUserLog">
+    <insert id="insertUserUserLog" parameterType="ca.usherbrooke.gegi.server.business.log.UserLog"
+            useGeneratedKeys="true" keyProperty="log.action_timestamp" keyColumn="action_timestamp">
+        INSERT INTO astanble.user_profil_interaction_log(
+        cip,
+        context_user_cip,
+        id_type,
+        id_field)
+        VALUES  (#{log.cip},
+                #{log.id_quiz}
+                #{log.id_type},
+                #{log.id_field});
     </insert>
 </mapper>

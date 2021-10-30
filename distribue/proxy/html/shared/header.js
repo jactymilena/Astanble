@@ -1,5 +1,5 @@
 const header = {
-    view: "toolbar", paddingY: 2, css: {"background": "orange"},
+    view: "toolbar", paddingY: 2, css: {"background": "#FF8921"},
     cols: [
         {
             view: "button", type: "image",
@@ -22,6 +22,6 @@ const header = {
                 window.location.href = "//localhost/Quiz";
             }, css: "webix_transparent"
         },
-        {view: "template", borderless: true, content: "usericon", css: {"background": "orange"}}
+        {view: "template", borderless: true, content: "usericon", css: {"background": "#FF8921"}}
     ]
 }

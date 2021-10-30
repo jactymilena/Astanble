@@ -103,50 +103,10 @@ function search(searchBy) {
     }
 }
 
-// function searchByName() {
-//     console.log('Search by name');
-//     const strToSearch = document.getElementById('champSearch');
-//     if (champSearch.value == "") {
-//         alert('Rentrer quelque chose dans le champ de recherche.');
-//     } else {
-//         axios.get("http://localhost:8888/api/wiki/searchByName/" + strToSearch.value)
-//             .then(function (response) {
-//                 console.log(response.status);
-//                 console.log(response.data);
-//                 const articles = response.data;
-//
-//                 // Vider liste d'articles
-//                 const liste_article = document.getElementById("liste_article");
-//                 liste_article.innerHTML = "";
-//
-//                 // Show button de fermeture de la recherche
-//                 document.getElementById('searchCloseButton').style.visibility = 'visible';
-//
-//                 // Mettre data trouvé dans la liste
-//                 articles.forEach(article => {
-//                     var htmlLink = createArticleLink(article);
-//                     liste_article.innerHTML += (htmlLink);
-//                     console.log(article.nom_article);
-//                 })
-//
-//             })
-//             .catch(function (error) {
-//                 console.log('refreshing');
-//                 keycloak.updateToken(5).then(function () {
-//                     console.log('Token refreshed');
-//                 }).catch(function () {
-//                     console.log('Failed to refresh token');
-//                 })
-//                 alert(error);
-//             });
-//     }
-//
-// }
-
 function createArticleLink (article) {
     return '<span><a href="article.html?article=' + article.id_article + '">' +
                 article.nom_article +
-            '</a>[' + article.authors.map(a => a.nom_complet_usager).join(', ')  + ']<br>' + article.description_article + '</span><br>'
+            '</a> [' + article.authors.map(a => a.nom_complet_usager).join(', ')  + ']<br>' + article.description_article + '</span><br>'
 }
 
 

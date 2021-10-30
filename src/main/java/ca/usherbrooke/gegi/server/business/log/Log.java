@@ -1,33 +1,34 @@
-package ca.usherbrooke.gegi.server.business;
+package ca.usherbrooke.gegi.server.business.log;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 
 public class Log {
-    private String CIP;
-    private Time action_timestamp;
-    private int id_type;
-    private int id_field;
+    protected String cip;
+    protected Timestamp action_timestamp;
+    protected int id_type;
+    protected int id_field;
 
-    public Log(String CIP, Time action_timestamp, int id_type, int id_field) {
-        this.CIP = CIP;
+    public Log(String CIP, int id_type, int id_field) {
+        this.cip = CIP;
         this.action_timestamp = action_timestamp;
         this.id_type = id_type;
         this.id_field = id_field;
     }
 
-    public String getCIP() {
-        return CIP;
+    public String getCip() {
+        return cip;
     }
 
-    public void setCIP(String CIP) {
-        this.CIP = CIP;
+    public void setCip(String cip) {
+        this.cip = cip;
     }
 
-    public Time getAction_timestamp() {
+    public Timestamp getAction_timestamp() {
         return action_timestamp;
     }
 
-    public void setAction_timestamp(Time action_timestamp) {
+    public void setAction_timestamp(Timestamp action_timestamp) {
         this.action_timestamp = action_timestamp;
     }
 

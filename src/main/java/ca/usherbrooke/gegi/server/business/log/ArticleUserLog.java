@@ -1,12 +1,13 @@
-package ca.usherbrooke.gegi.server.business;
+package ca.usherbrooke.gegi.server.business.log;
 
 import java.sql.Time;
 
 public class ArticleUserLog extends Log {
     private int id_article;
 
-    public ArticleUserLog(String CIP, Time action_timestamp, int id_type, int id_field) {
-        super(CIP, action_timestamp, id_type, id_field);
+    public ArticleUserLog(String CIP, int id_article, int id_type, int id_field) {
+        super(CIP, id_type, id_field);
+        this.id_article = id_article;
     }
 
     public int getId_article() {

@@ -1,14 +1,14 @@
 package ca.usherbrooke.gegi.server.persistence;
 
-import ca.usherbrooke.gegi.server.business.Article;
+import ca.usherbrooke.gegi.server.business.log.ArticleUserLog;
+import ca.usherbrooke.gegi.server.business.log.QuizUserLog;
+import ca.usherbrooke.gegi.server.business.log.UserLog;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+@Mapper
 public interface LogMapper {
-    void insertArticleUserLog(@Param("article") Article article);
-    void insertQuizUserQuestionLog(@Param("cip") String cip, @Param("id_quiz") int id_quiz,
-                           @Param("id_question") int id_question, @Param("id_type") int id_type,
-                           @Param("id_field") int id_field);
-    void insertQuizUserLog(@Param("cip") String cip, @Param("id_quiz") int id_quiz,
-                           @Param("id_type") int id_type, @Param("id_field") int id_field);
-    void insertUserUserLog();
+    void insertArticleUserLog(@Param("log") ArticleUserLog log);
+    //void insertQuizUserLog(@Param("log") QuizUserLog log);
+    //void insertUserUserLog(@Param("log") UserLog log);
 }

@@ -24,7 +24,7 @@ public interface WikiMapper {
     ArticleAuthor selectById(@Param("id_article")String id_article);
     void insertArticleCollab(@Param("cip") String cip, @Param("code_article") int code_article, @Param("id_relation") int id_relation);
     int insert(@Param("article") Article article);
-    void update(@Param("article") Article article);
-    void delete(@Param("id_article") int id_article);
+    int update(@Param("article") Article article);
+    int delete(@Param("id_article") int id_article);
 }
 

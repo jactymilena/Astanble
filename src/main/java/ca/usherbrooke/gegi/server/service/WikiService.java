@@ -3,6 +3,10 @@ package ca.usherbrooke.gegi.server.service;
 import ca.usherbrooke.gegi.server.business.Article;
 import ca.usherbrooke.gegi.server.business.ArticleAuthor;
 import ca.usherbrooke.gegi.server.business.Usager;
+import ca.usherbrooke.gegi.server.business.log.ArticleUserLog;
+import ca.usherbrooke.gegi.server.business.log.LogFields;
+import ca.usherbrooke.gegi.server.business.log.LogTypes;
+import ca.usherbrooke.gegi.server.persistence.LogMapper;
 import ca.usherbrooke.gegi.server.persistence.WikiMapper;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import io.quarkus.security.identity.SecurityIdentity;
@@ -27,7 +31,11 @@ public class WikiService {
     JsonWebToken jwt;
 
     @Inject
+    LogMapper logMapper;
+
+    @Inject
     WikiMapper wikiMapper;
+
 
 
     public List<ArticleAuthor> setListAuthors(List<ArticleAuthor> wikis) {
@@ -82,6 +90,9 @@ public class WikiService {
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public ArticleAuthor getwikiByIdArticle(@PathParam("id_article") String id_article) {
+        String user_cip = securityContext.getUserPrincipal().getName();
+        ArticleUserLog log = new ArticleUserLog(user_cip, Integer.parseInt(id_article), LogTypes.READ, LogFields.ALL_FIELDS);
+        logMapper.insertArticleUserLog(log);
         return wikiMapper.selectById(id_article);
     }
 
@@ -128,6 +139,8 @@ public class WikiService {
         if(numOfRows != 0) {
             String id_article = article.getId_article();
             wikiMapper.insertArticleCollab(user_cip, Integer.parseInt(id_article), 1);
+            ArticleUserLog log = new ArticleUserLog(user_cip, Integer.parseInt(id_article), LogTypes.CREATE, LogFields.ALL_FIELDS);
+            logMapper.insertArticleUserLog(log);
         }
     }
 
@@ -155,13 +168,17 @@ public class WikiService {
         if(article.getDescription_robot_article() == null)
             article.setDescription_robot_article(dbArticle.getDescription_robot_article());
 
-        wikiMapper.update(article);
+        int affected_rows = wikiMapper.update(article);
+        if(affected_rows > 0) {
+            ArticleUserLog log = new ArticleUserLog(user_cip, Integer.parseInt(id_article), LogTypes.UPDATE, LogFields.ALL_FIELDS);
+            logMapper.insertArticleUserLog(log);
+        }
     }
 
     @DELETE
     @Path("wiki/delete/{id_article}")
     @PermitAll
     public void deleteArticle(@PathParam("id_article") int id_article){
-        wikiMapper.delete(id_article);
+        int affected_rows = wikiMapper.delete(id_article);
     }
 }

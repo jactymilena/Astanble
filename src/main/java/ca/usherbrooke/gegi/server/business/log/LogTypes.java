@@ -1,4 +1,4 @@
-package ca.usherbrooke.gegi.server.business;
+package ca.usherbrooke.gegi.server.business.log;
 
 public final class LogTypes {
     private LogTypes() { }

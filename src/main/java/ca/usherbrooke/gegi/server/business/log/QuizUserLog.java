@@ -1,13 +1,17 @@
-package ca.usherbrooke.gegi.server.business;
+package ca.usherbrooke.gegi.server.business.log;
+
+import ca.usherbrooke.gegi.server.business.log.Log;
 
 import java.sql.Time;
 
-public class QuizUserLog extends Log{
+public class QuizUserLog extends Log {
     private int id_quiz;
     private int id_question;
 
-    public QuizUserLog(String CIP, Time action_timestamp, int id_type, int id_field) {
-        super(CIP, action_timestamp, id_type, id_field);
+    public QuizUserLog(String CIP, int id_quiz, int id_question, int id_type, int id_field) {
+        super(CIP, id_type, id_field);
+        this.id_quiz = id_quiz;
+        this.id_question = id_question;
     }
 
     public int getId_quiz() {

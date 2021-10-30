@@ -253,13 +253,11 @@ CREATE TABLE article_user_interaction_log
 (
     CIP                 CHAR(8) NOT NULL,
     action_timestamp    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
-    context_user_CIP    CHAR(8) NOT NULL,
     id_article          INT NOT NULL,
     id_type             INT NOT NULL,
     id_field            INT,
     PRIMARY KEY(CIP, action_timestamp),
     FOREIGN KEY (CIP) REFERENCES usager(CIP) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (context_user_CIP) REFERENCES usager(CIP) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (id_article) REFERENCES article(id_article) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (id_type) REFERENCES log_type(id_type) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (id_field) REFERENCES field_log_type(id_field) ON UPDATE CASCADE ON DELETE SET NULL
@@ -287,10 +285,12 @@ CREATE TABLE user_profil_interaction_log
 (
     CIP                 CHAR(8) NOT NULL,
     action_timestamp    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+    context_user_CIP    CHAR(8) NOT NULL,
     id_type             INT NOT NULL,
     id_field            INT,
     PRIMARY KEY(CIP, action_timestamp),
     FOREIGN KEY (CIP) REFERENCES usager(CIP) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (context_user_CIP) REFERENCES usager(CIP) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (id_type) REFERENCES log_type(id_type) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (id_field) REFERENCES field_log_type(id_field) ON UPDATE CASCADE ON DELETE SET NULL
 );

@@ -183,7 +183,8 @@ INSERT INTO field_log_type(nom_field, description_field)
 VALUES ('TITRE', 'Nom ou prenom d''un utilisateur, titre d''un article, nom d''un quiz.'),
        ('DESCRIPTION', 'Description d''un article, ou d''un quiz.'),
        ('CONTENU', 'Contenu d''un article, question d''un quiz.'),
-       ('AUTEUR', 'Changement des auteurs d''un article, d''un quiz.');
+       ('AUTEUR', 'Changement des auteurs d''un article, d''un quiz.'),
+       ('ALL FIELDS', 'Affectant tous les attributs.');
 
 -- ============================================================================
 --                          Creation des vues

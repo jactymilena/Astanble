@@ -23,15 +23,33 @@ meta{
 #liste_article {
     display: flex;
     flex-direction: column;
+    overflow: auto;
 }
 
-#liste_article a{
+#liste_article a {
+    font-size: 20px;
     color: #0f0f0f;
     text-decoration: none;
 }
 
+#liste_article span {
+    /*border-bottom: 1px solid black;*/
+    position: relative;
+
+}
+
+#liste_article span:after {
+    content: "";
+    height: 1px;
+    left: 7px;
+    right: 7px;
+    position: absolute;
+    bottom: -3px;
+    background-color: rgba(0, 9, 61, .10);
+}
+
 #liste_article a:hover {
-    color: #1e844a;
+    color: #6e6e67;
 }
 
 #champSearch {
@@ -57,11 +75,10 @@ meta{
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 16px;
-    color: #818181;
+    color: #4b4b4b;
     display: block;
-    transition: 0.3s;
 }
 
 .sidenav a:hover {
-    color: #5c5c5c;
+    color: #6e6e67;
 }

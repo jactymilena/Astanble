@@ -25,6 +25,11 @@ function searchOnKeyDown(event)
     }
 }
 
+function searchUserArticle() {
+    $('#champSearch').val(user_profil.first_name + " " + user_profil.last_name);
+    search("searchByAuthor");
+}
+
 function searchArticle() {
     const searchRadioBtn = document.getElementsByName('searchChoice');
     searchRadioBtn.forEach(btn => {

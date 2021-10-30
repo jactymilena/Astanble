@@ -37,9 +37,10 @@ function requestWiki(id) {
             console.log("Response: ", response.status);
             console.log(response.data);
             article = response.data;
-            //
-            h1_nom_article = document.getElementById("nom_article");
-            h1_nom_article.innerHTML = article.nom_article;
+
+            $('#nom_article').text(article.nom_article);
+            $('#nom_article_editTextBox').val(article.nom_article);
+
             quill.root.innerHTML = article.content;
             quill.enable(false);
         })
@@ -68,6 +69,7 @@ function saveEditorContent() {
 
     let article = {
         "id_article" : urlParams.get('article'),
+        "nom_article" : $('#nom_article_editTextBox').val(),
         "content" : content
     }
 
@@ -99,10 +101,18 @@ function toggleContentEdition() {
     var saveEditorBtn = document.getElementById("saveButton");
 
     if(toggleContentEditionBtn.innerText == "Modifier")
+    {
         toggleContentEditionBtn.innerText = "Mode lecture";
+        $('#nom_article').hide();
+        $('#nom_article_editTextBox').show();
+    }
     else
+    {
         toggleContentEditionBtn.innerText = "Modifier";
+        $('#nom_article').text($('#nom_article_editTextBox').val());
+        $('#nom_article').show();
+        $('#nom_article_editTextBox').hide();
+    }
     quill.enable(!quill.isEnabled());
-
     saveEditorBtn.toggleAttribute("hidden");
 }

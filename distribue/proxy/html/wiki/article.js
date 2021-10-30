@@ -17,7 +17,23 @@ async function loadArticle() {
         theme: 'bubble'
     });
     // load wiki in page
-    requestWiki(urlParams.get('article'));
+    if(urlParams.get('create') == 'true')
+    {
+        clearAll();
+        toggleContentEdition();
+        $('#saveButton').text("Créer");
+        $('#saveButton').attr("onclick", "createArticle();");
+        quill.enable(true);
+    }
+    else {
+        requestWiki(urlParams.get('article'));
+    }
+}
+
+function clearAll() {
+    $('#nom_article').text("");
+    $('#nom_article_editTextBox').val("");
+    quill.root.innerHTML = "";
 }
 
 function requestWiki(id) {
@@ -82,6 +98,40 @@ function saveEditorContent() {
         .then(function (response) {
             console.log("Response: ", response.status);
             toggleContentEdition();
+        })
+        .catch(function (error) {
+            console.log('refreshing');
+            keycloak.updateToken(5).then(function () {
+                console.log('Token refreshed');
+            }).catch(function () {
+                console.log('Failed to refresh token');
+            })
+            console.log('Sad ça fonctionne pas :(');
+            alert(error);
+
+        });
+}
+
+function createArticle() {
+    let delta = quill.getContents();
+    let content = quillGetHTML(delta);
+
+    let article = {
+        "nom_article" : $('#nom_article_editTextBox').val(),
+        "description_robot_article" : "Description robot de l'article.",
+        "content" : content,
+        "description_article" : "La description de l'article."
+    }
+
+    axios.post("http://localhost:8888/api/wikiInsert", JSON.stringify(article), {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token,
+            'Content-Type' : 'application/json'
+        }
+    })
+        .then(function (response) {
+            console.log("Response: ", response.status);
+            window.location = "/wiki/article.html?article=" + response.data;
         })
         .catch(function (error) {
             console.log('refreshing');

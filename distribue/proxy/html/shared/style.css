@@ -1,0 +1,85 @@
+body {
+    background: white;
+    height: 100%;
+    width: 65em;
+    margin: 0 auto;
+    padding: 3em;
+    font-family: Tahoma, Verdana, Arial, sans-serif;
+    /* flex horizontalement */
+    display: flex;
+    flex-wrap: wrap;
+}
+
+meta{
+    display:none;
+}
+
+.choix-theme-container {
+    width: 46%;
+    max-width: 500px;
+    min-width: 350px;
+}
+
+#liste_article {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+#liste_article a {
+    font-size: 20px;
+    color: #0f0f0f;
+    text-decoration: none;
+}
+
+#liste_article span {
+    /*border-bottom: 1px solid black;*/
+    position: relative;
+
+}
+
+#liste_article span:after {
+    content: "";
+    height: 1px;
+    left: 7px;
+    right: 7px;
+    position: absolute;
+    bottom: -3px;
+    background-color: rgba(0, 9, 61, .10);
+}
+
+#liste_article a:hover {
+    color: #6e6e67;
+}
+
+#champSearch {
+    height: 25px;
+    padding-left: 10px;
+    border: 0.5px black solid;
+    border-radius: 20px;
+    width: 40%;
+    min-width: 200px;
+    max-width: 325px;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    background-color: #1c1c1c;
+    /*overflow-x: auto;*/
+    transition: 0.5s;
+    padding-top: 60px;
+}
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #4b4b4b;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #6e6e67;
+}

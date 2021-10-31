@@ -40,9 +40,30 @@ Earth''s atmosphere consists mostly of nitrogen and oxygen. More solar energy is
        ('Mars', 'description robot', 'This article is about the planet. For the deity, see Mars (mythology). For other uses, see Mars (disambiguation).',
         'Mars is the fourth planet from the Sun and the second-smallest planet in the Solar System, being larger than only Mercury. In English, Mars carries the name of the Roman god of war and is often referred to as the "Red Planet".[17][18] The latter refers to the effect of the iron oxide prevalent on Mars''s surface, which gives it a reddish appearance (as shown), that is distinctive among the astronomical bodies visible to the naked eye.[19] Mars is a terrestrial planet with a thin atmosphere, with surface features reminiscent of the impact craters of the Moon and the valleys, deserts and polar ice caps of Earth. -- WIKIPEDIA');
 
+INSERT INTO article(nom_article, description_robot_article, description_article, content)
+VALUES ('Chien','description robot', 'Animal poilu domestiqué',
+        'Le Chien (Canis lupus familiaris) est la sous-espèce domestique de Canis lupus (Loup gris),' ||
+        ' un mammifère de la famille des Canidés (Canidae),' ||
+        ' laquelle comprend également le dingo, chien domestique retourné à l''état sauvage. '),
+
+       ('Chat', 'description robot', 'Le chat est un animal poilu domestiqué',
+        'Le Chat domestique (Felis silvestris catus) est la sous-espèce issue de la domestication du Chat sauvage (Felis silvestris), mammifère carnivore de la famille des Félidés.' ||
+        'Il est l’un des principaux animaux de compagnie et compte aujourd’hui une cinquantaine de races différentes reconnues par les instances de certification. Dans de très nombreux pays, le chat entre dans le cadre de la législation sur les carnivores domestiques à l’instar du chien et du furet.'),
+
+       ('Baleine bleu', 'description robot', 'This article is about a specific whale',
+        'La baleine bleue (Balaenoptera musculus), appelée aussi rorqual bleu, est une espèce de cétacés de la famille des Balaenopteridae. Pouvant dépasser 30 mètres de longueur et 170 tonnes.' ||
+        'Long et mince, le corps de la baleine bleue peut prendre diverses teintes de gris-bleuté sur le dos et un peu plus clair en dessous. '),
+
+       ('Poulet', 'description robot', 'This article is about the chicken.',
+        'Un poulet est une jeune volaille, mâle ou femelle, de la sous-espèce Gallus gallus domesticus, élevée pour sa chair. S''il s''agit du même animal, les conditions de production des poulets de chair diffèrent de celles des poules pondeuses qui sont élevées pour leurs œufs. Par exemple le rythme de croissance des poules pondeuses est bien moins important que celui des poulets de chair.'),
+
+       ('Tigre', 'description', 'This article is about very dangereus cat',
+        'Le Tigre (Panthera tigris) est une espèce de mammifère carnivore de la famille des félidés (Felidae) du genre Panthera. Aisément reconnaissable à sa fourrure rousse rayée de noir, il est le plus grand félin sauvage et l''un des plus grands carnivores terrestres.' ||
+        ' L''espèce est divisée en neuf sous-espèces présentant des différences mineures de taille ou de comportement.');
+
 --Thematique
 INSERT INTO thematique(nom_thematique)
-VALUES ('Espace');
+VALUES ('Espace'), ('Animaux');
 
 --Article_thematique
 INSERT INTO article_thematique(id_article, id_thematique, numero_ordre)
@@ -52,6 +73,13 @@ VALUES(1, 1, 1),
        (4, 1, 1),
        (5, 1, 1),
        (6, 1, 1);
+
+INSERT INTO article_thematique(id_article, id_thematique, numero_ordre)
+VALUES(7, 2, 1),
+      (8, 2, 1),
+      (9, 2, 1),
+      (10, 2, 1),
+      (11, 2, 1);
 
 --Statut
 INSERT INTO statut(nom_statut)
@@ -75,7 +103,13 @@ VALUES
        ('mill3003', 1),
        ('paqv2407', 1),
        ('saej3101', 1),
-       ('stgt0901', 1);
+       ('stgt0901', 1),
+       ('larn5378', 2),
+       ('rouy2404', 2),
+       ('mill3003', 2),
+       ('paqv2407', 2),
+       ('saej3101', 2),
+       ('stgt0901', 2);
 
 --Usager_statut
 INSERT INTO usager_statut(statut_show, id_statut, debut_statut, cip)
@@ -109,7 +143,9 @@ VALUES (1,1);
 
 --type_relation
 INSERT INTO type_relation(nom_relation)
-VALUES ('Auteur');
+VALUES ('Auteur'),
+       ('Co-auteur'),
+       ('Éditeur');
 
 --usager_quiz
 INSERT INTO usager_quiz(cip, id_quiz, type_relation, id_relation)
@@ -135,10 +171,12 @@ VALUES ('Amas de gaz et de poussières interstellaires.', true, 1),
 INSERT INTO reponse_usager_question(id_question, id_reponse, cip)
 VALUES (1, 1, 'larn5378');
 
-
+-- ============================================================================
+--                          Creation des vues
+-- ============================================================================
 
 -- ==
--- Creation de la vue des wiki et usager
+-- Creation de la vue des articles et usager
 -- ==
 CREATE OR REPLACE VIEW  view_usager_wiki as
 SELECT article.id_article, article.nom_article, article.description_article, article.content, type_relation.nom_relation,
@@ -148,3 +186,80 @@ WHERE article.id_article = usager_article_collaboration.code_article AND
         type_relation.id_relation = usager_article_collaboration.id_relation AND
         usager_article_collaboration.cip = usager.cip;
 
+-- ==
+-- Creation de la vue des articles et quizz
+-- ==
+CREATE OR REPLACE VIEW  view_article_quizz as
+SELECT article.id_article, article.nom_article, article.description_article, article.content, quiz.id_quiz, quiz.nom_quiz
+FROM article, article_quiz, quiz
+WHERE article.id_article = article_quiz.id_article AND
+        quiz.id_quiz = article_quiz.id_quiz;
+
+-- ==
+-- Creation de la vue des quiz et usager
+-- ==
+CREATE OR REPLACE VIEW  view_quiz_usager_reponse as
+SELECT u.cip, u.prenom_usager, u.nom_usager, u.prenom_usager || ' ' || u.nom_usager AS nom_complet_usager,
+       qz.id_quiz, qz.nom_quiz, q.id_question, q.num_question, q.question_content, tq.id_type, tq.nom_type,
+       r.id_reponse, r.reponse, r.bonne_mauvaise
+FROM reponse_usager_question
+LEFT JOIN question q on reponse_usager_question.id_question = q.id_question
+LEFT JOIN quiz qz on q.id_quiz = qz.id_quiz
+LEFT JOIN reponse r on reponse_usager_question.id_reponse = r.id_reponse
+LEFT JOIN usager u on reponse_usager_question.cip = u.cip
+LEFT JOIN type_question tq on q.id_type = tq.id_type;
+
+-- ==
+-- Creation de la vue des quiz et usager + type de relation
+-- ==
+CREATE OR REPLACE VIEW  view_usager_quiz_relation as
+SELECT q.id_quiz, q.nom_quiz, tr.id_relation, tr.nom_relation, u.cip, u.prenom_usager, u.nom_usager,
+       u.prenom_usager || ' ' || u.nom_usager AS nom_complet_usager
+FROM usager_quiz uq
+LEFT JOIN quiz q on q.id_quiz = uq.id_quiz
+LEFT JOIN usager u on uq.cip = u.cip
+LEFT JOIN type_relation tr on uq.id_relation = tr.id_relation;
+
+-- ==
+-- Creation de la vue des articles et references
+-- ==
+CREATE OR REPLACE VIEW  view_article_reference as
+SELECT a.id_article, a.nom_article, r.id_reference, r.nom_reference, rl.lien
+FROM reference_article ra
+LEFT JOIN reference r on ra.id_reference = r.id_reference
+LEFT JOIN article a on ra.id_article = a.id_article
+LEFT JOIN reference_lien rl on r.id_reference = rl.code_reference;
+
+-- ==
+-- Creation de la vue des articles et thematiques
+-- ==
+CREATE OR REPLACE VIEW  view_article_thematique as
+SELECT a.id_article, a.nom_article, t.id_thematique, t.nom_thematique
+FROM article_thematique at
+LEFT JOIN article a on at.id_article = a.id_article
+LEFT JOIN thematique t on at.id_thematique = t.id_thematique;
+
+-- ==
+-- Creation de la vue des usagers et statuts
+-- ==
+CREATE OR REPLACE VIEW  view_usager_statut as
+SELECT u.cip, u.prenom_usager, u.nom_usager, u.prenom_usager || ' ' || u.nom_usager AS nom_complet_usager,
+       s.id_statut, s.nom_statut
+FROM usager_statut us
+LEFT JOIN statut s on us.id_statut = s.id_statut
+LEFT JOIN usager u on us.cip = u.cip;
+
+-- ==
+-- Creation de la vue des usagers et thematique
+-- ==
+CREATE OR REPLACE VIEW  view_usager_thematique as
+SELECT u.cip, u.prenom_usager, u.nom_usager, u.prenom_usager || ' ' || u.nom_usager AS nom_complet_usager,
+       t.id_thematique, t.nom_thematique
+FROM usager_thematique ut
+LEFT JOIN usager u on ut.cip = u.cip
+LEFT JOIN thematique t on ut.id_thematique = t.id_thematique;
+
+
+-- ============================================================================
+--                          Creation des triggers
+-- ============================================================================

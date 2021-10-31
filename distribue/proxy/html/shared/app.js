@@ -50,3 +50,42 @@ function userProfil() {
         });
 }
 
+function choixThemes(list_themes, idBalise, preselected_theme = [], ) {
+    var selection_formater_delegate = (theme, preselected_theme) => {
+        return {
+            value: theme.id_thematique,
+            label: theme.nom_thematique,
+            selected: preselected_theme.includes(theme.id_thematique),
+            disabled: false
+        }
+    }
+    var choice = make_choice(list_themes, idBalise, selection_formater_delegate, preselected_theme);
+    return choice;
+}
+
+function make_choice(list, idBalise, selection_formater_delegate, preselected = []) {
+    console.log("creating choice");
+    let choice_object = new Choices('#' + idBalise, {
+        removeItemButton: true,
+        searchResultLimit: 10,
+        noResultsText: 'Aucun résultat trouvé',
+        noChoicesText: 'Aucun choix possible',
+        itemSelectText: '',
+        duplicateItemsAllowed: false,
+        editItems: false
+    });
+    document.getElementById(idBalise).choices = choice_object;
+    var list_possible_choices = [];
+
+    list.forEach((item) =>  {
+        list_possible_choices.push(selection_formater_delegate(item, preselected));
+    });
+
+    choice_object.setChoices(
+        list_possible_choices,
+        'value',
+        'label',
+        true,
+    );
+    return choice_object;
+}

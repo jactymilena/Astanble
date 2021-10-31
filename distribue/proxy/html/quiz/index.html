@@ -1,21 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <script>
-        function requestQuiz() {
-            console.log("Test API");
-        }
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Quiz</title>
+
+        <!-- style sheet personnel -->
+        <link rel="stylesheet" href="style.css">
+
+        <!-- webix -->
+        <link rel="stylesheet" href="//cdn.webix.com/edge/webix.css" type="text/css">
+        <script src="//cdn.webix.com/edge/webix.js" type="text/javascript"></script>
+
+        <!-- script basic externe + keycloack -->
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="http://localhost/auth/js/keycloak.js"></script>
+
+        <!-- script personnel pour la page -->
+        <script src="../shared/app.js"></script>
+        <script src="./shared/app.js"></script>
+        <script src="../shared/header.js"></script>
+        <!-- <script src="./index.js"></script> -->
+
+    </head>
+
+    <!-- appel loadPage() après que le body ait loader -->
+    <body onload="loadIndex()" style="width: 100%;">
+    <div id="quiz" style="width: 100%;">
+        <h1>Quiz</h1>
+        <h2>Vos cours</h2>
+        <p>section des quiz d'un cours</p>
+        <br>
+    </div>
+
+
+    <div id="historique" align="left" style="width: 100%;">
+        <h2>Historique</h2>
+        <p>section de l'historique</p>
+        <br>
+    </div>
+
+    <div id="creation"align="left" style="width: 100%;">
+        <h2>Création</h2>
+        <p>section de la creation de quiz</p>
+            <a href = "creation.html">
+                <button>Créer un quiz </button>
+            </a>
+    </div>
+
+    <div id="usericon" align="right" style="width: 100%;">
+        <img src="../trimestre/images/UserIcon.png"
+             alt="Icone utilisateur"
+             style="width:50px; height: 50px; background: #FF8921; margin-top:20px">
+    </div>
+
+    <script type="text/javascript" charset="utf-8">
+        webix.ready(function () {
+            webix.ui.fullScreen();
+            webix.ui({
+                rows: [
+                   header,
+                    {
+                        view: "scrollview",
+                        scroll: "y",
+                        body:
+                            {
+                                rows: [
+                                    //deuxieme ligne: quiz
+                                    {view: "template", content: "quiz", autoheight: true},
+
+                                    //troisieme ligne
+                                    {view: "template", content: "historique", autoheight: true},
+
+                                    //quatrieme ligne
+                                    {view: "template", content: "creation", autoheight: true}
+                                ]
+                            }
+                    }
+                ]
+            });
+        })
     </script>
-</head>
-<body>
-<br>
-<h1> Quiz</h1>
-Bienvenue sur le quiz
-<h2 id="nom_quiz">Nom du quiz</h2>
-<div id="liste-questions">
-    <p id="question">Question</p>
-    <p id="reponse">Réponse</p>
-</div>
-<button onclick="requestQuiz()">TestAPI</button>
-</body>
+    </body>
 </html>

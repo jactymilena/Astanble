@@ -3,7 +3,7 @@ var keycloak;
 var quill;
 
 async function loadArticle() {
-    // call init from app.js
+    // call init from app1.js
     await init();
     // load all themes on side nav
     loadThemesOnSideNav();
@@ -36,7 +36,7 @@ function requestWiki(id) {
 
             console.log("Response: ", response.status);
             console.log(response.data);
-            article = response.data[0];
+            article = response.data;
             //
             h1_nom_article = document.getElementById("nom_article");
             h1_nom_article.innerHTML = article.nom_article;

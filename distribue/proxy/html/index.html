@@ -1,21 +1,101 @@
 <!DOCTYPE html>
+<html lang="en">
 <html>
-<header>
-    <a href = "/astanble"> Accueil</a>
-    <a href = "/wiki"> Wiki</a>
-</header>
 <head>
-    <title>Astanble</title>
-    <style>
-        body {
-            width: 35em;
-            margin: 0 auto;
-            font-family: Tahoma, Verdana, Arial, sans-serif;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Accueil</title>
+
+    <!-- style -->
+    <link rel="stylesheet" href="../shared/style.css">
+
+    <!-- webix -->
+    <link rel="stylesheet" href="//cdn.webix.com/edge/webix.css" type="text/css">
+    <script src="//cdn.webix.com/edge/webix.js" type="text/javascript"></script>
+
+    <!-- script personnel pour la page -->
+    <script src="../shared/header.js"></script>
 
 </head>
-<body>
-    <h1>Bienvenue sur Astanble</h1>
+<body style="width: 100%;">
+    <div id="main", align="center">
+        <h1>Accueil</h1>
+        <h2>Bienvenue sur Astanble!</h2>
+    </div>
+
+    <div id="pAccueil", align="center">
+        <p>
+            Astanble est une plateforme d'apprentissage qui a été créé par Mastronète. Le but de la plateforme
+            est de permettre un accès facile à l'information pour les étudiants de l'Université de Sherbrooke.
+            Astanble est composée d'un Wiki et d'un Quiz. Le Wiki regroupe plusieurs articles pertinents sur différents
+            sujets et thèmes sur lesquels les étudiants peuvent s'instruire. L'outil de Quiz permet d'assimiler
+            de nouvelles notions et de confirmer les connaissances.
+        </p>
+    </div>
+
+    <div id="mastronete", align="left">
+        <h2>Mastronète</h2>
+        <h3>Mais qui est Mastronète?</h3>
+        <p>Mastronète est une équipe d'étudiants motivés et talentueux de l'Université de Sherbrooke
+            en génie informatique qui ont à coeur la réussite des étudiants.
+            L'équipe est formée de: <br></p>
+        <div align="center">
+            <p>
+                    1- Yan Ha Routhier Chevrier <br>
+                    2- Jacty Milena Saenz Rosales<br>
+                    3- Thomas St-Gelais <br>
+                    4- Laurence Milette <br>
+                    5- Véronique Paquin <br>
+                    6- Naomie L'Archevêque-Carrière <br>
+            </p>
+        </div>
+    </div>
+
+    <div id="usericon" align="right">
+        <img src="../trimestre/images/UserIcon.png"
+             alt="Icone utilisateur"
+             style="width:50px; height: 50px; background: #FF8921; margin-top:20px">
+    </div>
+
+    <div id="logo2" align="center">
+        <img src="../trimestre/images/D.jpg"
+        alt="Logo Astanble"
+        style="width:300px; height: 200px">
+    </div>
+
+    <script type="text/javascript" charset="utf-8">
+        webix.ready(function() {
+            webix.ui.fullScreen();
+            webix.ui({
+                responsive:true,
+                rows: [
+                    //premiere ligne: toolbar compose de colonnes de boutons
+                  header,
+                    {
+                        view: "scrollview",
+                        scroll: "y",
+                        body:
+                            {
+                                rows: [
+                                    //deuxieme ligne: label daccueil
+                                    {view: "template", content: "main", autoheight: true},
+
+                                    //troisieme ligne: astanble explication
+                                    {view: "template", content: "pAccueil", autoheight: true},
+
+                                    //quatrieme ligne: mastronete explication
+                                    {view: "template", content: "mastronete", autoheight: true},
+
+                                    //cinquieme ligne: logo 2
+                                    {view: "template", content: "logo2", autoheight: true}
+                                ], autoheight: true
+                            }
+                    }
+                ]
+            });
+        })
+    </script>
+
 </body>
 </html>

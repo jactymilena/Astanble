@@ -56,3 +56,20 @@ FROM
 ON at.id_article = a.id_article
 
 WHERE at.id_thematique = 1;
+
+SELECT
+    cip,
+    prenom_usager,
+    nom_usager,
+    nom_complet_usager
+FROM astanble.view_usager_quiz_relation
+WHERE id_quiz = 1
+  AND nom_relation = 'Auteur' OR nom_relation = 'Co-Auteur';
+
+SELECT * FROM astanble.view_quiz_usager_reponse;
+
+SELECT * FROM astanble.view_usager_quiz_relation
+WHERE nom_relation = 'Auteur' OR nom_relation = 'Co-Auteur';
+
+SELECT * FROM astanble.view_usager_quiz_relation
+WHERE cip = 'larn5378 ' AND nom_relation = 'Auteur' OR nom_relation = 'Co-Auteur';

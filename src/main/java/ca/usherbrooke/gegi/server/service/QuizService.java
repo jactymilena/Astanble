@@ -31,6 +31,16 @@ public class QuizService {
     @Inject
     ReponseMapper reponseMapper;
 
+    public List<QuizAuthor> setListAuthors(List<QuizAuthor> quiz) {
+        for (QuizAuthor q : quiz) {
+            int id_quiz = q.getId_quiz();
+            q.setAuthors(quizMapper.selectAuthorByQuiz(id_quiz));
+        }
+
+        return quiz;
+
+    }
+
     @GET
     @Path("quiz")
     @PermitAll
@@ -62,18 +72,25 @@ public class QuizService {
     @Path("quizByID/{id}")
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Quiz> getQuizByID(@PathParam("id") int id) {
-        List<Quiz> quiz = quizMapper.selectByID(id);
+    public Quiz getQuizByID(@PathParam("id") int id) {
+        Quiz q = (Quiz) quizMapper.selectByID(id);
 
-        return quiz;
+        List<Question> questions = questionMapper.selectByQuiz(id);
+        for (Question question : questions) {
+            question.setReponses(reponseMapper.selectByQuestion(question.getId_question()));
+        }
+        q.setQuestions(questions);
+
+        return q;
     }
 
     @GET
     @Path("quizByAuthor/{auteur}")
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Quiz> getQuizByAuthor(@PathParam("auteur") String auteur) {
-        List<Quiz> quiz = quizMapper.selectByAuthor(auteur);
+    public List<QuizAuthor> getQuizByAuthor(@PathParam("auteur") String auteur) {
+        List<QuizAuthor> quiz = quizMapper.selectByAuthor(auteur);
+        setListAuthors(quiz);
 
         return quiz;
     }

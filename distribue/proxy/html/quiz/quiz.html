@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz</title>
+
+    <!-- style sheet personnel -->
+    <link rel="stylesheet" href="../shared/style.css">
+
+    <!-- webix -->
+    <link rel="stylesheet" href="//cdn.webix.com/edge/webix.css" type="text/css">
+    <script src="//cdn.webix.com/edge/webix.js" type="text/javascript"></script>
+
+
+    <!-- script basic externe + keycloack -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="http://localhost/auth/js/keycloak.js"></script>
+
+    <!-- script personnel pour la page -->
+    <script src="../shared/app.js"></script>
+    <script src="./quiz.js"></script>
+    <script src="../shared/header.js"></script>
+</head>
+<body>
+<h1>Page du quiz</h1>
+
+<div id="main">
+    <h1 id="nom_quiz"></h1>
+    <hr>
+
+    <div id="liste_questions">
+
+    </div>
+</div>
+
+<!-- logo side navigation bar-->
+<div id="logo">
+    <img src="../trimestre/images/A.PNG"
+         alt="Logo Astanble"
+         style="width:200px;height:200px;">
+</div>
+
+<div id="usericon" align="right">
+    <img src="../trimestre/images/UserIcon.png"
+         alt="Icone utilisateur"
+         style="width:50px; height: 50px; background: #FF8921; margin-top:20px">
+</div>
+<script type="text/javascript" charset="utf-8">
+    webix.ready(function () {
+        webix.ui.fullScreen();
+        webix.ui({
+            rows: [
+                //premiere ligne: toolbar avec colonnes de boutons
+                header, // render de ../shared/header.js
+                //deuxieme ligne: label wiki
+                {
+                    cols: [
+                        {
+                            rows: [
+                                {view: "template", content: "logo", height: 200},
+                                {
+                                    view: "template",
+                                    multi: true,
+                                    content: "sidenav",
+                                    width: 200
+                                }
+                            ]
+                        },
+                        {
+                            rows: [{view: "template", content: "main"},]
+                        }
+                    ]
+                }
+            ]
+        });
+    })
+</script>
+
+</body>
+</html>

@@ -1,6 +1,6 @@
 // roule après que le body est loadé
 function loadIndex() {
-    // call init from app1.js
+    // call init from app.js
     init();
     // load all themes on side nav
     loadThemesOnSideNav();

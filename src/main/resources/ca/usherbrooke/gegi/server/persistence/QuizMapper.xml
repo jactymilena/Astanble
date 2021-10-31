@@ -9,24 +9,36 @@
     </select>
 
     <select id="selectQuestionsByQuiz" resultType="ca.usherbrooke.gegi.server.business.Question">
-        SELECT * FROM question WHERE id_quiz = {#id_quiz}
+        SELECT * FROM question WHERE id_quiz = #{id_quiz}
     </select>
 
     <select id="selectReponsesByQuestion" resultType="ca.usherbrooke.gegi.server.business.Reponse">
-        SELECT * FROM reponse WHERE id_question = {#id_question}
+        SELECT * FROM reponse WHERE id_question = #{id_question}
     </select>
 
     <select id="selectByName" resultType="ca.usherbrooke.gegi.server.business.Quiz">
-        SELECT * FROM quiz WHERE nom_quiz = {#name}
+        SELECT * FROM quiz WHERE nom_quiz = #{name}
 
     </select>
 
     <select id="selectByID" resultType="ca.usherbrooke.gegi.server.business.Quiz">
-
+        SELECT * FROM quiz WHERE id_quiz = #{id_quiz}
     </select>
 
-    <select id="selectByAuthor" resultType="ca.usherbrooke.gegi.server.business.Quiz">
+    <select id="selectByAuthor" resultType="ca.usherbrooke.gegi.server.business.QuizAuthor">
+        SELECT * FROM astanble.view_usager_quiz_relation
+        WHERE cip = #{auteur} AND nom_relation = 'Auteur' OR nom_relation = 'Co-Auteur';
+    </select>
 
+    <select id="selectAuthorByQuiz" resultType="ca.usherbrooke.gegi.server.business.Usager">
+        SELECT
+        cip,
+        prenom_usager,
+        nom_usager,
+        nom_complet_usager
+        FROM astanble.view_usager_quiz_relation
+        WHERE id_quiz = #{id_quiz}
+            AND nom_relation = 'Auteur' OR nom_relation = 'Co-Auteur';
     </select>
 
     <insert id="insert">

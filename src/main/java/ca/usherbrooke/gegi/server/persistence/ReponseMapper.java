@@ -1,10 +1,12 @@
 package ca.usherbrooke.gegi.server.persistence;
 
 import ca.usherbrooke.gegi.server.business.Reponse;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface ReponseMapper {
     List<Reponse> select();
     List<Reponse> selectByQuestion(@Param("id_question") int id_question);

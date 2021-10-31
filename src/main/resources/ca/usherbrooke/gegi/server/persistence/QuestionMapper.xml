@@ -5,15 +5,15 @@
 <mapper namespace="ca.usherbrooke.gegi.server.persistence.QuestionMapper">
 
     <select id="select" resultType="ca.usherbrooke.gegi.server.business.Question">
-        SELECT * FROM question
+        SELECT * FROM astanble.question;
     </select>
 
     <select id="selectByQuiz" resultType="ca.usherbrooke.gegi.server.business.Question">
-        SELECT * FROM question WHERE id_quiz = {#id_quiz}
+        SELECT * FROM astanble.question WHERE id_quiz = #{id_quiz};
     </select>
 
     <select id="selectByReponse" resultType="ca.usherbrooke.gegi.server.business.Question">
-        SELECT * FROM reponse WHERE id_question = {#id_question}
+        SELECT * FROM astanble.reponse WHERE id_question = #{id_question};
     </select>
 
     <select id="selectByName" resultType="ca.usherbrooke.gegi.server.business.Question">

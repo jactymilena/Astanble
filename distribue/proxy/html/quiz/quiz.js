@@ -9,7 +9,9 @@ async function loadQuiz() {
         }
     })
         .then(function (response) {
-
+            var quiz = response.data;
+            const nom_quiz = document.getElementById("nom_quiz");
+            nom_quiz.innerHTML = quiz.nom_quiz;
         })
         .catch(function (error) {
             console.log('refreshing');

@@ -73,7 +73,7 @@ public class QuizService {
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Quiz getQuizByID(@PathParam("id") int id) {
-        Quiz q = (Quiz) quizMapper.selectByID(id);
+        Quiz q = quizMapper.selectByID(id);
 
         List<Question> questions = questionMapper.selectByQuiz(id);
         for (Question question : questions) {
@@ -106,7 +106,7 @@ public class QuizService {
     @Path("quiz/update")
     @PermitAll
     public void update(Quiz quiz){
-        Quiz dbQuiz =  quizMapper.selectByID(quiz.getId_quiz()).get(0);
+        Quiz dbQuiz =  quizMapper.selectByID(quiz.getId_quiz());
 
         if(quiz.getNom_quiz() == null)
             quiz.setNom_quiz(dbQuiz.getNom_quiz());

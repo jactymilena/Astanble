@@ -84,7 +84,7 @@ meta{
     color: #6e6e67;
 }
 
-.sidebar {
+.sidenav {
     height: 100%;
     width: 0;
     position: fixed;
@@ -96,7 +96,7 @@ meta{
     padding-top: 60px;
 }
 
-.sidebar div {
+.sidenav div {
     padding: 8px 8px 8px 30px;
     font-size: 24px;
     display: block;
@@ -104,7 +104,7 @@ meta{
     cursor: pointer;
 }
 
-.sidebar .closebtn {
+.sidenav .closebtn {
     position: absolute;
     top: 0;
     right: 25px;

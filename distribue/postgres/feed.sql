@@ -221,6 +221,16 @@ LEFT JOIN usager u on reponse_usager_question.cip = u.cip
 LEFT JOIN type_question tq on q.id_type = tq.id_type;
 
 -- ==
+-- Creation de la vue de reponse, question et quiz
+-- ==
+CREATE OR REPLACE VIEW view_reponse_quizname as
+    SELECT r.id_reponse, r.reponse_content, r.bonne_mauvaise, q.id_question, q.num_question, q.question_content, q.cip,
+           q.id_type, qu.id_quiz, qu.nom_quiz
+    FROM reponse as r
+    LEFT JOIN question as q ON r.id_question= q.id_question
+    LEFT JOIN quiz as qu ON qu.id_quiz=q.id_quiz;
+
+-- ==
 -- Creation de la vue des quiz et usager + type de relation
 -- ==
 CREATE OR REPLACE VIEW  view_usager_quiz_relation as

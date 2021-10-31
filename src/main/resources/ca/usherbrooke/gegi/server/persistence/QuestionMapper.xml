@@ -17,7 +17,9 @@
     </select>
 
     <select id="selectByName" resultType="ca.usherbrooke.gegi.server.business.Question">
-        SELECT * FROM astanble.
+        SELECT * FROM astanble.question as q
+        LEFT JOIN astanble.quiz as qu ON q.id_quiz= qu.id_quiz
+        WHERE qu.nom_quiz= #{name}
     </select>
 
     <select id="selectByID" resultType="ca.usherbrooke.gegi.server.business.Question">
@@ -33,13 +35,13 @@
         num_question,
         question_content,
         id_quiz,
-        CIP,
+        cip,
         id_type
     )
     VALUES (#{question.num_question},
             #{question.question_content},
             #{question.id_quiz},
-            #{question.CIP},
+            #{question.cip},
             #{question.id_type})
     </insert>
 

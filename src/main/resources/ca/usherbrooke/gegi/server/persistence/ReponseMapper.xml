@@ -13,15 +13,18 @@
     </select>
 
     <select id="selectByName" resultType="ca.usherbrooke.gegi.server.business.Reponse">
-        SELECT * FROM astanble.reponse WHERE nom_quiz = #{name};
+        SELECT * FROM astanble.view_reponse_quizname
+        WHERE nom_quiz = #{name};
 
     </select>
 
     <select id="selectByID" resultType="ca.usherbrooke.gegi.server.business.Reponse">
-        SELECT * FROM astanble.reponse WHERE id_reponse ={#id_reponse}
+        SELECT * FROM astanble.reponse WHERE id_reponse =#{id_reponse};
     </select>
 
     <select id="selectByAuthor" resultType="ca.usherbrooke.gegi.server.business.Reponse">
+        SELECT * FROM astanble.view_quiz_usager_reponse
+        WHERE cip = #{auteur} AND nom_relation = 'Auteur' OR nom_relation = 'Co-Auteur'
 
     </select>
 

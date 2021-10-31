@@ -38,7 +38,7 @@
         nom_complet_usager
         FROM astanble.view_usager_quiz_relation
         WHERE id_quiz = #{id_quiz}
-            AND nom_relation = 'Auteur' OR nom_relation = 'Co-Auteur';
+        AND nom_relation = 'Auteur' OR nom_relation = 'Co-Auteur';
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="quiz.id_quiz" keyColumn="id_quiz">

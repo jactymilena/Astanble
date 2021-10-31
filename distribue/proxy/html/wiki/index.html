@@ -8,7 +8,6 @@
 
     <!-- style -->
     <link rel="stylesheet" href="../shared/style.css">
-    <link rel="stylesheet" href="style.css">
 
     <!-- choices -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
@@ -34,13 +33,15 @@
     <script src="./shared/app.js"></script>
     <script src="index.js"></script>
 
+
 </head>
 
 <!-- appel loadPage() après que le body ait loader -->
 <body onload="loadIndex()" style="width: 100%;">
 
 <!-- side navigation bar -->
-<div id="sidenav" class="sidenav">
+<div id="sidenav" class="sidenav" style=visibility:hidden;>
+    <div class="closebtn" onclick="closeNav()">X</div>
     <h3>Thèmes</h3>
     <datalist>
     </datalist>
@@ -50,6 +51,7 @@
 <div id="main" align="center" style="width: 100%;">
     <h1>Wiki</h1>
     <h2>Liste des articles</h2>
+    <button class="openbtn" onclick="openNav()">Ouvrir</button>
 </div>
 
 <div id="formulaire" align="center">
@@ -81,17 +83,34 @@
 </div>
 
 <!-- logo side navigation bar-->
-<div id="logo">
-    <img src="../trimestre/images/A.PNG"
-         alt="Logo Astanble"
-         style="width:200px;height:200px;">
-</div>
+<!--<div id="logo">-->
+<!--    <img src="../trimestre/images/A.PNG"-->
+<!--         alt="Logo Astanble"-->
+<!--         style="width:200px;height:200px;">-->
+<!--</div>-->
 
 <div id="usericon" align="right">
     <img src="../trimestre/images/UserIcon.png"
          alt="Icone utilisateur"
          style="width:50px; height: 50px; background: #FF8921; margin-top:20px">
 </div>
+
+<script>
+    function openNav() {
+        document.getElementById("sidenav").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+        document.getElementById("formulaire").style.marginLeft = "250px";
+        document.getElementById("listearticle").style.marginLeft = "250px";
+        document.getElementById('sidenav').style.visibility = 'visible';
+    }
+    function closeNav() {
+        document.getElementById("sidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft= "0";
+        document.getElementById("formulaire").style.marginLeft= "0";
+        document.getElementById("listearticle").style.marginLeft= "0";
+        document.getElementById('sidenav').style.visibility = 'hidden';
+    }
+</script>
 
 <script type="text/javascript" charset="utf-8">
     webix.ready(function () {
@@ -104,17 +123,17 @@
                 {
 
                     cols: [
-                        {
-                            rows: [
-                                {view: "template", content: "logo", height: 200},
-                                {
-                                    view: "template",
-                                    multi: true,
-                                    content: "sidenav",
-                                    width: 200
-                                }
-                            ]
-                        },
+                        // {
+                        //     rows: [
+                        //         // {view: "template", content: "logo", height: 200},
+                        //         {
+                        //             view: "template",
+                        //             multi: true,
+                        //             content: "sidenav",
+                        //             width: 1
+                        //         }
+                        //     ]
+                        // },
                         {
                             rows: [
                                     {
@@ -129,7 +148,7 @@
                                             view: "template", content: "listearticle"
                                         }
                                     }
-                                ]
+                            ]
                         }
                     ]
                 }

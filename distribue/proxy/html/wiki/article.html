@@ -44,9 +44,9 @@
 
 <!-- section central -->
 <div id="main">
+    <button class="openbtn" style=alignment:left onclick="openNav()">Ouvrir</button>
     <h1>Page d'article</h1>
     <hr>
-    <button class="openbtn" onclick="openNav()">Ouvrir</button>
     <!-- Create the editor container -->
     <h1 id="nom_article">Article</h1>
     <div id="editor">
@@ -73,15 +73,11 @@
     function openNav() {
         document.getElementById("sidenav").style.width = "250px";
         document.getElementById("main").style.marginLeft = "250px";
-        // document.getElementById("formulaire").style.marginLeft = "250px";
-        // document.getElementById("listearticle").style.marginLeft = "250px";
         document.getElementById('sidenav').style.visibility = 'visible';
     }
     function closeNav() {
         document.getElementById("sidenav").style.width = "0";
         document.getElementById("main").style.marginLeft= "0";
-        // document.getElementById("formulaire").style.marginLeft= "0";
-        // document.getElementById("listearticle").style.marginLeft= "0";
         document.getElementById('sidenav').style.visibility = 'hidden';
     }
 </script>

@@ -4,6 +4,7 @@ async function loadIndex() {
     await init();
 
     // load quiz de l'auteur
+    // TODO: Mettre le cip de la personne connectée
     loadAuthorQuiz("larn5378");
 }
 

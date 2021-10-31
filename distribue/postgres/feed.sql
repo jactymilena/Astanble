@@ -201,7 +201,7 @@ WHERE article.id_article = article_quiz.id_article AND
 CREATE OR REPLACE VIEW  view_quiz_usager_reponse as
 SELECT u.cip, u.prenom_usager, u.nom_usager, u.prenom_usager || ' ' || u.nom_usager AS nom_complet_usager,
        qz.id_quiz, qz.nom_quiz, q.id_question, q.num_question, q.question_content, tq.id_type, tq.nom_type,
-       r.id_reponse, r.reponse, r.bonne_mauvaise
+       r.id_reponse, r.reponse_content, r.bonne_mauvaise
 FROM reponse_usager_question
 LEFT JOIN question q on reponse_usager_question.id_question = q.id_question
 LEFT JOIN quiz qz on q.id_quiz = qz.id_quiz

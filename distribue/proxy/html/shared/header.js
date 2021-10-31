@@ -19,7 +19,7 @@ const header = {
         },
         {
             view: "button", value: "Quiz", width: 100, click: function (id, event) {
-                window.location.href = "//localhost/Quiz";
+                window.location.href = "//localhost/quiz";
             }, css: "webix_transparent"
         },
         {view: "template", borderless: true, content: "usericon", css: {"background": "#FF8921"}}

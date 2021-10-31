@@ -42,3 +42,17 @@ SELECT astanble.SIMILARITY(prenom_usager,  'mil'), astanble.SIMILARITY(nom_usage
 LIMIT 100;
 
 SELECT * FROM astanble.view_usager_wiki;
+
+SELECT
+    a.id_article,
+    a.nom_article,
+    a.content,
+    a.description_robot_article,
+    a.description_article
+FROM
+    astanble.article AS a
+
+        JOIN astanble.article_thematique AS at
+ON at.id_article = a.id_article
+
+WHERE at.id_thematique = 1;

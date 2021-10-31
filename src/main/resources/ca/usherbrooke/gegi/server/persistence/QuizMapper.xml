@@ -41,16 +41,22 @@
             AND nom_relation = 'Auteur' OR nom_relation = 'Co-Auteur';
     </select>
 
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="quiz.id_quiz" keyColumn="id_quiz">
+        INSERT INTO astanble.quiz(
+        nom_quiz)
+        VALUES (#{quiz.nom_quiz})
 
     </insert>
 
     <update id="update">
-
+        UPDATE astanble.quiz
+        SET nom_quiz = #{quiz.nom_quiz}
+        WHERE id_quiz = #{quiz.id_quiz}::int
     </update>
 
     <delete id="delete">
-
+        DELETE FROM astanble.quiz
+        WHERE id_quiz = #{quiz.id_quiz}::int
     </delete>
 
 

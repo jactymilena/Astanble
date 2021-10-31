@@ -18,23 +18,35 @@
     </select>
 
     <select id="selectByID" resultType="ca.usherbrooke.gegi.server.business.Reponse">
-
+        SELECT * FROM astanble.reponse WHERE id_reponse ={#id_reponse}
     </select>
 
     <select id="selectByAuthor" resultType="ca.usherbrooke.gegi.server.business.Reponse">
 
     </select>
 
-    <insert id="insert">
-
+    <insert id="insert" useGeneratedKeys="true" keyProperty="reponse.id_reponse" keyColumn="id_reponse">
+        INSERT INTO astanble.reponse(
+            reponse_content,
+            bonne_mauvaise,
+            id_question
+        )
+        VALUES (#{reponse.reponse_content},
+                #{reponse.bonne_mauvaise},
+                #{reponse.id_question})
     </insert>
 
     <update id="update">
-
+        UPDATE astanble.reponse
+        SET reponse_content= #{reponse.reponse_content},
+            bonne_mauvaise=#{reponse.bonne_mauvaise},
+            id_question=#{reponse.id_question}
+        WHERE id_reponse=#{reponse.id_reponse}::int
     </update>
 
     <delete id="delete">
-
+        DELETE FROM astanble.reponse
+        WHERE id_reponse=#{reponse.id_reponse}::int
     </delete>
 
 

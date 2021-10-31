@@ -17,27 +17,45 @@
     </select>
 
     <select id="selectByName" resultType="ca.usherbrooke.gegi.server.business.Question">
-
+        SELECT * FROM astanble.
     </select>
 
     <select id="selectByID" resultType="ca.usherbrooke.gegi.server.business.Question">
-
+        SELECT * FROM astanble.question WHERE id_question=#{id_question}
     </select>
 
     <select id="selectByType" resultType="ca.usherbrooke.gegi.server.business.Question">
-
+        SELECT * FROM astanble.question WHERE id_type=#{id_type}
     </select>
 
-    <insert id="insert">
-
+    <insert id="insert" useGeneratedKeys="true" keyProperty="question.id_question" keyColumn="id_question">
+    INSERT INTO astanble.question(
+        num_question,
+        question_content,
+        id_quiz,
+        CIP,
+        id_type
+    )
+    VALUES (#{question.num_question},
+            #{question.question_content},
+            #{question.id_quiz},
+            #{question.CIP},
+            #{question.id_type})
     </insert>
 
     <update id="update">
-
+    UPDATE astanble.question
+    SET num_question= #{question.num_question},
+        question_content = #{question.question_content},
+        id_quiz= #{question.id_quiz},
+        cip= #{cip},
+        id_type= #{id_type}
+    WHERE id_question = #{question.id_question}::int
     </update>
 
     <delete id="delete">
-
+    DELETE FROM astanble.question
+    WHERE id_question= #{question.id_question}::int
     </delete>
 
 

@@ -17,7 +17,23 @@ async function loadArticle() {
         theme: 'bubble'
     });
     // load wiki in page
-    requestWiki(urlParams.get('article'));
+    if(urlParams.get('create') == 'true')
+    {
+        clearAll();
+        toggleContentEdition();
+        $('#saveButton').text("Créer");
+        $('#saveButton').attr("onclick", "createArticle();");
+        quill.enable(true);
+    }
+    else {
+        requestWiki(urlParams.get('article'));
+    }
+}
+
+function clearAll() {
+    $('#nom_article').text("");
+    $('#nom_article_editTextBox').val("");
+    quill.root.innerHTML = "";
 }
 
 function requestWiki(id) {
@@ -37,9 +53,10 @@ function requestWiki(id) {
             console.log("Response: ", response.status);
             console.log(response.data);
             article = response.data;
-            //
-            h1_nom_article = document.getElementById("nom_article");
-            h1_nom_article.innerHTML = article.nom_article;
+
+            $('#nom_article').text(article.nom_article);
+            $('#nom_article_editTextBox').val(article.nom_article);
+
             quill.root.innerHTML = article.content;
             quill.enable(false);
         })
@@ -68,6 +85,7 @@ function saveEditorContent() {
 
     let article = {
         "id_article" : urlParams.get('article'),
+        "nom_article" : $('#nom_article_editTextBox').val(),
         "content" : content
     }
 
@@ -94,15 +112,57 @@ function saveEditorContent() {
         });
 }
 
+function createArticle() {
+    let delta = quill.getContents();
+    let content = quillGetHTML(delta);
+
+    let article = {
+        "nom_article" : $('#nom_article_editTextBox').val(),
+        "description_robot_article" : "Description robot de l'article.",
+        "content" : content,
+        "description_article" : "La description de l'article."
+    }
+
+    axios.post("http://localhost:8888/api/wikiInsert", JSON.stringify(article), {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token,
+            'Content-Type' : 'application/json'
+        }
+    })
+        .then(function (response) {
+            console.log("Response: ", response.status);
+            window.location = "/wiki/article.html?article=" + response.data;
+        })
+        .catch(function (error) {
+            console.log('refreshing');
+            keycloak.updateToken(5).then(function () {
+                console.log('Token refreshed');
+            }).catch(function () {
+                console.log('Failed to refresh token');
+            })
+            console.log('Sad ça fonctionne pas :(');
+            alert(error);
+
+        });
+}
+
 function toggleContentEdition() {
     var toggleContentEditionBtn = document.getElementById("toggleEditButton");
     var saveEditorBtn = document.getElementById("saveButton");
 
     if(toggleContentEditionBtn.innerText == "Modifier")
+    {
         toggleContentEditionBtn.innerText = "Mode lecture";
+        $('#nom_article').hide();
+        $('#nom_article_editTextBox').show();
+    }
     else
+    {
         toggleContentEditionBtn.innerText = "Modifier";
+        $('#nom_article').text($('#nom_article_editTextBox').val());
+        $('#nom_article').show();
+        $('#nom_article_editTextBox').hide();
+    }
     quill.enable(!quill.isEnabled());
-
     saveEditorBtn.toggleAttribute("hidden");
 }

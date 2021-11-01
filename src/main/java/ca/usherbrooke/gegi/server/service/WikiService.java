@@ -120,7 +120,8 @@ public class WikiService {
     @POST
     @Path("wikiInsert")
     @PermitAll
-    public void insertArticle(Article article){
+    @Produces(MediaType.APPLICATION_JSON)
+    public String insertArticle(Article article){
         System.out.println("New article: " + article.getNom_article());
         String user_cip = securityContext.getUserPrincipal().getName();
 
@@ -128,6 +129,7 @@ public class WikiService {
         int id_article = wikiMapper.insert(article);
 //        if(id_article != null)
 //            wikiMapper.insertArticleCollab(user_cip, id_article, 1);
+        return article.getId_article();
     }
 
     @PUT

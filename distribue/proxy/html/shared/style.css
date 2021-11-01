@@ -10,6 +10,10 @@ body {
     flex-wrap: wrap;
 }
 
+h1, h2, h3, h4 {
+    font-family: ui-serif;
+}
+
 meta{
     display:none;
 }
@@ -120,4 +124,23 @@ meta{
 
 #main {
     transition: margin-left .5s;
+}
+
+.filtreThemeBtn {
+    position: fixed;
+    width:117px;
+    height:60px;
+    bottom:40px;
+    right:40px;
+    background-color:#0C9;
+    color:#FFF;
+    border-radius:50px;
+    text-align:center;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 1;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #ced4da;
 }

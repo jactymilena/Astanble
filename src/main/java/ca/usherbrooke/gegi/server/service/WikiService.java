@@ -125,11 +125,11 @@ public class WikiService {
         System.out.println("New article: " + article.getNom_article());
         String user_cip = securityContext.getUserPrincipal().getName();
 
-        // TODO: Pas encore testé je ne sais pas si renvoit bien le ID
-        int id_article = wikiMapper.insert(article);
-//        if(id_article != null)
-//            wikiMapper.insertArticleCollab(user_cip, id_article, 1);
-        return article.getId_article();
+        int row_afffected = wikiMapper.insert(article);
+        String id_article = article.getId_article();
+        if(row_afffected != 0)
+            wikiMapper.insertArticleCollab(user_cip, Integer.parseInt(id_article), 1);
+        return id_article;
     }
 
     @PUT
@@ -144,8 +144,8 @@ public class WikiService {
         dbArticle.setAuthors(wikiMapper.selectAllCollabOfArticle(id_article));
 
         List<Usager> authors = dbArticle.getAuthors();
-        Usager user = authors.stream().filter(usager -> usager.getCip() == user_cip).findFirst().orElse(null);
-        if(user == null) {
+        boolean aColab = authors.stream().anyMatch(e -> e.getCip().equals(user_cip));
+        if(!aColab) {
             wikiMapper.insertArticleCollab(user_cip, id_article_int, 3);
         }
 

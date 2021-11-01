@@ -1,21 +1,20 @@
 // variables
 var keycloak;
 var quill;
-
+var editor5;
 async function loadArticle() {
     // call init from app1.js
     await init();
     // load all themes on side nav
     loadThemesOnSideNav();
-    // Initialize Quill editor
-    quill = new Quill('#editor', {
-        toolbar: [
-            [{header: [1, 2, false]}],
-            ['bold', 'italic', 'underline'],
-            ['image', 'code-block']
-        ],
-        theme: 'bubble'
-    });
+    await ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .then( editor => {
+            editor5 = editor;
+        })
+        .catch( error => {
+            console.error( error );
+        } );
     // load wiki in page
     if(urlParams.get('create') == 'true')
     {
@@ -23,17 +22,18 @@ async function loadArticle() {
         toggleContentEdition();
         $('#saveButton').text("Créer");
         $('#saveButton').attr("onclick", "createArticle();");
-        quill.enable(true);
+        editor5.isReadOnly = false;
     }
     else {
         requestWiki(urlParams.get('article'));
+        editor5.isReadOnly = true;
     }
 }
 
 function clearAll() {
     $('#nom_article').text("");
     $('#nom_article_editTextBox').val("");
-    quill.root.innerHTML = "";
+    editor5.setData("");
 }
 
 function requestWiki(id) {
@@ -57,8 +57,7 @@ function requestWiki(id) {
             $('#nom_article').text(article.nom_article);
             $('#nom_article_editTextBox').val(article.nom_article);
 
-            quill.root.innerHTML = article.content;
-            quill.enable(false);
+            editor5.setData(article.content);
         })
         .catch(function (error) {
             console.log('refreshing');
@@ -71,17 +70,9 @@ function requestWiki(id) {
         });
 }
 
-// conversion d'un objet Delta en HTML
-function quillGetHTML(inputDelta) {
-    let tempQuill=new Quill(document.createElement("div"));
-    tempQuill.setContents(inputDelta);
-    return tempQuill.root.innerHTML;
-}
-
 // sauvegarde du contenu de l'éditeur
 function saveEditorContent() {
-    let delta = quill.getContents();
-    let content = quillGetHTML(delta);
+    let content = editor5.getData();
 
     let article = {
         "id_article" : urlParams.get('article'),
@@ -113,8 +104,7 @@ function saveEditorContent() {
 }
 
 function createArticle() {
-    let delta = quill.getContents();
-    let content = quillGetHTML(delta);
+    let content = editor5.getData();
 
     let article = {
         "nom_article" : $('#nom_article_editTextBox').val(),
@@ -163,6 +153,6 @@ function toggleContentEdition() {
         $('#nom_article').show();
         $('#nom_article_editTextBox').hide();
     }
-    quill.enable(!quill.isEnabled());
+    editor5.isReadOnly = !editor5.isReadOnly;
     saveEditorBtn.toggleAttribute("hidden");
 }

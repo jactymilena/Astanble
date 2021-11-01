@@ -9,9 +9,13 @@ async function loadIndex() {
 }
 
 function createQuizLink(quiz) {
-    return '<span><a href="quiz.html?quiz=' + quiz.id_quiz + '">' +
-        quiz.nom_quiz +
-        ' </a> [' + quiz.authors.map(q => q.nom_complet_usager).join(', ')  + ']</span><br>'
+    return `
+        <div class="card col-sm-12 col-md-6">
+          <div class="card-body">
+            <span><a href="quiz.html?quiz=${quiz.id_quiz}">${quiz.nom_quiz}</a> [${quiz.authors.map(q => q.nom_complet_usager).join(', ')}]</span><br>
+          </div>
+        </div>
+        `
 }
 
 function loadAuthorQuiz(cip) {

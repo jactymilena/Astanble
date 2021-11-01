@@ -6,7 +6,11 @@
         <title>Quiz</title>
 
         <!-- style sheet personnel -->
+        <link rel="stylesheet" href="../shared/style.css">
         <link rel="stylesheet" href="style.css">
+
+        <!-- bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
         <!-- webix -->
         <link rel="stylesheet" href="//cdn.webix.com/edge/webix.css" type="text/css">
@@ -26,35 +30,46 @@
 
     <!-- appel loadPage() après que le body ait loader -->
     <body onload="loadIndex()" style="width: 100%;">
-    <div id="quiz" style="width: 100%;">
-        <h1>Quiz</h1>
-        <h2>Vos cours</h2>
-        <p>section des quiz d'un cours</p>
-        <div id="liste_quiz_author">
 
+    <div id="main" class="container" style="margin-top: 20px;">
+        <div id="quiz" class="container" style="width: 100%;">
+            <h1>Quiz</h1>
+            <h2>Vos cours</h2>
+            <p>section des quiz d'un cours</p>
+            <div id="liste_quiz_author" class="row">
+
+            </div>
+            <br>
         </div>
-        <br>
-    </div>
 
+        <hr/>
 
-    <div id="historique" align="left" style="width: 100%;">
-        <h2>Historique</h2>
-        <p>section de l'historique</p>
-        <br>
-    </div>
+        <div id="historique" class="container" align="left" style="width: 100%;">
+            <h2>Historique</h2>
+            <p>section de l'historique</p>
+            <br>
+        </div>
 
-    <div id="creation"align="left" style="width: 100%;">
-        <h2>Création</h2>
-        <p>section de la creation de quiz</p>
+        <hr/>
+
+        <div id="creation" class="container" align="left" style="width: 100%;">
+            <h2>Création</h2>
+            <p>section de la creation de quiz</p>
             <a href = "creation.html">
                 <button>Créer un quiz </button>
             </a>
+        </div>
     </div>
 
+
     <div id="usericon" align="right" style="width: 100%;">
-        <img src="../trimestre/images/UserIcon.png"
-             alt="Icone utilisateur"
-             style="width:50px; height: 50px; background: #FF8921; margin-top:20px">
+        <div class="col-12">
+            <img src="../trimestre/images/UserIcon.png"
+                 alt="Icone utilisateur"
+                 style="width:50px; height: 50px; background: #FF8921; margin-top:20px"></div>
+        <div class="col-12">
+            <span id="user_profil_nav"></span>
+        </div>
     </div>
 
     <script type="text/javascript" charset="utf-8">
@@ -64,21 +79,8 @@
                 rows: [
                    header,
                     {
-                        view: "scrollview",
-                        scroll: "y",
-                        body:
-                            {
-                                rows: [
-                                    //deuxieme ligne: quiz
-                                    {view: "template", content: "quiz", autoheight: true},
-
-                                    //troisieme ligne
-                                    {view: "template", content: "historique", autoheight: true},
-
-                                    //quatrieme ligne
-                                    {view: "template", content: "creation", autoheight: true}
-                                ]
-                            }
+                        view: "template",
+                        content: "main"
                     }
                 ]
             });

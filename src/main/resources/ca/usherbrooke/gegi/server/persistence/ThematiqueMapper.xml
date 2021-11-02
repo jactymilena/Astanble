@@ -10,4 +10,16 @@
         FROM
             astanble.thematique
     </select>
+
+    <select id="selectByArticleId" resultType="ca.usherbrooke.gegi.server.business.Thematique">
+        SELECT
+            id_thematique,
+            nom_thematique
+        FROM
+            astanble.view_article_thematique
+        WHERE
+            id_article = ${id_article}::int
+
+    </select>
+
 </mapper>

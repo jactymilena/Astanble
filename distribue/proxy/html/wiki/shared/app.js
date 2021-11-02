@@ -9,7 +9,7 @@ function loadThemesOnSideNav() {
             console.log("api/thematique");
             console.log(response.status);
 
-            var thematiques = response.data;
+            var thematiques = window.thematiques = response.data;
             thematiques.forEach(function(thematique) {
                 var htmlLink = createSideNavLink(thematique);
                 sideNav.innerHTML += (htmlLink);

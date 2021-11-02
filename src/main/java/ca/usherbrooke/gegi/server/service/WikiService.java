@@ -3,6 +3,7 @@ package ca.usherbrooke.gegi.server.service;
 import ca.usherbrooke.gegi.server.business.Article;
 import ca.usherbrooke.gegi.server.business.ArticleAuthor;
 import ca.usherbrooke.gegi.server.business.Usager;
+import ca.usherbrooke.gegi.server.persistence.ThematiqueMapper;
 import ca.usherbrooke.gegi.server.persistence.WikiMapper;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import io.quarkus.security.identity.SecurityIdentity;
@@ -28,6 +29,9 @@ public class WikiService {
 
     @Inject
     WikiMapper wikiMapper;
+
+    @Inject
+    ThematiqueMapper thematiqueMapper;
 
 
     public List<ArticleAuthor> setListAuthors(List<ArticleAuthor> wikis) {
@@ -82,7 +86,9 @@ public class WikiService {
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public ArticleAuthor getwikiByIdArticle(@PathParam("id_article") String id_article) {
-        return wikiMapper.selectById(id_article);
+        ArticleAuthor article = wikiMapper.selectById(id_article);
+        article.setThematiques(thematiqueMapper.selectByArticleId(Integer.parseInt(id_article)));
+        return article;
     }
 
     @GET

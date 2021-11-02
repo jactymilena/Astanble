@@ -34,4 +34,15 @@ public class ThematiqueService {
         List<Thematique> thematiques = thematiqueMapper.select();
         return thematiques;
     }
+
+    @GET
+    @Path("thematiqueByArticle/{id_article}")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Thematique> getThematique(@PathParam("id_article") int id_article) {
+        List<Thematique> thematiques = thematiqueMapper.selectByArticleId(id_article);
+        return thematiques;
+    }
+
+
 }

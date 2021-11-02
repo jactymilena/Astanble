@@ -56,16 +56,34 @@
 
 <!-- section central -->
 <div class="container" id="main" style="padding-top: 30px">
-    <h1>Page d'article</h1>
-    <hr>
-    <!-- Create the editor container -->
-    <h1 id="nom_article">Article</h1>
-    <input id="nom_article_editTextBox" hidden/>
-    <div id="editor">
-        <p>This is the initial editor content.</p>
+    <div class="row">
+        <div class="col-sm-12 col-md-10">
+            <h1>Page d'article</h1>
+            <hr>
+            <!-- Create the editor container -->
+            <h1 id="nom_article">Article</h1>
+            <input id="nom_article_editTextBox" class="form-control" style="display: none; margin-bottom: 10px;"/>
+            <div id="editor">
+                <p>This is the initial editor content.</p>
+            </div>
+            <hr>
+            <h4>Description:</h4>
+            <textarea id="description_article" class="form-control" disabled></textarea>
+            <hr>
+            <button id="saveButton" class="decorated-button" onclick="saveEditorContent()" hidden>Save</button>
+            <button id="toggleEditButton" class="decorated-button" onclick="toggleContentEdition()">Modifier</button>
+        </div>
+        <div class="col-sm-12 col-md-2">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Thématiques</h4>
+                    <div id="themeSelector" class="card-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <button id="saveButton" class="decorated-button" onclick="saveEditorContent()" hidden>Save</button>
-    <button id="toggleEditButton" class="decorated-button" onclick="toggleContentEdition()">Modifier</button>
 </div>
 
 <!-- logo side navigation bar-->

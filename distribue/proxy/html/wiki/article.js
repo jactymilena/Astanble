@@ -23,17 +23,21 @@ async function loadArticle() {
         $('#saveButton').text("Créer");
         $('#saveButton').attr("onclick", "createArticle();");
         editor5.isReadOnly = false;
+        document.getElementById("description_article").removeAttribute("disabled");
     }
     else {
         requestWiki(urlParams.get('article'));
         editor5.isReadOnly = true;
     }
+
+    loadThemesSelector();
 }
 
 function clearAll() {
     $('#nom_article').text("");
     $('#nom_article_editTextBox').val("");
     editor5.setData("");
+    $('#description_article').val("");
 }
 
 function requestWiki(id) {
@@ -48,8 +52,7 @@ function requestWiki(id) {
         .then(function (response) {
             var article;
             var h1_nom_article;
-            console.log("ca fonctionnneee");
-
+            var thematiques;
             console.log("Response: ", response.status);
             console.log(response.data);
             article = response.data;
@@ -57,7 +60,12 @@ function requestWiki(id) {
             $('#nom_article').text(article.nom_article);
             $('#nom_article_editTextBox').val(article.nom_article);
 
+            $("#description_article").text(article.description_article);
             editor5.setData(article.content);
+            article.thematiques.forEach(t => {
+                $(`input[name='themeSelection'][value='${t.id_thematique}']`)[0].checked = true;
+            });
+            console.log(article);
         })
         .catch(function (error) {
             console.log('refreshing');
@@ -77,7 +85,8 @@ function saveEditorContent() {
     let article = {
         "id_article" : urlParams.get('article'),
         "nom_article" : $('#nom_article_editTextBox').val(),
-        "content" : content
+        "content" : content,
+        "description_article" : $("#description_article").val()
     }
 
     axios.put("http://localhost:8888/api/wiki/update", JSON.stringify(article), {
@@ -110,7 +119,7 @@ function createArticle() {
         "nom_article" : $('#nom_article_editTextBox').val(),
         "description_robot_article" : "Description robot de l'article.",
         "content" : content,
-        "description_article" : "La description de l'article."
+        "description_article" : $("#description_article").val()
     }
 
     axios.post("http://localhost:8888/api/wikiInsert", JSON.stringify(article), {
@@ -140,11 +149,12 @@ function toggleContentEdition() {
     var toggleContentEditionBtn = document.getElementById("toggleEditButton");
     var saveEditorBtn = document.getElementById("saveButton");
 
-    if(toggleContentEditionBtn.innerText == "Modifier")
+    if(toggleContentEditionBtn.innerText.toLowerCase() == "modifier")
     {
         toggleContentEditionBtn.innerText = "Mode lecture";
         $('#nom_article').hide();
         $('#nom_article_editTextBox').show();
+        document.getElementById('description_article').removeAttribute("disabled");
     }
     else
     {
@@ -152,7 +162,38 @@ function toggleContentEdition() {
         $('#nom_article').text($('#nom_article_editTextBox').val());
         $('#nom_article').show();
         $('#nom_article_editTextBox').hide();
+        $('#description_article').attr('disabled','disabled');
     }
     editor5.isReadOnly = !editor5.isReadOnly;
     saveEditorBtn.toggleAttribute("hidden");
+}
+
+function loadThemesSelector() {
+    var selector = document.getElementById("themeSelector");
+    axios.get("http://localhost:8888/api/thematique")
+        .then(function (response) {
+            console.log("api/thematique");
+            console.log(response.status);
+
+            var thematiques = window.thematiques = response.data;
+            thematiques.forEach(function(thematique) {
+                var htmlLink = createThemeSelect(thematique, false);
+                selector.innerHTML += (htmlLink);
+            });
+        })
+        .catch(function (error) {
+            console.log('refreshing');
+            keycloak.updateToken(5).then(function () {
+                console.log('Token refreshed');
+            }).catch(function () {
+                console.log('Failed to refresh token');
+            })
+            alert(error);
+        });
+}
+
+function createThemeSelect(theme, checked) {
+    return `
+        <input name="themeSelection" type="checkbox" value="${theme.id_thematique}" ${checked ? "checked": ""}>${theme.nom_thematique}</input>
+    `;
 }

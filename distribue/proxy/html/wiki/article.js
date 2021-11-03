@@ -1,7 +1,7 @@
 // variables
 var keycloak;
-var quill;
 var editor5;
+
 async function loadArticle() {
     // call init from app1.js
     await init();
@@ -55,7 +55,7 @@ function requestWiki(id) {
             var thematiques;
             console.log("Response: ", response.status);
             console.log(response.data);
-            article = response.data;
+            article = window.article = response.data;
 
             $('#nom_article').text(article.nom_article);
             $('#nom_article_editTextBox').val(article.nom_article);
@@ -131,6 +131,30 @@ function createArticle() {
         .then(function (response) {
             console.log("Response: ", response.status);
             window.location = "/wiki/article.html?article=" + response.data;
+        })
+        .catch(function (error) {
+            console.log('refreshing');
+            keycloak.updateToken(5).then(function () {
+                console.log('Token refreshed');
+            }).catch(function () {
+                console.log('Failed to refresh token');
+            })
+            console.log('Sad ça fonctionne pas :(');
+            alert(error);
+
+        });
+}
+
+function deleteArticle() {
+    axios.delete("http://localhost:8888/api/wiki/delete/" + window.article.id_article, {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token,
+            'Content-Type' : 'application/json'
+        }
+    })
+        .then(function (response) {
+            alert("Article supprimé.");
+            window.location = "/wiki";
         })
         .catch(function (error) {
             console.log('refreshing');

@@ -22,4 +22,14 @@
 
     </select>
 
+    <delete id="delete">
+        DELETE FROM astanble.thematique
+        WHERE id_thematique = #{id_thematique}::int;
+    </delete>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="thematique.id_thematique" keyColumn="id_thematique">
+        INSERT INTO astanble.thematique(
+            nom_thematique)
+        VALUES  (#{thematique.nom_thematique});
+    </insert>
 </mapper>

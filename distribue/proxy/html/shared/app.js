@@ -50,6 +50,86 @@ function userProfil() {
         });
 }
 
+function axiosFetch(crud, url, onsuccess, object = null) {
+    crud = crud.toLowerCase();
+    console.log(`axios.${crud} at ${url}`);
+    switch (crud) {
+         case "get":
+             axios.get(url)
+                 .then(function (response) {
+                     onsuccess(response);
+                 })
+                 .catch(function (error) {
+                     axiosOnError(error);
+                 });
+             break;
+        case "create":
+            axios.post(url, JSON.stringify(object), {
+                headers: {
+                    'Authorization': 'Bearer ' + keycloak.token,
+                    'Content-Type' : 'application/json'
+                }
+            })
+                .then(function (response) {
+                    onsuccess(response);
+                })
+                .catch(function (error) {
+                    axiosOnError(error);
+                });
+            break;
+        case "delete":
+            axios.delete(url, {
+                headers: {
+                    'Authorization': 'Bearer ' + keycloak.token,
+                    'Content-Type' : 'application/json'
+                }
+            })
+                .then(function (response) {
+                    onsuccess(response);
+                })
+                .catch(function (error) {
+                    axiosOnError(error);
+                });
+            break;
+        default:
+            alert("ERROR: crud command can be (get, create, delete, update).");
+            console.log("ERROR: crud command can be (get, create, delete, update).");
+            break;
+    }
+}
+
+function axiosOnError(error) {
+    console.log('refreshing');
+    keycloak.updateToken(5).then(function () {
+        console.log('Token refreshed');
+    }).catch(function () {
+        console.log('Failed to refresh token');
+    })
+    console.log('Sad ça fonctionne pas :(');
+    alert(error);
+}
+
+async function axiosGet(url, onsuccess) {
+    axiosFetch("get", url, onsuccess);
+}
+
+async function axiosCreate(url, onsuccess, object) {
+    axiosFetch("create", url, onsuccess, object);
+}
+
+async function axiosDelete(url, onsuccess) {
+    axiosFetch("delete", url, onsuccess);
+}
+
+function objectifyForm(formArray) {
+    //serialize data function
+    var returnArray = {};
+    for (var i = 0; i < formArray.length; i++){
+        returnArray[formArray[i]['name']] = formArray[i]['value'];
+    }
+    return returnArray;
+}
+
 function choixThemes(list_themes, idBalise, preselected_theme = [], ) {
     var selection_formater_delegate = (theme, preselected_theme) => {
         return {

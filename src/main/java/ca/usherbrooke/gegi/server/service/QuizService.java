@@ -95,6 +95,14 @@ public class QuizService {
         return quiz;
     }
 
+    @GET
+    @Path("quizByQuestionRepondue/{cip}")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Quiz> getQuizByQuestionRepondue(@PathParam("cip") String cip) {
+        return quizMapper.selectByQuestionRepondue(cip);
+    }
+
     @POST
     @Path("quizInsert")
     @PermitAll

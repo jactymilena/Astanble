@@ -19,5 +19,4 @@ public interface QuizMapper {
     void update(@Param("quiz") Quiz quiz);
     void delete(@Param("id_quiz") int id_quiz);
 
-
 }

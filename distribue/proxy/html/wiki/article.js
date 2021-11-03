@@ -31,6 +31,46 @@ async function loadArticle() {
     }
 
     loadThemesSelector();
+    loadCommentaire();
+}
+
+function createCommentaireHTML(commentaire) {
+    const item = document.createElement('span');
+    item.innerHTML = `
+        <h3>Commentaire</h3>   
+        ${commentaire.commentaire_content} <br>
+    `;
+    liste_commentaires.appendChild(item);
+}
+
+function loadCommentaire() {
+    const id_article = urlParams.get('article');
+
+    axios.get("http://localhost:8888/api/commentaire/" + id_article , {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token
+        }
+    })
+        .then(function (response) {
+            console.log(response.data);
+            var liste_commentaires = document.getElementById("liste_commentaires");
+            const commentaires = response.data;
+
+            commentaires.forEach(com => {
+                createCommentaireHTML(com);
+            });
+
+
+        })
+        .catch(function (error) {
+            console.log('refreshing');
+            keycloak.updateToken(5).then(function () {
+                console.log('Token refreshed');
+            }).catch(function () {
+                console.log('Failed to refresh token');
+            })
+            alert(error);
+        });
 }
 
 function clearAll() {

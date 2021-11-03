@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ca.usherbrooke.gegi.server.persistence.CommentaireMapper">
+
+    <select id="selectByArticle" resultType="ca.usherbrooke.gegi.server.business.Commentaire">
+        SELECT
+            id_commentaire,
+            commentaire_content,
+            cip,
+            id_article
+        FROM
+            astanble.commentaire
+        WHERE id_reponse_commentaire IS NULL AND id_article = #{id_article}
+        ORDER BY id_commentaire;
+    </select>
+
+    <select id="selectReponseByCommentaire" resultType="ca.usherbrooke.gegi.server.business.ReponseCommentaire">
+        SELECT
+            id_commentaire,
+            commentaire_content,
+            auteur,
+            id_reponse_commentaire,
+        FROM
+            astanble.commentaire
+        WHERE id_reponse_commentaire = #{id_commentaire}
+        ORDER BY id_commentaire;
+    </select>
+
+    <insert id="insertCommentaire">
+        INSERT INTO commentaire(commentaire_content, cip, id_article)
+        VALUES (#{commentaire_content}, #{cip}, #{id_article});
+    </insert>
+
+    <insert id="insertReponseCommentaire">
+        INSERT INTO commentaire(commentaire_content, cip, id_article, id_reponse_commentaire)
+        VALUES (#{commentaire_content}, #{cip}, #{id_article}, #{id_reponse_commentaire});
+    </insert>
+
+</mapper>

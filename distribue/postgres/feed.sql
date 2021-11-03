@@ -13,7 +13,7 @@ SET search_path TO Astanble;
 -- Insertion des données
 -- ==
 
--- Article
+--Article
 INSERT INTO article(nom_article, description_robot_article, description_article, content)
 VALUES ('Nebuleuse','description robot', 'Amas de gaz et de poussières interstellaires.',
         'Une nébuleuse est, en astronomie, un objet céleste composé de gaz raréfié, ' ||
@@ -181,6 +181,12 @@ VALUES ('Amas de gaz et de poussières interstellaires.', true, 1),
 --reponse usager question
 INSERT INTO reponse_usager_question(id_question, id_reponse, cip)
 VALUES (1, 1, 'larn5378');
+
+--commentaire
+INSERT INTO commentaire(commentaire_content, cip, id_article)
+VALUES ('Article très intéressant', 'saej3101', 1),
+       ('Très belles nébuleuses', 'mill3003', 1);
+
 
 -- ============================================================================
 --                          Creation des vues

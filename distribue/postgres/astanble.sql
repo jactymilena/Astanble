@@ -235,7 +235,9 @@ CREATE TABLE commentaire
     id_commentaire      SERIAL PRIMARY KEY NOT NULL,
     commentaire_content TEXT NOT NULL,
     cip                 CHAR(8) NOT NULL,
-    id_reponse_commentaire          INT,
+    id_article INT NOT NULL,
+    id_reponse_commentaire    INT,
     FOREIGN KEY (CIP) REFERENCES usager(CIP) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (id_reponse_commentaire) REFERENCES commentaire(id_commentaire)
+    FOREIGN KEY (id_reponse_commentaire) REFERENCES commentaire(id_commentaire),
+    FOREIGN KEY (id_article) REFERENCES article(id_article) ON UPDATE CASCADE ON DELETE CASCADE
 );

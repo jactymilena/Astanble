@@ -1,7 +1,9 @@
-SELECT * FROM astanble.article;
+SET search_path TO Astanble;
+
+SELECT * FROM astanble.article
 WHERE content LIKE 'objet';
 
-SELECT SIMILARITY(nom_article, 'n'), SIMILARITY(nom_article, 'n') / LENGTH(nom_article), LENGTH(nom_article) AS grandeur, nom_article FROM astanble.article;
+SELECT SIMILARITY(nom_article, 'n'), SIMILARITY(nom_article, 'n') / LENGTH(nom_article), LENGTH(nom_article) AS grandeur, nom_article FROM astanble.article
 WHERE SIMILARITY(content, 'objet') > 0.3;
 
 SELECT content <-> 'the', content FROM astanble.article;
@@ -75,3 +77,15 @@ SELECT * FROM astanble.view_usager_quiz_relation
 WHERE cip = 'larn5378 ' AND nom_relation = 'Auteur' OR nom_relation = 'Co-Auteur';
 
 SELECT * FROM astanble.question WHERE id_quiz = 1;
+
+SELECT * FROM commentaire;
+
+SELECT
+    id_commentaire,
+    commentaire_content,
+    cip,
+    id_article
+FROM
+    astanble.commentaire
+WHERE id_reponse_commentaire IS NULL AND id_article = 1
+ORDER BY id_commentaire;

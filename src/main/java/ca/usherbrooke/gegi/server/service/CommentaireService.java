@@ -3,6 +3,7 @@ package ca.usherbrooke.gegi.server.service;
 import ca.usherbrooke.gegi.server.business.ArticleAuthor;
 import ca.usherbrooke.gegi.server.business.Commentaire;
 import ca.usherbrooke.gegi.server.business.Question;
+import ca.usherbrooke.gegi.server.business.ReponseCommentaire;
 import ca.usherbrooke.gegi.server.persistence.CommentaireMapper;
 import ca.usherbrooke.gegi.server.persistence.QuestionMapper;
 import org.eclipse.microprofile.jwt.JsonWebToken;
@@ -35,7 +36,11 @@ public class CommentaireService {
 
         for(Commentaire com : commentaires) {
             com.setAuteur(commentaireMapper.selectAuthorOfCommentaire(com.getCip()));
-            com.setReponses(commentaireMapper.selectReponseByCommentaire(com.getId_commentaire()));
+            List<ReponseCommentaire> reponses = commentaireMapper.selectReponseByCommentaire(com.getId_commentaire());
+            for(ReponseCommentaire res : reponses) {
+                res.setAuteur(commentaireMapper.selectAuthorOfCommentaire(res.getCip()));
+            }
+            com.setReponses(reponses);
         }
 
         return commentaires;

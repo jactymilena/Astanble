@@ -35,18 +35,19 @@ async function loadArticle() {
 }
 
 function createCommentaireHTML(commentaire, isReponse) {
-    const item = document.createElement('span');
+    const item = document.createElement('div');
     item.innerHTML = `
-        <br>
         <h4>
             <img src="../trimestre/images/UserIcon.png"
              alt="Icone utilisateur"
-             style="width:30px; height: 30px; margin: ${(isReponse == true ? '20px' : '0px')};">
+             style="width:30px; height: 30px;">
               ${commentaire.auteur.prenom_usager} ${commentaire.auteur.nom_usager}
         </h4>   
-        ${commentaire.commentaire_content} <br>
+        ${commentaire.commentaire_content}
     `;
 
+    item.setAttribute('style', `margin: ${isReponse == true ? '30px' : '0px'};
+                                                 border: solid black 1px`);
     liste_commentaires.appendChild(item);
 }
 
@@ -65,9 +66,17 @@ function loadCommentaire() {
 
             commentaires.forEach(com => {
                 createCommentaireHTML(com, false);
-                // com.responses.forEach(res => {
-                //
-                // });
+                console.log(com.reponses);
+                console.log('Grandeur ' + com.reponses.length);
+
+                if(com.reponses.length > 0) {
+                    // console.log('Grandeur ' + com.reponses.length);
+                    console.log(com.reponses);
+                    com.reponses.forEach(res => {
+                        createCommentaireHTML(res, true);
+                    });
+                }
+
             });
         })
         .catch(function (error) {

@@ -128,6 +128,7 @@
                 header, // render de ../shared/header.js
                 //deuxieme ligne: label wiki
                 {
+
                     cols: [
                         // {
                         //     rows: [
@@ -142,8 +143,13 @@
                         // },
                         {
                             rows: [
-                                {view: "template", id: "title", content: "main"}
-                            ]
+                                {view: "template", id: "title", content: "main"},
+                            ],
+                            body: {
+                                view: "scrollview",
+                                scroll: "y",
+                                view: "template", content: "main"
+                            }
                         }
                     ]
                 }

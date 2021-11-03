@@ -228,3 +228,14 @@ CREATE TABLE reponse_usager_question
     FOREIGN KEY (id_reponse) REFERENCES reponse(id_reponse) ON UPDATE CASCADE ON DELETE SET NULL,
     FOREIGN KEY (CIP) REFERENCES usager(CIP) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+-- Table Commentaire
+CREATE TABLE commentaire
+(
+    id_commentaire      SERIAL PRIMARY KEY NOT NULL,
+    commentaire_content TEXT NOT NULL,
+    cip                 CHAR(8) NOT NULL,
+    id_reponse_commentaire          INT,
+    FOREIGN KEY (CIP) REFERENCES usager(CIP) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_reponse_commentaire) REFERENCES commentaire(id_commentaire)
+);

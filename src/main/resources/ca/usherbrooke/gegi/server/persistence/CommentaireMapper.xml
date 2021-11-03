@@ -20,12 +20,18 @@
         SELECT
             id_commentaire,
             commentaire_content,
-            auteur,
-            id_reponse_commentaire,
+            cip,
+            id_reponse_commentaire
         FROM
             astanble.commentaire
         WHERE id_reponse_commentaire = #{id_commentaire}
         ORDER BY id_commentaire;
+    </select>
+
+    <select id="selectAuthorOfCommentaire" resultType="ca.usherbrooke.gegi.server.business.Usager">
+        SELECT cip, nom_usager, prenom_usager
+        FROM astanble.usager
+        WHERE cip = #{cip};
     </select>
 
     <insert id="insertCommentaire">

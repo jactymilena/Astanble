@@ -33,6 +33,11 @@ public class CommentaireService {
     public List<Commentaire> getCommentaires(@PathParam("id_article") int id_article) {
         List<Commentaire> commentaires = commentaireMapper.selectByArticle(id_article);
 
+        for(Commentaire com : commentaires) {
+            com.setAuteur(commentaireMapper.selectAuthorOfCommentaire(com.getCip()));
+            com.setReponses(commentaireMapper.selectReponseByCommentaire(com.getId_commentaire()));
+        }
+
         return commentaires;
     }
 

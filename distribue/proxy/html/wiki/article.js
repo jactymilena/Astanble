@@ -34,12 +34,19 @@ async function loadArticle() {
     loadCommentaire();
 }
 
-function createCommentaireHTML(commentaire) {
+function createCommentaireHTML(commentaire, isReponse) {
     const item = document.createElement('span');
     item.innerHTML = `
-        <h3>Commentaire</h3>   
+        <br>
+        <h4>
+            <img src="../trimestre/images/UserIcon.png"
+             alt="Icone utilisateur"
+             style="width:30px; height: 30px; margin: ${(isReponse == true ? '20px' : '0px')};">
+              ${commentaire.auteur.prenom_usager} ${commentaire.auteur.nom_usager}
+        </h4>   
         ${commentaire.commentaire_content} <br>
     `;
+
     liste_commentaires.appendChild(item);
 }
 
@@ -57,10 +64,11 @@ function loadCommentaire() {
             const commentaires = response.data;
 
             commentaires.forEach(com => {
-                createCommentaireHTML(com);
+                createCommentaireHTML(com, false);
+                // com.responses.forEach(res => {
+                //
+                // });
             });
-
-
         })
         .catch(function (error) {
             console.log('refreshing');

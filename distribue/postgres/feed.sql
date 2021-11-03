@@ -187,6 +187,10 @@ INSERT INTO commentaire(commentaire_content, cip, id_article)
 VALUES ('Article très intéressant', 'saej3101', 1),
        ('Très belles nébuleuses', 'mill3003', 1);
 
+INSERT INTO commentaire(commentaire_content, cip, id_article, id_reponse_commentaire)
+VALUES ('Pas en accord avec toi', 'rouy2404', 1, 1),
+       ('Cest vrai', 'stgt0901', 1, 2);
+
 
 -- ============================================================================
 --                          Creation des vues

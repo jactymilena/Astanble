@@ -89,3 +89,7 @@ FROM
     astanble.commentaire
 WHERE id_reponse_commentaire IS NULL AND id_article = 1
 ORDER BY id_commentaire;
+
+SELECT cip, nom_usager, prenom_usager
+FROM usager
+WHERE cip = 'saej3101';

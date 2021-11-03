@@ -5,9 +5,18 @@ import java.util.List;
 public class Commentaire {
     private int id_commentaire;
     private String commentaire_content;
-    private Usager auteur;
     private int id_article;
+    private String cip;
+    private Usager auteur;
     private List<ReponseCommentaire> reponses;
+
+    public String getCip() {
+        return cip;
+    }
+
+    public void setCip(String cip) {
+        this.cip = cip;
+    }
 
     public int getId_commentaire() {
         return id_commentaire;

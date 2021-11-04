@@ -7,8 +7,17 @@ public class Commentaire {
     private String commentaire_content;
     private int id_article;
     private String cip;
+    private String date_commentaire;
     private Usager auteur;
     private List<ReponseCommentaire> reponses;
+
+    public String getDate_commentaire() {
+        return date_commentaire;
+    }
+
+    public void setDate_commentaire(String date_commentaire) {
+        this.date_commentaire = date_commentaire;
+    }
 
     public String getCip() {
         return cip;

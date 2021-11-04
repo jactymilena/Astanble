@@ -9,11 +9,12 @@
             id_commentaire,
             commentaire_content,
             cip,
-            id_article
+            id_article,
+            date_commentaire
         FROM
             astanble.commentaire
         WHERE id_reponse_commentaire IS NULL AND id_article = #{id_article}
-        ORDER BY id_commentaire;
+        ORDER BY date_commentaire;
     </select>
 
     <select id="selectReponseByCommentaire" resultType="ca.usherbrooke.gegi.server.business.ReponseCommentaire">
@@ -21,11 +22,12 @@
             id_commentaire,
             commentaire_content,
             cip,
-            id_reponse_commentaire
+            id_reponse_commentaire,
+            date_commentaire
         FROM
             astanble.commentaire
         WHERE id_reponse_commentaire = #{id_commentaire}
-        ORDER BY id_commentaire;
+        ORDER BY date_commentaire;
     </select>
 
     <select id="selectAuthorOfCommentaire" resultType="ca.usherbrooke.gegi.server.business.Usager">
@@ -35,13 +37,13 @@
     </select>
 
     <insert id="insertCommentaire">
-        INSERT INTO astanble.commentaire(commentaire_content, cip, id_article)
-        VALUES (#{commentaire.commentaire_content}, #{commentaire.cip}, #{commentaire.id_article});
+        INSERT INTO astanble.commentaire(commentaire_content, cip, id_article, date_commentaire)
+        VALUES (#{commentaire.commentaire_content}, #{commentaire.cip}, #{commentaire.id_article}, #{commentaire.date_commentaire}::date);
     </insert>
 
     <insert id="insertReponseCommentaire">
-        INSERT INTO astanble.commentaire(commentaire_content, cip, id_article, id_reponse_commentaire)
-        VALUES (#{commentaire_content}, #{cip}, #{id_article}, #{id_reponse_commentaire});
+        INSERT INTO astanble.commentaire(commentaire_content, cip, id_article, id_reponse_commentaire, date_commentaire)
+        VALUES (#{commentaire.commentaire_content}, #{commentaire.cip}, #{commentaire.id_article}, #{commentaire.id_reponse_commentaire}, #{commentaire.date_commentaire}::date);
     </insert>
 
 </mapper>

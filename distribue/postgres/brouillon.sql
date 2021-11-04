@@ -97,4 +97,4 @@ WHERE cip = 'saej3101';
 INSERT INTO astanble.commentaire(commentaire_content, cip, id_article)
 VALUES ('allo', 'saej3101', 1);
 
-SELECT commentaire_content FROM astanble.commentaire;
+SELECT * FROM astanble.commentaire;

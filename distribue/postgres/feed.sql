@@ -183,13 +183,13 @@ INSERT INTO reponse_usager_question(id_question, id_reponse, cip)
 VALUES (1, 1, 'larn5378');
 
 --commentaire
-INSERT INTO commentaire(commentaire_content, cip, id_article)
-VALUES ('Article très intéressant', 'saej3101', 1),
-       ('Très belles nébuleuses', 'mill3003', 1);
+INSERT INTO commentaire(commentaire_content, cip, id_article, date_commentaire)
+VALUES ('Article très intéressant', 'saej3101', 1, '2021-11-04 08:05:06'),
+       ('Très belles nébuleuses', 'mill3003', 1, '2021-11-04 08:10:06');
 
-INSERT INTO commentaire(commentaire_content, cip, id_article, id_reponse_commentaire)
-VALUES ('Pas en accord avec toi', 'rouy2404', 1, 1),
-       ('Cest vrai', 'stgt0901', 1, 2);
+INSERT INTO commentaire(commentaire_content, cip, id_article, id_reponse_commentaire, date_commentaire)
+VALUES ('Pas en accord avec toi', 'rouy2404', 1, 1, '2021-11-05 08:05:06'),
+       ('Cest vrai', 'stgt0901', 1, 2, '2021-11-05 08:05:06');
 
 
 -- ============================================================================

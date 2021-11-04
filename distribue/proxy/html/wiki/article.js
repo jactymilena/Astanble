@@ -37,12 +37,18 @@ async function loadArticle() {
 function createCommentaireHTML(commentaire, isReponse) {
     const item = document.createElement('div');
     item.innerHTML = `
-        <h4>
+        <div>
             <img src="../trimestre/images/UserIcon.png"
              alt="Icone utilisateur"
              style="width:30px; height: 30px;">
-              ${commentaire.auteur.prenom_usager} ${commentaire.auteur.nom_usager}
-        </h4>   
+            <span style="font-size: large; font-weight: bold">
+                ${commentaire.auteur.prenom_usager} ${commentaire.auteur.nom_usager}
+            </span>
+            <span style="align: right; font-size: smaller">
+                ${commentaire.date_commentaire}
+            </span>
+        </div>   
+        
         ${commentaire.commentaire_content}
         <br>
     `;

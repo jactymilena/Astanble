@@ -14,6 +14,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Path("/api")
@@ -50,6 +52,9 @@ public class CommentaireService {
     @Path("commentaireInsert")
     @PermitAll
     public void insert(Commentaire commentaire){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        commentaire.setDate_commentaire(formatter.format(date));
         commentaireMapper.insertCommentaire(commentaire);
     }
 

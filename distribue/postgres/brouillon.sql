@@ -93,3 +93,8 @@ ORDER BY id_commentaire;
 SELECT cip, nom_usager, prenom_usager
 FROM usager
 WHERE cip = 'saej3101';
+
+INSERT INTO astanble.commentaire(commentaire_content, cip, id_article)
+VALUES ('allo', 'saej3101', 1);
+
+SELECT commentaire_content FROM astanble.commentaire;

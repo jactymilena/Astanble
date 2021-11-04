@@ -31,7 +31,7 @@ async function loadArticle() {
     }
 
     loadThemesSelector();
-    loadCommentaire();
+    loadCommentaires();
 }
 
 function createCommentaireHTML(commentaire, isReponse) {
@@ -44,14 +44,15 @@ function createCommentaireHTML(commentaire, isReponse) {
               ${commentaire.auteur.prenom_usager} ${commentaire.auteur.nom_usager}
         </h4>   
         ${commentaire.commentaire_content}
+        <br>
     `;
 
-    item.setAttribute('style', `margin: ${isReponse == true ? '30px' : '0px'};
-                                                 border: solid black 1px`);
+    item.setAttribute('style', `margin-left: ${isReponse == true ? '30px' : '0px'};
+                                                 border: solid black 1px; margin-top : 15px`);
     liste_commentaires.appendChild(item);
 }
 
-function loadCommentaire() {
+function loadCommentaires() {
     const id_article = urlParams.get('article');
 
     axios.get("http://localhost:8888/api/commentaire/" + id_article , {
@@ -62,6 +63,7 @@ function loadCommentaire() {
         .then(function (response) {
             console.log(response.data);
             var liste_commentaires = document.getElementById("liste_commentaires");
+            liste_commentaires.innerHTML = "";
             const commentaires = response.data;
 
             commentaires.forEach(com => {
@@ -88,6 +90,45 @@ function loadCommentaire() {
             })
             alert(error);
         });
+}
+
+function createCommentaire() {
+    console.log("Insert commentaire");
+    const commentaire_content = document.getElementById('champ_commentaire');
+
+    if(commentaire_content.value != "") {
+        var commentaire = {
+            "id_article" : urlParams.get('article'),
+            "commentaire_content" : commentaire_content.value,
+            "cip" : user_profil.cip
+        };
+
+        console.log(commentaire);
+
+        axios.post("http://localhost:8888/api/commentaireInsert", JSON.stringify(commentaire), {
+            headers: {
+                'Authorization': 'Bearer ' + keycloak.token,
+                'Content-Type' : 'application/json'
+            }
+        })
+            .then(function (response) {
+                console.log("Response: ", response.status);
+                loadCommentaires();
+            })
+            .catch(function (error) {
+                console.log('refreshing');
+                keycloak.updateToken(5).then(function () {
+                    console.log('Token refreshed');
+                }).catch(function () {
+                    console.log('Failed to refresh token');
+                })
+                console.log('Sad ça fonctionne pas :(');
+                alert(error);
+
+            });
+    } else {
+        alert("Entrez un commentaire dans le champ pertinent.");
+    }
 }
 
 function clearAll() {

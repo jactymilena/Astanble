@@ -35,12 +35,12 @@
     </select>
 
     <insert id="insertCommentaire">
-        INSERT INTO commentaire(commentaire_content, cip, id_article)
-        VALUES (#{commentaire_content}, #{cip}, #{id_article});
+        INSERT INTO astanble.commentaire(commentaire_content, cip, id_article)
+        VALUES (#{commentaire.commentaire_content}, #{commentaire.cip}, #{commentaire.id_article});
     </insert>
 
     <insert id="insertReponseCommentaire">
-        INSERT INTO commentaire(commentaire_content, cip, id_article, id_reponse_commentaire)
+        INSERT INTO astanble.commentaire(commentaire_content, cip, id_article, id_reponse_commentaire)
         VALUES (#{commentaire_content}, #{cip}, #{id_article}, #{id_reponse_commentaire});
     </insert>
 

@@ -1,15 +1,49 @@
-// roule après que le body est loadé
 async function loadIndex() {
-    window.user_profil = {};
-    // call init from app.js
-    init();
+    await initKeycloak();
+    userProfil();
+}
 
-    //https://stackoverflow.com/questions/1759987/listening-for-variable-changes-in-javascript
-    var userProxy = new Proxy(window.user_profil, {
-        set: function (target, key, value) {
-            loadAuthorQuiz(window.user_profil.cip);
-        }
+async function initKeycloak() {
+    console.log("Initializing Keycloack");
+    keycloak = new Keycloak({
+        "realm": "usager",
+        "auth-server-url": "https://localhost/auth/",
+        "ssl-required": "external",
+        "clientId": "frontend",
+        "public-client": true,
+        "confidential-port": 0
     });
+    await keycloak.init({onLoad: 'login-required'}).then(function (authenticated) {
+        console.log(authenticated ? 'authenticated' : 'not authenticated');
+    }).catch(function () {
+        alert('failed to initialize');
+    });
+}
+
+async function userProfil() {
+    await axios.get("http://localhost:8888/api/student", {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token
+        }
+    })
+        .then(function (response) {
+            console.log("Response: ", response.status);
+            user_profil = window.user_profil = response.data;
+
+            // prep user on ui
+            var user_profil_html = document.getElementById("user_profil_nav");
+            if(user_profil_html && user_profil)
+                user_profil_html.innerText = user_profil.first_name + " " + user_profil.last_name;
+            loadAuthorQuiz(window.user_profil.cip);
+        })
+        .catch(function (error) {
+            console.log('refreshing');
+            keycloak.updateToken(5).then(function () {
+                console.log('Token refreshed');
+            }).catch(function () {
+                console.log('Failed to refresh token');
+            })
+        });
 }
 
 function createQuizLink(quiz) {

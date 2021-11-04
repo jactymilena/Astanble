@@ -1,4 +1,4 @@
-var user_profil;
+var user_profil = {};
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 

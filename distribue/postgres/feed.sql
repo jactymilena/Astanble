@@ -158,8 +158,8 @@ VALUES ('Auteur'),
        ('Éditeur');
 
 --usager_quiz
-INSERT INTO usager_quiz(cip, id_quiz, type_relation, id_relation)
-VALUES ('larn5378', 1, 1, 1);
+INSERT INTO usager_quiz(cip, id_quiz, id_relation)
+VALUES ('larn5378', 1, 1);
 
 --usager_article_collaboration
 INSERT INTO usager_article_collaboration(debut_collaboration, fin_collaboration, id_relation, cip, code_article)

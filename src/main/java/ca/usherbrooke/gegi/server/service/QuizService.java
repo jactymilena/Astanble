@@ -98,8 +98,14 @@ public class QuizService {
     @POST
     @Path("quizInsert")
     @PermitAll
-    public void insert(Quiz quiz){
-        quizMapper.insert(quiz);
+    @Produces(MediaType.APPLICATION_JSON)
+    public int insert(Quiz quiz){
+        String user_cip = securityContext.getUserPrincipal().getName();
+        int row_affected = quizMapper.insert(quiz);
+        int id_quiz = quiz.getId_quiz();
+        if(row_affected != 0)
+            quizMapper.insertCollabQuiz(user_cip, id_quiz, 1);
+        return id_quiz;
     }
 
     @PUT

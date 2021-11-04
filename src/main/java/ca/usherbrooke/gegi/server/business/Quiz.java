@@ -5,6 +5,7 @@ import java.util.List;
 public class Quiz {
     private int id_quiz;
     private String nom_quiz;
+    private String description_quiz;
     private List<Question> questions;
 
     public int getId_quiz() {
@@ -21,6 +22,14 @@ public class Quiz {
 
     public void setNom_quiz(String nom_quiz) {
         this.nom_quiz = nom_quiz;
+    }
+
+    public String getDescription_quiz() {
+        return description_quiz;
+    }
+
+    public void setDescription_quiz(String description_quiz) {
+        this.description_quiz = description_quiz;
     }
 
     public List<Question> getQuestions() {

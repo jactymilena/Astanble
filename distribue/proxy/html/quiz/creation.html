@@ -33,12 +33,13 @@
         <script src="http://localhost/auth/js/keycloak.js"></script>
 
         <!-- script personnel pour la page -->
+        <script src="../shared/app.js"></script>
         <script src="../shared/header.js"></script>
         <script src="creation.js"></script>
 
     </head>
 
-    <body style="width: 100%;">
+    <body onload="loadIndex();" style="width: 100%;">
         <div id="main" class="container mt-5">
             <div id="creation">
                 <h1>Création de quiz</h1>
@@ -46,7 +47,7 @@
             <div id="1" class="row col-md-7 col-sm-12">
                 <div class="col-6">
                     <h4>Titre</h4>
-                    <input type="titre" id="titre" class="form-control" name="titre">
+                    <input type="titre" id="nom_quiz" class="form-control" name="titre">
                 </div>
                 <div class="col-6">
                     <h4>Nom du cours</h4>
@@ -56,35 +57,11 @@
             <br>
             <div class="col-md-7 col-sm-12">
                 <h4>Description</h4>
-                <textarea type="description" id="description" class="form-control" name="description"></textarea>
+                <textarea type="description" id="description_quiz" class="form-control" name="description"></textarea>
             </div>
             <hr>
             <h4>Ajout cartes</h4>
             <div id="cards">
-                <div class="col-12 mt-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="row">
-                                <div id="card-1" class="col-6">1</div>
-                                <div align="right" class="col-6">
-                                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteCard(1)"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                             <div class="row">
-                                 <div class="col-6">
-                                     <input id="question-1" class="form-control">
-                                     <label for="question-1" class="form-label">Question</label>
-                                 </div>
-                                 <div class="col-6">
-                                     <input id="reponse-1" class="form-control">
-                                     <label for="reponse-1" class="form-label">Réponse</label>
-                                 </div>
-                             </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="col-12 mt-3">
                 <button class="w-100 p-0" onclick="ajouterCarte()">
@@ -93,6 +70,11 @@
                             Ajouter carte
                         </div>
                     </div>
+                </button>
+            </div>
+            <div class="col-12 mt-3" align="right" style="margin-bottom: 100px">
+                <button class="decorated-button" onclick="creerQuiz()">
+                    Créer
                 </button>
             </div>
         </div>
@@ -113,13 +95,41 @@
                     rows: [
                         header,
                         {
-                            view:"template", content: "main"
+                            view: "template", scroll: "y", content: "main"
                         }
                     ]
                 });
             })
         </script>
         <script id="handlebars-carte" type="text/x-handlebars-template">
+            <div class="col-12 mt-3">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div id="num-{{num_question}}" class="col-6">{{num_question}}</div>
+                            <div align="right" class="col-6">
+                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteCarte({{num_question}})"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <input id="question-{{id_question}}" class="form-control" value="{{question_content}}" onkeyup="updateQuestion({{id_question}})">
+                                <label for="question-1" class="form-label">Question</label>
+                            </div>
+                            <div class="col-6">
+                                <input id="reponse-{{id_reponse}}" class="form-control" value="{{reponse_content}}" onkeyup="updateReponse({{id_reponse}})">
+                                <label for="reponse-1" class="form-label">Réponse</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </script>
+        <script>
+            var carte_html = document.getElementById('handlebars-carte').innerHTML;
+            var carte_Script = Handlebars.compile(carte_html);
         </script>
     </body>
 </html>

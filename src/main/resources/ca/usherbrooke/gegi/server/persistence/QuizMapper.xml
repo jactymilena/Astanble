@@ -43,14 +43,25 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="quiz.id_quiz" keyColumn="id_quiz">
         INSERT INTO astanble.quiz(
-        nom_quiz)
-        VALUES (#{quiz.nom_quiz})
+        nom_quiz,
+        description_quiz)
+        VALUES (#{quiz.nom_quiz},#{quiz.description_quiz})
+    </insert>
 
+    <insert id="insertCollabQuiz">
+        INSERT INTO astanble.usager_quiz(
+            cip,
+            id_quiz,
+            id_relation)
+        VALUES  (#{cip},
+                 #{id_quiz},
+                 #{id_relation});
     </insert>
 
     <update id="update">
         UPDATE astanble.quiz
-        SET nom_quiz = #{quiz.nom_quiz}
+        SET nom_quiz = #{quiz.nom_quiz},
+            description_quiz = #{quiz.description_quiz}
         WHERE id_quiz = #{quiz.id_quiz}::int
     </update>
 

@@ -4,6 +4,7 @@ const urlParams = new URLSearchParams(queryString);
 
 async function init() {
     await initKeycloak();
+    await userProfil();
 }
 
 async function initKeycloak() {
@@ -18,27 +19,26 @@ async function initKeycloak() {
     });
     await keycloak.init({onLoad: 'login-required'}).then(function (authenticated) {
         console.log(authenticated ? 'authenticated' : 'not authenticated');
-        // prep la variable user_profil
-        userProfil();
     }).catch(function () {
         alert('failed to initialize');
     });
 }
 
-function userProfil() {
-    axios.get("http://localhost:8888/api/student", {
+async function userProfil() {
+    await axios.get("http://localhost:8888/api/student", {
         headers: {
             'Authorization': 'Bearer ' + keycloak.token
         }
     })
         .then(function (response) {
             console.log("Response: ", response.status);
-            user_profil = response.data;
+            user_profil = window.user_profil = response.data;
 
             // prep user on ui
             var user_profil_html = document.getElementById("user_profil_nav");
             if(user_profil_html && user_profil)
                 user_profil_html.innerText = user_profil.first_name + " " + user_profil.last_name;
+            return user_profil;
         })
         .catch(function (error) {
             console.log('refreshing');

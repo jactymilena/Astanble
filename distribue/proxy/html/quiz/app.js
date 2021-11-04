@@ -1,11 +1,15 @@
 // roule après que le body est loadé
 async function loadIndex() {
+    window.user_profil = {};
     // call init from app.js
-    await init();
+    init();
 
-    // load quiz de l'auteur
-    // TODO: Mettre le cip de la personne connectée
-    loadAuthorQuiz("larn5378");
+    //https://stackoverflow.com/questions/1759987/listening-for-variable-changes-in-javascript
+    var userProxy = new Proxy(window.user_profil, {
+        set: function (target, key, value) {
+            loadAuthorQuiz(window.user_profil.cip);
+        }
+    });
 }
 
 function createQuizLink(quiz) {

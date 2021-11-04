@@ -65,10 +65,32 @@ function creerQuiz() {
     }
     axiosCreate("http://localhost:8888/api/quizInsert", function (response) {
         console.log(response.status);
-        creerQuestions();
+        creerQuestions(response.data);
     }, quiz);
 }
 
-function creerQuestions(){
-
+function creerQuestions(id_quiz){
+    let questionsReponses = [];
+    $("[id^=question-]").each(function() {
+        let num_question = $(this).attr("data-question-num");
+        let id_question = $(this).attr("data-question-id");
+        let question = {
+            id_quiz: id_quiz,
+            cip: user_profil.cip,
+            num_question: num_question,
+            question_content: $(this).val(),
+            id_type: 1,
+            reponses: []
+        }
+        $(`[data-question-num=${num_question}][data-question-id=${id_question}][id^=reponse-]`).each(function(){
+            let reponse = {
+                id_question: id_question,
+                reponse_content: $(this).val(),
+                bonne_mauvaise: true
+            }
+            question.reponses.push(reponse);
+        });
+        questionsReponses.push(question);
+    });
+    console.log(questionsReponses);
 }

@@ -106,7 +106,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
-                            <div id="num-{{num_question}}" class="col-6">{{num_question}}</div>
+                            <div id="num-{{num_question}}" data-question-num="{{num_question}}" class="col-6">{{num_question}}</div>
                             <div align="right" class="col-6">
                                 <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteCarte({{num_question}})"><i class="fas fa-trash"></i></button>
                             </div>
@@ -115,12 +115,12 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
-                                <input id="question-{{id_question}}" class="form-control" value="{{question_content}}" onkeyup="updateQuestion({{id_question}})">
-                                <label for="question-1" class="form-label">Question</label>
+                                <input id="question-{{id_question}}" data-question-num="{{num_question}}" data-question-id="{{id_question}}" class="form-control" value="{{question_content}}" onkeyup="updateQuestion({{id_question}})">
+                                <label for="question-{{id_question}}" class="form-label">Question</label>
                             </div>
                             <div class="col-6">
-                                <input id="reponse-{{id_reponse}}" class="form-control" value="{{reponse_content}}" onkeyup="updateReponse({{id_reponse}})">
-                                <label for="reponse-1" class="form-label">Réponse</label>
+                                <input id="reponse-{{id_reponse}}" data-question-num="{{num_question}}" data-question-id="{{id_question}}" data-reponse-id="{{id_reponse}}" class="form-control" value="{{reponse_content}}" onkeyup="updateReponse({{id_reponse}})">
+                                <label for="reponse-{{id_reponse}}" class="form-label">Réponse</label>
                             </div>
                         </div>
                     </div>

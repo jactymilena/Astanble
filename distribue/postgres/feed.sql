@@ -131,7 +131,7 @@ VALUES (1,1);
 
 --type_question
 INSERT INTO type_question(nom_type)
-VALUES ('Choix multiple');
+VALUES ('Carte'),('Choix multiple');
 
 --Question
 INSERT INTO question(num_question, question_content, id_quiz, cip, id_type)

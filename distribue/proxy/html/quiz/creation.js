@@ -92,5 +92,8 @@ function creerQuestions(id_quiz){
         });
         questionsReponses.push(question);
     });
-    console.log(questionsReponses);
+    axiosCreate("http://localhost:8888/api/question/insert/all", function (response) {
+        console.log(response.status);
+        console.log("questions inserted");
+    }, questionsReponses);
 }

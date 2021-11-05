@@ -1,27 +1,74 @@
-
-
 function loadIndex() {
     // call init from app.js
     init();
+    let id_quiz = urlParams.get('quiz');
     window.list_carte = [];
-    for (let i = 1; i < 4; i++) {
-        ajouterCarte(i);
+    if(id_quiz != undefined) {
+        window.id_quiz = id_quiz;
+        axiosGet(`http://localhost:8888/api/quiz/${id_quiz}`, function (response){
+            console.log(response.status);
+            let quiz = response.data;
+            $("#nom_quiz").val(quiz.nom_quiz);
+            $("#description_quiz").val(quiz.description_quiz);
+            quiz.questions.forEach(q => {
+                ajouterCarte(null, q);
+            })
+            $("#submit-quiz").text("Sauvegarder");
+            prep_form("update");
+        });
+    } else {
+        for (let i = 1; i < 4; i++) {
+            ajouterCarte(i);
+        }
+        prep_form("create");
     }
 }
 
-function ajouterCarte(num = null) {
-    if(num == null)
-        num = window.list_carte.length;
-    if(num == 0)
-        num = 1;
-    var question = {
-        num_question: num,
-        id_question: num,
-        question_content: "",
-        id_reponse: num,
-        reponse_content: ""
+function prep_form(crud) {
+    crud = crud.toLowerCase();
+    switch (crud) {
+        case "create":
+            createFormSubmitObjet("create", "http://localhost:8888/api/quizInsert", "form-create-quiz", function (response) {
+                console.log(response.status);
+                creerQuestions(response.data);
+            }, () => creerQuiz());
+            break;
+        case "update":
+            createFormSubmitObjet("update", "http://localhost:8888/api/quiz/update", "form-create-quiz", function (response) {
+                console.log(response.status);
+            }, () => creerQuizQuestions());
+            break;
+        default:
+            console.log("not a crud option!");
+            alert("not a crud option!");
+            break;
     }
-    window.list_carte[num] = question;
+}
+
+function ajouterCarte(num = null, question = null) {
+    if(question == null) {
+        if(num == null)
+            num = window.list_carte.length;
+        if(num == 0)
+            num = 1;
+        var question = {
+            num_question: num,
+            question_content: "",
+            reponses: [{
+                num_question: num,
+                num_reponse: 1,
+                reponse_content: ""
+            }]
+        }
+        window.list_carte[num] = question;
+    } else {
+        let num_reponse = 1;
+        question.reponses.forEach(r => {
+            r.num_reponse = num_reponse;
+            num_reponse++;
+        });
+        window.list_carte[question.num_question] = question;
+    }
     var carte = carte_Script(question);
     $("#cards").append(carte);
 }
@@ -34,10 +81,8 @@ function deleteCarte(num) {
         if(q.num_question != num) {
             var question = {
                 num_question: new_index,
-                id_question: new_index,
                 question_content: q.question_content,
-                id_reponse: new_index,
-                reponse_content: q.reponse_content
+                reponses: q.reponses
             }
             new_list[new_index] = question;
             var carte = carte_Script(question);
@@ -50,12 +95,13 @@ function deleteCarte(num) {
 
 function updateQuestion(num) {
     var question = window.list_carte[num];
-    question.question_content = $(`#question-${num}`).val();
+    question.question_content = $(`[data-type="question"][data-question-num="${num}"]`).val();
 }
 
-function updateReponse(num) {
-    var question = window.list_carte[num];
-    question.reponse_content = $(`#reponse-${num}`).val();
+function updateReponse(input) {
+    var question = window.list_carte[$(input).attr("data-question-num")];
+    var reponse = question.reponses.find(r => r.num_reponse == $(input).attr("data-reponse-num"));
+    reponse.reponse_content = $(input).val();
 }
 
 function creerQuiz() {
@@ -63,13 +109,28 @@ function creerQuiz() {
         nom_quiz: $("#nom_quiz").val(),
         description_quiz: $("#description_quiz").val()
     }
-    axiosCreate("http://localhost:8888/api/quizInsert", function (response) {
-        console.log(response.status);
-        creerQuestions(response.data);
-    }, quiz);
+    return quiz;
+}
+
+function creerQuizQuestions() {
+    let quiz = {
+        id_quiz: window.id_quiz,
+        nom_quiz: $("#nom_quiz").val(),
+        description_quiz: $("#description_quiz").val(),
+        questions: createFormQuestions(window.id_quiz)
+    }
+    return quiz;
 }
 
 function creerQuestions(id_quiz){
+    let questionsReponses = createFormQuestions(id_quiz);
+    axiosCreate("http://localhost:8888/api/question/insert/all", function (response) {
+        console.log(response.status);
+        console.log("questions inserted");
+    }, questionsReponses);
+}
+
+function createFormQuestions(id_quiz) {
     let questionsReponses = [];
     $("[id^=question-]").each(function() {
         let num_question = $(this).attr("data-question-num");
@@ -81,19 +142,20 @@ function creerQuestions(id_quiz){
             question_content: $(this).val(),
             id_type: 1,
             reponses: []
-        }
-        $(`[data-question-num=${num_question}][data-question-id=${id_question}][id^=reponse-]`).each(function(){
+        };
+        if(id_question != "")
+            question.id_question = id_question;
+        $(`[data-question-num="${num_question}"][data-type="reponse"]`).each(function(){
+            let id_reponse = $(this).attr("data-reponse-id");
             let reponse = {
-                id_question: id_question,
                 reponse_content: $(this).val(),
                 bonne_mauvaise: true
-            }
+            };
+            if(id_reponse != "")
+                reponse.id_reponse = id_reponse;
             question.reponses.push(reponse);
         });
         questionsReponses.push(question);
     });
-    axiosCreate("http://localhost:8888/api/question/insert/all", function (response) {
-        console.log(response.status);
-        console.log("questions inserted");
-    }, questionsReponses);
+    return questionsReponses;
 }

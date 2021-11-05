@@ -54,7 +54,7 @@ function axiosFetch(crud, url, onsuccess, object = null) {
     crud = crud.toLowerCase();
     console.log(`axios.${crud} at ${url}`);
     switch (crud) {
-         case "get":
+         case "read":
              axios.get(url)
                  .then(function (response) {
                      onsuccess(response);
@@ -64,6 +64,20 @@ function axiosFetch(crud, url, onsuccess, object = null) {
                  });
              break;
         case "create":
+            axios.post(url, JSON.stringify(object), {
+                headers: {
+                    'Authorization': 'Bearer ' + keycloak.token,
+                    'Content-Type' : 'application/json'
+                }
+            })
+                .then(function (response) {
+                    onsuccess(response);
+                })
+                .catch(function (error) {
+                    axiosOnError(error);
+                });
+            break;
+        case "update":
             axios.post(url, JSON.stringify(object), {
                 headers: {
                     'Authorization': 'Bearer ' + keycloak.token,
@@ -92,8 +106,8 @@ function axiosFetch(crud, url, onsuccess, object = null) {
                 });
             break;
         default:
-            alert("ERROR: crud command can be (get, create, delete, update).");
-            console.log("ERROR: crud command can be (get, create, delete, update).");
+            alert("ERROR: crud command can be (read, create, delete, update).");
+            console.log("ERROR: crud command can be (read, create, delete, update).");
             break;
     }
 }
@@ -110,16 +124,80 @@ function axiosOnError(error) {
 }
 
 async function axiosGet(url, onsuccess) {
-    axiosFetch("get", url, onsuccess);
+    axiosFetch("read", url, onsuccess);
 }
 
 async function axiosCreate(url, onsuccess, object) {
     axiosFetch("create", url, onsuccess, object);
 }
 
+async function axiosUpdate(url, onsuccess, object) {
+    axiosFetch("update", url, onsuccess, object);
+}
+
 async function axiosDelete(url, onsuccess) {
     axiosFetch("delete", url, onsuccess);
 }
+
+function createFormSubmit(url, id_form, onsuccess) {
+    var form = document.getElementById(id_form);
+    form.onsubmit = async (e) => {
+        e.preventDefault();
+        if (form.checkValidity() === false) {
+            e.stopPropagation();
+        } else {
+            await axiosCreate(url,
+                function(response) {
+                    onsuccess(response);
+                    form.classList.add('was-validated');
+                    if(response.status === 200) {
+                        form.reset();
+                        form.classList.remove('was-validated');
+                    }
+                }, objectifyForm($(`#${id_form}`).serializeArray()));
+        }
+    };
+}
+
+function createFormSubmitObjet(crud, url, id_form, onsuccess, createObjectFunc) {
+    var form = document.getElementById(id_form);
+    form.onsubmit = async (e) => {
+        e.preventDefault();
+        if (form.checkValidity() === false) {
+            e.stopPropagation();
+        } else {
+            crud = crud.toLowerCase();
+            switch (crud) {
+                case "create":
+                    await axiosCreate(url,
+                        function(response) {
+                            onsuccess(response);
+                            form.classList.add('was-validated');
+                            if(response.status === 200) {
+                                form.reset();
+                                form.classList.remove('was-validated');
+                            }
+                        }, createObjectFunc());
+                    break;
+                case "update":
+                    await axiosUpdate(url,
+                        function(response) {
+                            onsuccess(response);
+                            form.classList.add('was-validated');
+                            if(response.status === 200) {
+                                form.classList.remove('was-validated');
+                            }
+                        }, createObjectFunc());
+                    break;
+                default:
+                    console.log("not a crud command!");
+                    alert("not a crud command!");
+                    break;
+            }
+        }
+    };
+}
+
 
 function objectifyForm(formArray) {
     //serialize data function

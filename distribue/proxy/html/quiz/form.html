@@ -41,42 +41,44 @@
 
     <body onload="loadIndex();" style="width: 100%;">
         <div id="main" class="container mt-5">
-            <div id="creation">
-                <h1>Création de quiz</h1>
-            </div>
-            <div id="1" class="row col-md-7 col-sm-12">
-                <div class="col-6">
-                    <h4>Titre</h4>
-                    <input type="titre" id="nom_quiz" class="form-control" name="titre">
+            <form id="form-create-quiz">
+                <div id="creation">
+                    <h1>Création de quiz</h1>
                 </div>
-                <div class="col-6">
-                    <h4>Nom du cours</h4>
-                    <input type="nom" id="nom" class="form-control" name="nom">
-                </div>
-            </div>
-            <br>
-            <div class="col-md-7 col-sm-12">
-                <h4>Description</h4>
-                <textarea type="description" id="description_quiz" class="form-control" name="description"></textarea>
-            </div>
-            <hr>
-            <h4>Ajout cartes</h4>
-            <div id="cards">
-            </div>
-            <div class="col-12 mt-3">
-                <button class="w-100 p-0" onclick="ajouterCarte()">
-                    <div class="card">
-                        <div class="card-body">
-                            Ajouter carte
-                        </div>
+                <div id="1" class="row col-md-7 col-sm-12">
+                    <div class="col-6">
+                        <h4>Titre</h4>
+                        <input type="titre" id="nom_quiz" class="form-control" name="titre" required>
                     </div>
-                </button>
-            </div>
-            <div class="col-12 mt-3" align="right" style="margin-bottom: 100px">
-                <button class="decorated-button" onclick="creerQuiz()">
-                    Créer
-                </button>
-            </div>
+                    <div class="col-6">
+                        <h4>Nom du cours</h4>
+                        <input type="nom" id="nom" class="form-control" name="nom">
+                    </div>
+                </div>
+                <br>
+                <div class="col-md-7 col-sm-12">
+                    <h4>Description</h4>
+                    <textarea type="description" id="description_quiz" class="form-control" name="description"></textarea>
+                </div>
+                <hr>
+                <h4>Ajout cartes</h4>
+                <div id="cards">
+                </div>
+                <div class="col-12 mt-3">
+                    <button class="w-100 p-0" onclick="ajouterCarte()">
+                        <div class="card">
+                            <div class="card-body">
+                                Ajouter carte
+                            </div>
+                        </div>
+                    </button>
+                </div>
+                <div class="col-12 mt-3" align="right" style="margin-bottom: 100px">
+                    <button id="submit-quiz" class="decorated-button">
+                        Créer
+                    </button>
+                </div>
+            </form>
         </div>
 
         <div id="usericon" align="right" style="width: 100%;">
@@ -115,12 +117,18 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
-                                <input id="question-{{id_question}}" data-question-num="{{num_question}}" data-question-id="{{id_question}}" class="form-control" value="{{question_content}}" onkeyup="updateQuestion({{id_question}})">
+                                <input id="question-{{id_question}}" data-type="question" data-question-num="{{num_question}}" data-question-id="{{id_question}}" class="form-control" value="{{question_content}}" onkeyup="updateQuestion({{num_question}})" required>
                                 <label for="question-{{id_question}}" class="form-label">Question</label>
                             </div>
                             <div class="col-6">
-                                <input id="reponse-{{id_reponse}}" data-question-num="{{num_question}}" data-question-id="{{id_question}}" data-reponse-id="{{id_reponse}}" class="form-control" value="{{reponse_content}}" onkeyup="updateReponse({{id_reponse}})">
-                                <label for="reponse-{{id_reponse}}" class="form-label">Réponse</label>
+                                <div class="row">
+                                    {{#each reponses}}
+                                    <div class="col-12">
+                                        <input id="reponse-{{id_reponse}}" data-type="reponse" data-question-num="{{../num_question}}" data-reponse-num="{{num_reponse}}" data-question-id="{{id_question}}" data-reponse-id="{{id_reponse}}" class="form-control" value="{{reponse_content}}" onkeyup="updateReponse(this)" required>
+                                        <label for="reponse-{{id_reponse}}" class="form-label">Réponse</label>
+                                    </div>
+                                    {{/each}}
+                                </div>
                             </div>
                         </div>
                     </div>

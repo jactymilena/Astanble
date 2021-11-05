@@ -35,26 +35,6 @@ function prep_form() {
     });
 }
 
-function createFormSubmit(url, id_form, onsuccess) {
-    var form = document.getElementById(id_form);
-    form.onsubmit = async (e) => {
-        e.preventDefault();
-        if (form.checkValidity() === false) {
-            e.stopPropagation();
-        } else {
-            await axiosCreate(url,
-                function(response) {
-                    onsuccess(response);
-                    form.classList.add('was-validated');
-                    if(response.status === 200) {
-                        form.reset();
-                        form.classList.remove('was-validated');
-                    }
-                }, objectifyForm($(`#${id_form}`).serializeArray()));
-        }
-    };
-}
-
 function deleteArticle(id_article) {
     axiosDelete("http://localhost:8888/api/wiki/delete/" + id_article, function(response) {
         console.log(response.status);

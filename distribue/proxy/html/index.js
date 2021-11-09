@@ -36,9 +36,6 @@ async function userProfil() {
                 user_profil_html.innerText = user_profil.first_name + " " + user_profil.last_name;
 
 
-
-
-
         })
         .catch(function (error) {
             console.log('refreshing');
@@ -48,10 +45,4 @@ async function userProfil() {
                 console.log('Failed to refresh token');
             })
         });
-}
-
-function modifInfoUser(){
-    const userDiv = document.getElementById("main");
-    userDiv.hidden= true;
-    console.log("modification profil");
 }

@@ -4,17 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
 
-    <title>Profile</title>
+    <title>Profil</title>
 
-    <!-- webix -->
-    <link rel="stylesheet" href="//cdn.webix.com/edge/webix.css" type="text/css">
-    <script src="//cdn.webix.com/edge/webix.js" type="text/javascript"></script>
+
+
+    <!-- choices -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
 
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <!-- style -->
     <link rel="stylesheet" href="../shared/style.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+
+    <!-- webix -->
+    <link rel="stylesheet" href="//cdn.webix.com/edge/webix.css" type="text/css">
+    <script src="//cdn.webix.com/edge/webix.js" type="text/javascript"></script>
 
     <!-- Bootstrap bundle js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -26,49 +34,214 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="http://localhost/auth/js/keycloak.js"></script>
 
+
     <!-- Handlebars -->
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
 
+    <!-- script personnel pour la page -->
     <script src="../shared/app.js"></script>
     <script src="../shared/header.js"></script>
+    <script src="index.js"></script>
 </head>
 
+<!-- appel loadPage() après que le body ait loader -->
 <body onload="loadIndex()" style="width: 100%;">
-    <div id="main" align="center">
-        <h1>Profil</h1>
-    </div>
 
-    <div id="infoUser" align="left">
-        <h4>Prenom:</h4>
-        <h4>Nom:</h4>
-        <h4>CIP:</h4>
-        <h4>Courriel:</h4>
-        <button type="button" onclick="modifInfoUser()">Modifier</button>
-    </div>
+<div id="main" align="center">
+    <h1>Profil</h1>
+</div>
 
-    <div id="usericon" align="right" class="row">
-        <div class="col-12">
-            <img src="../trimestre/images/UserIcon.png"
-                 alt="Icone utilisateur"
-                 style="width:50px; height: 50px; background: #FF8921; margin-top:20px"></div>
-        <div class="col-12">
-            <span id="user_profil_nav"></span>
+<div id="infoUser" align="left">
+    <div class="container">
+        <form>
+
+            <!-- Premiere partie, info du user-->
+            <div class="row mt-5 align-items-center">
+                <div class="col-md-3 text-center mb-5">
+
+                    <!--image du user-->
+                    <div class="avatar avatar-xl">
+                        <img src="../trimestre/images/UserIcon.png" alt="..." style="width:200px; height: 200px" class="avatar-img rounded-circle" />
+                    </div>
+                </div>
+
+                <!--infos generales-->
+                <div class="col">
+                    <div class="row align-items-center">
+                        <div class="col-md-7">
+                            <h4 class="mb-1">Nom de famille, Prenom</h4>
+                            <p class="small mb-3">
+                                <span class="badge bg-dark">Université de Sherbrooke, CA, QC</span></p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-7">
+                            <p class="text-muted">
+                                Étudiant(e) à l'Université de Sherbrooke en génie informatique
+                            </p>
+                            <div id="initial_info1">
+                                <div class="mb-3 row">
+                                    <label for="staticCip" class="col-sm-2 col-form-label">Cip</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly class="form-control-plaintext" id="staticCip" value="abcd1234">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="staticCourriel" class="col-sm-2 col-form-label">Cip</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly class="form-control-plaintext" id="staticCourriel" value="courriel@usherbrooke.ca">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="staticCourriel1" class="col-sm-2 col-form-label">Cip</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly class="form-control-plaintext" id="staticCourriel1" value="courriel@usherbrooke.ca">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!--bouton modif profil-->
+            <div id="initial_info" align="center">
+                <hr class="my-4" />
+                    <button  type="button" class="btn btn-primary" onclick="modifInfoUser()">
+                        Modifier le profil
+                    </button>
+            </div>
+
+            <!--modification des infos (forms)-->
+            <div hidden id="modif_info" align="left" >
+                <hr class="my-4" />
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="firstname">Prénom</label>
+                            <input type="text" id="firstname" class="form-control" placeholder="Prénom" />
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="lastname">Nom</label>
+                            <input type="text" id="lastname" class="form-control" placeholder="Nom" />
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="inputCip5">Cip</label>
+                        <input type="text" class="form-control" id="inputCip5" placeholder="abcd1234" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail4">Courriel</label>
+                        <input type="email" class="form-control" id="inputEmail4" placeholder="courriel@Usherbrooke.ca" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail5">Courriel (optionel)</label>
+                        <input type="email" class="form-control" id="inputEmail5" placeholder="courriel@Usherbrooke.ca" />
+                    </div>
+
+
+                <hr class="my-4" />
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="inputPassword4">Ancien mot de passe</label>
+                                <input type="password" class="form-control" id="inputPassword4" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword5">Nouveau mot de passe</label>
+                                <input type="password" class="form-control" id="inputPassword5" />
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword6">Confirmation du nouveau mot de passe</label>
+                                <input type="password" class="form-control" id="inputPassword6" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="mb-2">Exigences du mot de passe</p>
+                            <p class="small text-muted mb-2">Pour créer un nouveau mot de passe, vous devez remplir toutes les conditions suivantes :</p>
+                            <ul class="small text-muted pl-4 mb-0">
+                                <li>Minimum de 8 charactères</li>
+                                <li>Au moins un chiffre</li>
+                                <li>Ne peut pas être le même que votre ancien mot de passe</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" onclick="saveInfoUser()">Sauvegarder les modifications</button>
+            </div>
+            </form>
         </div>
     </div>
+</div>
 
-    <script type="text/javascript" charset="utf-8">
-        webix.ready(function () {
-            webix.ui.fullScreen();
-            webix.ui({
-                rows: [
-                    //premiere ligne: toolbar avec colonnes de boutons
-                    header,
+<div id="usericon" align="right" class="row">
+    <div class="col-12">
+        <img src="../trimestre/images/UserIcon.png"
+             alt="Icone utilisateur"
+             style="width:50px; height: 50px; background: #FF8921; margin-top:20px"></div>
+    <div class="col-12">
+        <span id="user_profil_nav"></span>
+    </div>
+</div>
 
-                    {view: "template", content: "main", autoheight: true},
-                    {view: "template", scroll: "y", content: "infoUser"}
-                ]
-            })
-        })
-    </script>
+<script type="text/javascript" charset="utf-8">
+    webix.ready(function () {
+        webix.ui.fullScreen();
+        webix.ui({
+            rows: [
+                //premiere ligne: toolbar avec colonnes de boutons
+                header, // render de ../shared/header.js
+                //deuxieme ligne: label
+                {
+
+                    cols: [
+                        {
+                            rows: [
+                                {
+                                    view: "template", content: "main", autoheight: true
+                                },
+                                {
+                                    view: "template",
+                                    scroll: "y",
+                                    content: "infoUser"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        });
+    });
+
+    function modifInfoUser(){
+        const userDiv = document.getElementById("initial_info");
+        userDiv.hidden=true;
+        const userDiv1= document.getElementById("initial_info1");
+        userDiv1.hidden=true;
+
+        const newUserDiv = document.getElementById("modif_info");
+        newUserDiv.hidden=false;
+
+        console.log("modification profil");
+    };
+
+    function saveInfoUser(){
+        const userDiv = document.getElementById("initial_info");
+        userDiv.hidden=false;
+        const userDiv1= document.getElementById("initial_info1");
+        userDiv1.hidden=false;
+
+        const newUserDiv = document.getElementById("modif_info");
+        newUserDiv.hidden=true;
+
+        console.log("sauvegarde des modifications");
+    }
+</script>
+
+
 </body>
 </html>

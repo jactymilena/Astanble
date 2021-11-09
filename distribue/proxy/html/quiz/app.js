@@ -48,10 +48,24 @@ async function userProfil() {
 
 function createQuizLink(quiz) {
     return `
-        <div class="card col-sm-12 col-md-6">
+<div class="col-sm-12 col-md-6">
+        <div class="card">
+            <div class="card-header" align="right">
+                <div class="btn-group">
+                  <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-cog"></i>
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/quiz/form.html?quiz=${quiz.id_quiz}">Modifier</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#" onclick="deleteQuiz(${quiz.id_quiz});">Supprimer</a>
+                  </div>
+                </div>
+            </div>
           <div class="card-body">
             <span><a href="quiz.html?quiz=${quiz.id_quiz}">${quiz.nom_quiz}</a> [${quiz.authors.map(q => q.nom_complet_usager).join(', ')}]</span><br>
           </div>
+        </div>
         </div>
         `
 }
@@ -88,4 +102,14 @@ function loadAuthorQuiz(cip) {
         });
 }
 
+function deleteQuiz(id_quiz) {
+    axiosDelete("http://localhost:8888/api/quiz/delete/" + id_quiz, function () {
+        clearAuthorQuizList();
+        loadAuthorQuiz(user_profil.cip);
+    });
+}
 
+function clearAuthorQuizList() {
+    let liste_quiz_author = document.getElementById("liste_quiz_author");
+    liste_quiz_author.innerHTML = "";
+}

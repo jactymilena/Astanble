@@ -67,7 +67,7 @@
 
     <delete id="delete">
         DELETE FROM astanble.quiz
-        WHERE id_quiz = #{quiz.id_quiz}::int
+        WHERE id_quiz = #{id_quiz}::int
     </delete>
 
 

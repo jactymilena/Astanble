@@ -191,7 +191,7 @@ public class QuizService {
     @DELETE
     @Path("quiz/delete/{id_quiz}")
     @PermitAll
-    public void delete(@PathParam("id_quiz") int id_quiz){
+    public void deleteQuiz(@PathParam("id_quiz") int id_quiz){
         quizMapper.delete(id_quiz);
     }
 

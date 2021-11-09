@@ -53,49 +53,52 @@
 
 <div id="infoUser" align="left">
     <div class="container">
-        <form class="needs-validation" novalidate>
 
-            <!-- Premiere partie, info du user-->
-            <div class="row mt-5 align-items-center">
-                <div class="col-md-3 text-center mb-5">
 
-                    <!--image du user-->
-                    <div class="avatar avatar-xl">
-                        <img src="../trimestre/images/UserIcon.png" alt="..." style="width:200px; height: 200px" class="avatar-img rounded-circle" />
+        <!-- Premiere partie, info du user-->
+        <div class="row mt-5 align-items-center">
+            <div class="col-md-3 text-center mb-5">
+
+                <!--image du user-->
+                <div class="avatar avatar-xl">
+                    <img src="../trimestre/images/UserIcon.png" alt="..." style="width:200px; height: 200px" class="avatar-img rounded-circle" />
+                </div>
+            </div>
+
+            <!--infos generales-->
+            <div class="col">
+                <div class="row align-items-center">
+                    <div class="col-md-7">
+                        <h4 class="mb-1" id="nameTitle">
+                            Prenom nom
+                        </h4>
+                        <p class="small mb-4">
+                            <span class="badge bg-dark">Université de Sherbrooke, CA, QC</span>
+                        </p>
                     </div>
                 </div>
 
-                <!--infos generales-->
-                <div class="col">
-                    <div class="row align-items-center">
-                        <div class="col-md-7">
-                            <h4 class="mb-1">Nom de famille, Prenom</h4>
-                            <p class="small mb-3">
-                                <span class="badge bg-dark">Université de Sherbrooke, CA, QC</span></p>
-                        </div>
-                    </div>
-
-                    <div class="row mb-4">
-                        <div class="col-md-7">
-                            <p class="text-muted">
-                                Étudiant(e) à l'Université de Sherbrooke en génie informatique
-                            </p>
-                            <div id="initial_info1">
-                                <div class="mb-3 row">
-                                    <label for="staticCip" class="col-sm-2 col-form-label">Cip</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" readonly class="form-control-plaintext" id="staticCip" value="abcd1234">
-                                    </div>
+                <div class="row mb-4">
+                    <div class="col-md-7">
+                        <p class="text-muted" id="champRole">
+                            Étudiant(e) à l'Université de Sherbrooke en génie informatique
+                        </p>
+                        <div id="initial_info1">
+                            <div class="mb-3 row">
+                                <label for="staticCip" class="col-sm-2 col-form-label">Cip</label>
+                                <div class="col-sm-10" id="staticCipSpan">
+                                    <input type="text" readonly class="form-control-plaintext" id="staticCip" value="abcd1234">
                                 </div>
+                            </div>
                                 <div class="mb-3 row">
                                     <label for="staticCourriel" class="col-sm-2 col-form-label">Courriel</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-10" id="staticCourrielSpan">
                                         <input type="text" readonly class="form-control-plaintext" id="staticCourriel" value="courriel@usherbrooke.ca">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="staticCourriel1" class="col-sm-2 col-form-label">Courriel (optionnel)</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-10" id="staticCourriel1Span">
                                         <input type="text" readonly class="form-control-plaintext" id="staticCourriel1" value="courriel@usherbrooke.ca">
                                     </div>
                                 </div>
@@ -114,13 +117,14 @@
                     </button>
             </div>
 
+        <form onsubmit="setInfo()" class="needs-validation" novalidate>
             <!--modification des infos (forms)-->
             <div hidden id="modif_info" align="left" >
                 <hr class="my-4" />
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="firstname">Prénom</label>
-                            <input type="text" id="firstname" class="form-control" placeholder="Prénom" required>
+                            <input type="text" id="firstname" class="form-control" value="Prénom" required>
                             <div class="invalid-feedback">
                                 Veuillez entrer un prénom.
                             </div>
@@ -128,7 +132,7 @@
 
                         <div class="form-group col-md-6">
                             <label for="lastname">Nom</label>
-                            <input type="text" id="lastname" class="form-control" placeholder="Nom" required>
+                            <input type="text" id="lastname" class="form-control" value="Nom" required>
                             <div class="invalid-feedback">
                                 Veuillez entrer un nom.
                             </div>
@@ -137,7 +141,7 @@
 
                     <div class="form-group col-md-2">
                         <label for="inputCip5">Cip</label>
-                        <input type="text" class="form-control" id="inputCip5" placeholder="abcd1234" required>
+                        <input type="text" class="form-control" id="inputCip5" value="abcd1234" required>
                         <div class="invalid-feedback">
                             Veuillez entrer un cip.
                         </div>
@@ -145,7 +149,7 @@
 
                     <div class="form-group">
                         <label for="inputEmail4">Courriel</label>
-                        <input type="email" class="form-control" id="inputEmail4" placeholder="courriel@Usherbrooke.ca" required>
+                        <input type="email" class="form-control" id="inputEmail4" value="courriel@Usherbrooke.ca" required>
                         <div class="invalid-feedback">
                             Veuillez entrer un courriel.
                         </div>
@@ -153,12 +157,13 @@
 
                     <div class="form-group">
                         <label for="inputEmail5">Courriel (optionnel)</label>
-                        <input type="email" class="form-control" id="inputEmail5" placeholder="courriel@Usherbrooke.ca" >
+                        <input type="email" class="form-control" id="inputEmail5" value="courriel@Usherbrooke.ca" >
                     </div>
 
 
                 <hr class="my-4" />
-                    <div class="row mb-4">
+
+                    <!--<div class="row mb-4">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="inputPassword4">Ancien mot de passe</label>
@@ -182,7 +187,8 @@
                                 <li>Ne peut pas être le même que votre ancien mot de passe</li>
                             </ul>
                         </div>
-                    </div>
+                    </div>-->
+
                 <div class="row mb-2">
                     <div class="col-md-4">
                         <button type="submit" class="btn btn-primary">Sauvegarder les modifications</button>
@@ -206,25 +212,6 @@
         <span id="user_profil_nav"></span>
     </div>
 </div>
-
-<script>
-      (function() {
-        'use strict';
-        window.addEventListener('load', function() {
-            var forms = document.getElementsByClassName('needs-validation');
-
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
-</script>
 
 <script type="text/javascript" charset="utf-8">
     webix.ready(function () {
@@ -254,23 +241,8 @@
             ]
         });
     });
-
-    function modifInfoUser(){
-        const userDiv = document.getElementById("initial_info");
-        userDiv.hidden=true;
-        const userDiv1= document.getElementById("initial_info1");
-        userDiv1.hidden=true;
-
-        const newUserDiv = document.getElementById("modif_info");
-        newUserDiv.hidden=false;
-
-        console.log("modification profil");
-    };
-
-    function goBack(){
-        window.location.href="//localhost/profil";
-    }
 </script>
+
 
 
 </body>

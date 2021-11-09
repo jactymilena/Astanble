@@ -21,7 +21,7 @@ async function initKeycloak() {
 }
 
 async function userProfil() {
-    await axios.get("http://localhost:8888/api/student", {
+    await axios.get("http://localhost:8888/api/any", {
         headers: {
             'Authorization': 'Bearer ' + keycloak.token
         }
@@ -33,13 +33,22 @@ async function userProfil() {
             // prep user on ui
             var user_profil_html = document.getElementById("user_profil_nav");
             if(user_profil_html && user_profil)
+
                 user_profil_html.innerText = user_profil.first_name + " " + user_profil.last_name;
+                document.getElementById("nameTitle").innerHTML = user_profil.first_name + " " + user_profil.last_name;
+                if(user_profil.roles=="default-roles-master,student"){
+                    document.getElementById("champRole").innerHTML = "Étudiant(e)";
+                }else document.getElementById("champRole").innerHTML = "Administrateur";
+                document.getElementById("staticCourrielSpan").innerHTML= user_profil.email;
 
 
+                document.getElementById("firstname").value= user_profil.first_name;
+                document.getElementById("lastname").value= user_profil.last_name;
+                document.getElementById("inputEmail4").value= user_profil.email;
 
+                userProfilOthers(user_profil.email);
 
-
-        })
+            })
         .catch(function (error) {
             console.log('refreshing');
             keycloak.updateToken(5).then(function () {
@@ -50,8 +59,100 @@ async function userProfil() {
         });
 }
 
-function modifInfoUser(){
-    const userDiv = document.getElementById("main");
-    userDiv.hidden= true;
-    console.log("modification profil");
+async function userProfilOthers(inputEmail) {
+    axios.get("http://localhost:8888/api/usagerByCourriel/" + inputEmail, {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token
+        }
+    })
+        .then(function (response) {
+        console.log("Response: ", response.status);
+        user_profil = window.user_profil = response.data;
+
+
+            document.getElementById("staticCipSPan").innerHTML = user_profil.cip;
+            document.getElementById("inputCip5").value = user_profil.cip;
+
+            if (user_profil.courriel2 != null) {
+                document.getElementById("staticCourriel1Span").innerHTML = user_profil.courriel2;
+                document.getElementById("inputEmail5").value = user_profil.courriel2;
+            } else {
+                document.getElementById("staticCourriel1Span").innerHTML = "";
+                document.getElementById("inputEmail5").value = "";
+            }
+        
+    })
+        .catch(function (error) {
+        console.log('refreshing');
+        keycloak.updateToken(5).then(function () {
+            console.log('Token refreshed');
+        }).catch(function () {
+            console.log('Failed to refresh token');
+        })
+    });
 }
+
+function setInfo() {
+    let usager = {
+        "cip" : document.getElementById("inputCip5").value,
+        "nom_usager" : document.getElementById("lastname").value,
+        "prenom_usager" : document.getElementById("firstname").value,
+        "courriel1" : document.getElementById("inputEmail4").value,
+        "courriel2" : document.getElementById("inputEmail5").value,
+        "nom_complet_usager" : document.getElementById("firstname").value + document.getElementById("lastname").value
+    }
+    axios.put("http://localhost:8888/api/usager/update/"+ usager, {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token
+        }
+    })
+        .then(function (response) {
+            console.log("Response: ", response.status);
+
+        })
+        .catch(function (error) {
+            console.log('refreshing');
+            keycloak.updateToken(5).then(function () {
+                console.log('Token refreshed');
+            }).catch(function () {
+                console.log('Failed to refresh token');
+            })
+            console.log('Sad ça fonctionne pas :(');
+            alert(error);
+
+        });
+};
+
+function goBack(){
+    window.location.href="//localhost/profil";
+};
+
+function modifInfoUser(){
+    const userDiv = document.getElementById("initial_info");
+    userDiv.hidden=true;
+    const userDiv1= document.getElementById("initial_info1");
+    userDiv1.hidden=true;
+
+    const newUserDiv = document.getElementById("modif_info");
+    newUserDiv.hidden=false;
+
+    console.log("modification profil");
+};
+
+(function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        var forms = document.getElementsByClassName('needs-validation');
+
+        var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+
+            }, false);
+        });
+    }, false);
+})();

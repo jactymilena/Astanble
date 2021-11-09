@@ -53,7 +53,7 @@
 
 <div id="infoUser" align="left">
     <div class="container">
-        <form>
+        <form class="needs-validation" novalidate>
 
             <!-- Premiere partie, info du user-->
             <div class="row mt-5 align-items-center">
@@ -120,28 +120,40 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="firstname">Prénom</label>
-                            <input type="text" id="firstname" class="form-control" placeholder="Prénom" />
+                            <input type="text" id="firstname" class="form-control" placeholder="Prénom" required>
+                            <div class="invalid-feedback">
+                                Veuillez entrer un prénom.
+                            </div>
                         </div>
 
                         <div class="form-group col-md-6">
                             <label for="lastname">Nom</label>
-                            <input type="text" id="lastname" class="form-control" placeholder="Nom" />
+                            <input type="text" id="lastname" class="form-control" placeholder="Nom" required>
+                            <div class="invalid-feedback">
+                                Veuillez entrer un nom.
+                            </div>
                         </div>
                     </div>
 
                     <div class="form-group col-md-2">
                         <label for="inputCip5">Cip</label>
-                        <input type="text" class="form-control" id="inputCip5" placeholder="abcd1234" />
+                        <input type="text" class="form-control" id="inputCip5" placeholder="abcd1234" required>
+                        <div class="invalid-feedback">
+                            Veuillez entrer un cip.
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputEmail4">Courriel</label>
-                        <input type="email" class="form-control" id="inputEmail4" placeholder="courriel@Usherbrooke.ca" />
+                        <input type="email" class="form-control" id="inputEmail4" placeholder="courriel@Usherbrooke.ca" required>
+                        <div class="invalid-feedback">
+                            Veuillez entrer un courriel.
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <label for="inputEmail5">Courriel (optionnel)</label>
-                        <input type="email" class="form-control" id="inputEmail5" placeholder="courriel@Usherbrooke.ca" />
+                        <input type="email" class="form-control" id="inputEmail5" placeholder="courriel@Usherbrooke.ca" >
                     </div>
 
 
@@ -171,7 +183,14 @@
                             </ul>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary" onclick="saveInfoUser()">Sauvegarder les modifications</button>
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary">Sauvegarder les modifications</button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-primary" onclick="goBack()">Annuler</button>
+                    </div>
+                </div>
             </div>
             </form>
         </div>
@@ -187,6 +206,25 @@
         <span id="user_profil_nav"></span>
     </div>
 </div>
+
+<script>
+      (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            var forms = document.getElementsByClassName('needs-validation');
+
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
 
 <script type="text/javascript" charset="utf-8">
     webix.ready(function () {
@@ -229,16 +267,8 @@
         console.log("modification profil");
     };
 
-    function saveInfoUser(){
-        const userDiv = document.getElementById("initial_info");
-        userDiv.hidden=false;
-        const userDiv1= document.getElementById("initial_info1");
-        userDiv1.hidden=false;
-
-        const newUserDiv = document.getElementById("modif_info");
-        newUserDiv.hidden=true;
-
-        console.log("sauvegarde des modifications");
+    function goBack(){
+        window.location.href="//localhost/profil";
     }
 </script>
 

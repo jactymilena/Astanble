@@ -99,6 +99,7 @@ public class QuestionService {
                 reponseMapper.insert(reponse);
             } else {
                 // update question
+                reponse.setId_question(question.getId_question());
                 reponseMapper.update(reponse);
             }
         });

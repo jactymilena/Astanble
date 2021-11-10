@@ -13,7 +13,6 @@ war {
 }
 
 dependencies {
-    
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation group: 'io.quarkiverse.mybatis', name: 'quarkus-mybatis', version: '0.0.7'
     implementation 'io.quarkus:quarkus-resteasy:2.1.3.Final'
@@ -21,7 +20,9 @@ dependencies {
     implementation 'io.quarkus:quarkus-oidc:2.1.3.Final'
     implementation 'io.quarkus:quarkus-jdbc-postgresql:2.1.3.Final'
     implementation 'io.quarkus:quarkus-undertow:2.1.3.Final'
-
+    implementation 'io.quarkus:quarkus-rest-client'
+    implementation 'io.quarkus:quarkus-resteasy-multipart'
+    implementation 'io.quarkus:quarkus-resteasy-jackson:2.4.1.Final'
 }
 
 repositories {

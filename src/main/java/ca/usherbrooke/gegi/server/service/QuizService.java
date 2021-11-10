@@ -157,33 +157,7 @@ public class QuizService {
                     reponseMapper.insert(reponse);
                 });
             } else {
-                int id_question = question.getId_question();
-                Question dbQuestion = questionMapper.selectByID(id_question);
-                dbQuestion.setReponses(reponseMapper.selectByQuestion(question.getId_question()));
-
-                questionMapper.update(question);
-
-                // suppressions des reponses qui n'existe plus
-                dbQuestion.getReponses().forEach(reponse -> {
-                    boolean reponse_exists = question.getReponses().stream().anyMatch(r -> r.getId_reponse() == reponse.getId_reponse());
-                    if(!reponse_exists) {
-                        reponseMapper.delete(reponse.getId_reponse());
-                    }
-                });
-
-                // update or insert responses which exists
-                question.getReponses().forEach(reponse -> {
-                    reponse.setId_question(question.getId_question());
-                    boolean reponse_exists = dbQuestion.getReponses().stream().anyMatch(r -> r.getId_reponse() == reponse.getId_reponse());
-                    if(!reponse_exists) {
-                        // insert new question
-                        reponse.setId_question(question.getId_question());
-                        reponseMapper.insert(reponse);
-                    } else {
-                        // update question
-                        reponseMapper.update(reponse);
-                    }
-                });
+                questionService.updateQuestionReponses(question);
             }
         });
     }

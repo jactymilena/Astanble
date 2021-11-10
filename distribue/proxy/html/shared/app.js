@@ -38,6 +38,10 @@ async function userProfil() {
             var user_profil_html = document.getElementById("user_profil_nav");
             if(user_profil_html && user_profil)
                 user_profil_html.innerText = user_profil.first_name + " " + user_profil.last_name;
+
+            if(user_profil.roles.includes("admin"))
+                $$("admin_tab").show();
+
             return user_profil;
         })
         .catch(function (error) {

@@ -23,7 +23,7 @@ const header = {
             }, css: "webix_transparent"
         },
         {
-            view: "button", value: "Admin", width: 100, click: function (id, event) {
+            view: "button", id: "admin_tab", value: "Admin", width: 100, hidden:true, click: function (id, event) {
                 window.location.href = "//localhost/admin";
             }, css: "webix_transparent"
         },

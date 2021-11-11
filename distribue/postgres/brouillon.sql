@@ -73,9 +73,16 @@ SELECT * FROM astanble.view_usager_quiz_relation
 WHERE nom_relation = 'Auteur' OR nom_relation = 'Co-Auteur';
 
 SELECT * FROM astanble.view_usager_quiz_relation
-WHERE cip = 'larn5378 ' AND nom_relation = 'Auteur' OR nom_relation = 'Co-Auteur';
+WHERE cip = 'larn5378' AND nom_relation = 'Auteur' OR nom_relation = 'Co-Auteur';
 
 SELECT * FROM astanble.question WHERE id_quiz = 1;
+
+SELECT id_quiz, nom_quiz
+FROM view_quiz_usager_reponse
+    WHERE cip = 'saej3101';
+
+SELECT * FROM view_article_quiz;
+
 
 SELECT * FROM commentaire;
 

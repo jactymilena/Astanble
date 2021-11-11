@@ -41,4 +41,7 @@ async function loadQuiz() {
         });
 
 }
+function getIdTypeQuestion(q){
+    getIdTypeQuestion(q);
+}
 

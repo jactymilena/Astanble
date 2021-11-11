@@ -203,7 +203,7 @@ function createQuizLink(quiz) {
     return `
         <div class="card col-sm-12 col-md-6">
           <div class="card-body">
-            <span><a href="quiz.html?quiz=${quiz.id_quiz}">${quiz.nom_quiz}</a></span><br>
+            <span><a href="../quiz/quiz.html?quiz=${quiz.id_quiz}">${quiz.nom_quiz}</a></span><br>
           </div>
         </div>
         `

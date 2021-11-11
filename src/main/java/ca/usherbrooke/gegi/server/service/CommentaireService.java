@@ -58,4 +58,14 @@ public class CommentaireService {
         commentaireMapper.insertCommentaire(commentaire);
     }
 
+    @POST
+    @Path("commentaireReponseInsert")
+    @PermitAll
+    public void insertReponse(ReponseCommentaire commentaire){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        commentaire.setDate_commentaire(formatter.format(date));
+        commentaireMapper.insertReponseCommentaire(commentaire);
+    }
+
 }

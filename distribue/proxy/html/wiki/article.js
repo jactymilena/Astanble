@@ -56,6 +56,24 @@ function createCommentaireHTML(commentaire, isReponse) {
     item.setAttribute('style', `margin-left: ${isReponse == true ? '30px' : '0px'};
                                                  border: solid black 1px; margin-top : 15px`);
     liste_commentaires.appendChild(item);
+
+    if(isReponse == false) {
+        console.log("pas reponse");
+        const comment_option = document.createElement('div');
+
+        comment_option.innerHTML += `
+        <div style="margin-left: 30px">
+            <img src="../trimestre/images/UserIcon.png"
+                 alt="Icone utilisateur"
+                 style="width:30px; height: 30px;">
+            <input id="champ_commentaire_reponse" parent="${commentaire.id_commentaire}" class="champ" type="text" placeholder="Répondre au commentaire..."/>
+            <input id="comment_button" type="button" value="Répondre" onclick="createCommentaireReponse(${commentaire.id_commentaire})"/>
+        </div>
+        `;
+
+        liste_commentaires.appendChild(comment_option);
+    }
+
 }
 
 function loadCommentaires() {
@@ -96,6 +114,46 @@ function loadCommentaires() {
             })
             alert(error);
         });
+}
+
+function createCommentaireReponse(id_parent) {
+    console.log("Réponse à un commentaire " + id_parent);
+    const commentaire_content = document.querySelector(`input[parent="${id_parent}"]`);
+
+    if(commentaire_content.value != "") {
+        var commentaire = {
+            "id_article" : urlParams.get('article'),
+            "commentaire_content" : commentaire_content.value,
+            "cip" : user_profil.cip,
+            "id_reponse_commentaire" : id_parent
+        };
+
+        console.log(commentaire);
+
+        axios.post("http://localhost:8888/api/commentaireReponseInsert", JSON.stringify(commentaire), {
+            headers: {
+                'Authorization': 'Bearer ' + keycloak.token,
+                'Content-Type' : 'application/json'
+            }
+        })
+            .then(function (response) {
+                console.log("Response: ", response.status);
+                loadCommentaires();
+            })
+            .catch(function (error) {
+                console.log('refreshing');
+                keycloak.updateToken(5).then(function () {
+                    console.log('Token refreshed');
+                }).catch(function () {
+                    console.log('Failed to refresh token');
+                })
+                console.log('Sad ça fonctionne pas :(');
+                alert(error);
+
+            });
+    } else {
+        alert("Entrez un commentaire dans le champ pertinent.");
+    }
 }
 
 function createCommentaire() {

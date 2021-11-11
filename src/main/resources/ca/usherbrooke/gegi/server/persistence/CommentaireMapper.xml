@@ -14,7 +14,7 @@
         FROM
             astanble.commentaire
         WHERE id_reponse_commentaire IS NULL AND id_article = #{id_article}
-        ORDER BY date_commentaire;
+        ORDER BY date_commentaire DESC;
     </select>
 
     <select id="selectReponseByCommentaire" resultType="ca.usherbrooke.gegi.server.business.ReponseCommentaire">
@@ -27,7 +27,7 @@
         FROM
             astanble.commentaire
         WHERE id_reponse_commentaire = #{id_commentaire}
-        ORDER BY date_commentaire;
+        ORDER BY date_commentaire ASC;
     </select>
 
     <select id="selectAuthorOfCommentaire" resultType="ca.usherbrooke.gegi.server.business.Usager">

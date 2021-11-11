@@ -32,4 +32,5 @@
             nom_thematique)
         VALUES  (#{thematique.nom_thematique});
     </insert>
+    
 </mapper>

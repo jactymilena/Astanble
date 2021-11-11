@@ -16,6 +16,8 @@ async function loadArticle() {
             console.error( error );
         } );
     // load wiki in page
+
+    await loadThemesSelector();
     if(urlParams.get('create') == 'true')
     {
         clearAll();
@@ -29,8 +31,6 @@ async function loadArticle() {
         requestWiki(urlParams.get('article'));
         editor5.isReadOnly = true;
     }
-
-    loadThemesSelector();
 }
 
 function clearAll() {
@@ -63,7 +63,9 @@ function requestWiki(id) {
             $("#description_article").text(article.description_article);
             editor5.setData(article.content);
             article.thematiques.forEach(t => {
-                $(`input[name='themeSelection'][value='${t.id_thematique}']`)[0].checked = true;
+                let thematique = $(`input[name='themeSelection'][value='${t.id_thematique}']`)[0];
+                thematique.checked = true;
+                thematique.setAttribute("data-checked", "true");
             });
             console.log(article);
         })
@@ -86,7 +88,8 @@ function saveEditorContent() {
         "id_article" : urlParams.get('article'),
         "nom_article" : $('#nom_article_editTextBox').val(),
         "content" : content,
-        "description_article" : $("#description_article").val()
+        "description_article" : $("#description_article").val(),
+        "thematiques" : getCheckedTheme()
     }
 
     axios.put("http://localhost:8888/api/wiki/update", JSON.stringify(article), {
@@ -192,9 +195,9 @@ function toggleContentEdition() {
     saveEditorBtn.toggleAttribute("hidden");
 }
 
-function loadThemesSelector() {
+async function loadThemesSelector() {
     var selector = document.getElementById("themeSelector");
-    axios.get("http://localhost:8888/api/thematique")
+    await axios.get("http://localhost:8888/api/thematique")
         .then(function (response) {
             console.log("api/thematique");
             console.log(response.status);
@@ -218,6 +221,24 @@ function loadThemesSelector() {
 
 function createThemeSelect(theme, checked) {
     return `
-        <input name="themeSelection" type="checkbox" value="${theme.id_thematique}" ${checked ? "checked": ""}>${theme.nom_thematique}</input>
+        <span>
+            <input onclick="themeSelectionCheck(this);" name="themeSelection" type="checkbox" value="${theme.id_thematique}" ${checked ? "data-checked='true' checked": "data-checked='false'"}>${theme.nom_thematique}</input>
+        </span>
     `;
+}
+
+function getCheckedTheme() {
+    let themesChecked = [];
+    $('input[data-checked=true]').each(function(theme) {
+        let thematique = {
+            "id_thematique": `${$(this).val()}`,
+            "nom_thematique": ""
+        }
+        themesChecked.push(thematique);
+    });
+    return themesChecked;
+}
+
+function themeSelectionCheck(input) {
+    input.setAttribute("data-checked", input.checked);
 }

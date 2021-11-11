@@ -63,7 +63,21 @@ VALUES ('Chien','description robot', 'Animal poilu domestiqué',
 
 --Thematique
 INSERT INTO thematique(nom_thematique)
-VALUES ('Espace'), ('Animaux');
+VALUES ('Espace'),
+       ('Arts, lettres et langues'),
+       ('Droit'),
+       ('Environnement et développement durable'),
+       ('Études plurisectorielles'),
+       ('Génie'),
+       ('Informatique'),
+       ('Musique'),
+       ('Sciences de l''activité physique'),
+       ('Sciences de la santé'),
+       ('Sciences de l''éducation'),
+       ('Sciences humaines'),
+       ('Sciences pures'),
+       ('Administration'),
+       ('Théologie et de sciences religieuses');
 
 --Article_thematique
 INSERT INTO article_thematique(id_article, id_thematique, numero_ordre)

@@ -131,7 +131,7 @@ VALUES (1,1);
 
 --type_question
 INSERT INTO type_question(nom_type)
-VALUES ('Choix multiple');
+VALUES ('Carte'), ('Choix multiple');
 
 --Question
 INSERT INTO question(num_question, question_content, id_quiz, cip, id_type)
@@ -141,7 +141,7 @@ INSERT INTO question(num_question, question_content, id_quiz, cip, id_type)
 VALUES (2, 'Quelle était la définition du mot nébuleuse les années 1920?' , 1, 'larn5378', 1);
 
 INSERT INTO question(num_question, question_content, id_quiz, cip, id_type)
-VALUES (3, 'Est-ce qu une nébuleuse est un objet céleste composé de gaz raréfié en astronomie?' , 1, 'larn5378', 1);
+VALUES (3, 'Est-ce qu une nébuleuse est un objet céleste composé de gaz raréfié en astronomie?' , 1, 'larn5378', 2);
 
 --article_question
 INSERT INTO article_question(id_article, id_question)
@@ -175,7 +175,9 @@ VALUES
 INSERT INTO reponse(reponse_content, bonne_mauvaise, id_question)
 VALUES ('Amas de gaz et de poussières interstellaires.', true, 1),
        ('Une étoile.', false, 1),
-       ('Amas de roches et deau.', false, 1);
+       ('Amas de roches et deau.', false, 1),
+       ('oui', true, 3),
+       ('non', false, 3);
 
 
 --reponse usager question

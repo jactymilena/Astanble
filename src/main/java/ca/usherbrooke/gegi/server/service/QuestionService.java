@@ -38,10 +38,10 @@ public class QuestionService {
     @Path("TypeQuestion/{question}")
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
-    public Question selectByTypeQuestion(@Param("question") int question){
+    public int selectByTypeQuestion(@Param("question") int question){
         Question type = questionMapper.selectByTypeQuestion(question);
         int id_type = type.getId_type();
-        return type;
+        return id_type;
     }
 
     @POST

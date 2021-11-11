@@ -3,9 +3,24 @@ function createQuestionHTML(q, liste_questions) {
     item.innerHTML = `
         <h3>Question ${q.num_question}</h3>   
         ${q.question_content} <br>
-        <input type="text" placeholder="Réponse"/>
-        <br>
     `;
+    if(q.id_type == 1) {
+        item.innerHTML += `
+            <h3>Réponse</h3>
+            <input id=${q.id_question} type="text" placeholder="Réponse"/>
+            <br>
+        `;
+    }
+    else if(q.id_type==2){
+        var reponseQuiz = q.reponses;
+        for(var i = 0; i<reponseQuiz.length;i++){
+            item.innerHTML += `
+            <input id=${reponseQuiz[i].id_reponse} type="radio" name={"reponse"+${q.id_question}} />
+            <label for=${reponseQuiz[i].id_reponse}>${reponseQuiz[i].reponse_content}</label>
+            `;
+        }
+    }
+
     liste_questions.appendChild(item);
 }
 
@@ -20,7 +35,7 @@ async function loadQuiz() {
         }
     })
         .then(function (response) {
-            var quiz = response.data;
+            const quiz = response.data;
             const nom_quiz = document.getElementById("nom_quiz");
             nom_quiz.innerHTML = quiz.nom_quiz;
             var liste_questions = document.getElementById("liste_questions");
@@ -41,7 +56,13 @@ async function loadQuiz() {
         });
 
 }
-function getIdTypeQuestion(q){
+/*function getIdTypeQuestion(q){
     getIdTypeQuestion(q);
-}
+}*/
+function quiz_finish(){
+    quiz.questions.forEach(q => {
+        var question = document.getElementById(${q.id_question});
+        
+    })
 
+}

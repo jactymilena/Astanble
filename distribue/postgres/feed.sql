@@ -198,9 +198,9 @@ WHERE article.id_article = usager_article_collaboration.code_article AND
         usager_article_collaboration.cip = usager.cip;
 
 -- ==
--- Creation de la vue des articles et quizz
+-- Creation de la vue des articles et quiz
 -- ==
-CREATE OR REPLACE VIEW  view_article_quizz as
+CREATE OR REPLACE VIEW  view_article_quiz as
 SELECT article.id_article, article.nom_article, article.description_article, article.content, quiz.id_quiz, quiz.nom_quiz
 FROM article, article_quiz, quiz
 WHERE article.id_article = article_quiz.id_article AND

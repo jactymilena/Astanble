@@ -118,6 +118,11 @@
         ORDER BY astanble.SIMILARITY(description_article,   #{description_article}) DESC
             LIMIT 100;
     </select>
+
+    <select id="selectQuizByArticle" resultType="ca.usherbrooke.gegi.server.business.Quiz">
+        SELECT * FROM astanble.view_article_quiz
+        WHERE id_article = #{id_article};
+    </select>
     
     <insert id="insert" useGeneratedKeys="true" keyProperty="article.id_article" keyColumn="id_article">
         INSERT INTO astanble.article(

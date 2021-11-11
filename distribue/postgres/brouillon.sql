@@ -80,4 +80,5 @@ SELECT id_quiz, nom_quiz
 FROM view_quiz_usager_reponse
     WHERE cip = 'saej3101';
 
-SELECT * FROM view_quiz_usager_reponse;
+SELECT * FROM view_article_quiz;
+

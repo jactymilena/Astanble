@@ -2,6 +2,7 @@ package ca.usherbrooke.gegi.server.service;
 
 import ca.usherbrooke.gegi.server.business.Article;
 import ca.usherbrooke.gegi.server.business.ArticleAuthor;
+import ca.usherbrooke.gegi.server.business.Quiz;
 import ca.usherbrooke.gegi.server.business.Usager;
 import ca.usherbrooke.gegi.server.persistence.ThematiqueMapper;
 import ca.usherbrooke.gegi.server.persistence.WikiMapper;
@@ -121,6 +122,16 @@ public class WikiService {
         List<ArticleAuthor> wikis = wikiMapper.selectSearchByDescription(description_article);
         setListAuthors(wikis);
         return wikis;
+    }
+
+    @GET
+    @Path("wiki/quizByArticle/{id_article}")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Quiz> getQuizByArticle(@PathParam("id_article") int id_article) {
+        List<Quiz> quiz = wikiMapper.selectQuizByArticle(id_article);
+
+        return quiz;
     }
 
     @POST

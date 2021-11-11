@@ -31,6 +31,7 @@ async function loadArticle() {
     }
 
     loadThemesSelector();
+    loadQuizref();
 }
 
 function clearAll() {
@@ -196,4 +197,44 @@ function createThemeSelect(theme, checked) {
     return `
         <input name="themeSelection" type="checkbox" value="${theme.id_thematique}" ${checked ? "checked": ""}>${theme.nom_thematique}</input>
     `;
+}
+
+function createQuizLink(quiz) {
+    return `
+        <div class="card col-sm-12 col-md-6">
+          <div class="card-body">
+            <span><a href="quiz.html?quiz=${quiz.id_quiz}">${quiz.nom_quiz}</a></span><br>
+          </div>
+        </div>
+        `
+}
+
+function loadQuizref() {
+    console.log("load des quiz")
+    const id_article = urlParams.get('article');
+    axios.get("http://localhost:8888/api/wiki/quizByArticle/" + id_article , {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token
+        }
+    })
+        .then(function (response) {
+           console.log(response.data);
+            const quiz = response.data
+            const liste_quiz_article = document.getElementById('liste_quiz_article');
+            quiz.forEach(q => {
+                liste_quiz_article.innerHTML +=  createQuizLink(q);
+            });
+
+
+
+        })
+        .catch(function (error) {
+            console.log('refreshing');
+            keycloak.updateToken(5).then(function () {
+                console.log('Token refreshed');
+            }).catch(function () {
+                console.log('Failed to refresh token');
+            })
+            alert(error);
+        });
 }

@@ -237,7 +237,7 @@ CREATE TABLE commentaire
     cip                       CHAR(8) NOT NULL,
     id_article                INT NOT NULL,
     id_reponse_commentaire    INT,
-    date_commentaire           DATE NOT NULL,
+    date_commentaire          TIMESTAMP NOT NULL,
     FOREIGN KEY (CIP) REFERENCES usager(CIP) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (id_reponse_commentaire) REFERENCES commentaire(id_commentaire),
     FOREIGN KEY (id_article) REFERENCES article(id_article) ON UPDATE CASCADE ON DELETE CASCADE

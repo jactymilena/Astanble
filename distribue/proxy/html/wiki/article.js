@@ -42,23 +42,28 @@ function createCommentaireHTML(commentaire, isReponse, liste) {
             <img src="../trimestre/images/UserIcon.png"
              alt="Icone utilisateur"
              style="width:30px; height: 30px;">
-            <span style="font-size: large; font-weight: bold">
-                ${commentaire.auteur.prenom_usager} ${commentaire.auteur.nom_usager}
-            </span>
-            <span style="align: right; font-size: smaller">
-                ${commentaire.date_commentaire}
-            </span>
-            <input id="delete_comment_button" type="button" value="x" onclick="deleteCommentaire(${commentaire.id_commentaire})"/>
-            <input id="comment_button" type="button" value="Répondre" onclick="addResponseOption(${commentaire.id_commentaire})" 
-            ${isReponse == true ? "hidden" : ''}/>
+             <div style="border: solid #5f5f5f 1px;">
+                
+                <span style="font-size: large; font-weight: bold">
+                    ${commentaire.auteur.prenom_usager} ${commentaire.auteur.nom_usager}
+                </span>
+                <span style="align: right; font-size: smaller">
+                    ${commentaire.date_commentaire}
+                </span>
+                <input id="delete_comment_button" type="button" value="x" onclick="deleteCommentaire(${commentaire.id_commentaire})"/>
+                <input id="comment_button" type="button" value="Répondre" onclick="addResponseOption(${commentaire.id_commentaire})" 
+                ${isReponse == true ? "hidden" : ''}/>
+                <br>
+                ${commentaire.commentaire_content}
+            </div>
+            
         </div>   
         
-        ${commentaire.commentaire_content}
         <br>
     `;
 
     item.setAttribute('style', `margin-left: ${isReponse == true ? '30px' : '0px'};
-                                                 border: solid black 1px; margin-top : 15px`);
+                                                  margin-top : 15px`);
     liste.appendChild(item);
 }
 

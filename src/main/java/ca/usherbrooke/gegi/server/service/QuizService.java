@@ -4,6 +4,7 @@ import ca.usherbrooke.gegi.server.business.*;
 import ca.usherbrooke.gegi.server.persistence.QuestionMapper;
 import ca.usherbrooke.gegi.server.persistence.QuizMapper;
 import ca.usherbrooke.gegi.server.persistence.ReponseMapper;
+import org.apache.ibatis.annotations.Param;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import javax.annotation.security.PermitAll;
@@ -31,6 +32,9 @@ public class QuizService {
     @Inject
     ReponseMapper reponseMapper;
 
+    @Inject
+    QuestionService questionService;
+
     public List<QuizAuthor> setListAuthors(List<QuizAuthor> quiz) {
         for (QuizAuthor q : quiz) {
             int id_quiz = q.getId_quiz();
@@ -55,6 +59,20 @@ public class QuizService {
             }
             q.setQuestions(questions);
         }
+        return quiz;
+    }
+
+    @GET
+    @Path("quiz/{id_quiz}")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public Quiz getQuiz(@PathParam("id_quiz") int id_quiz) {
+        Quiz quiz = quizMapper.selectByID(id_quiz);
+        List<Question> questions = questionMapper.selectByQuiz(quiz.getId_quiz());
+        for (Question question : questions) {
+            question.setReponses(reponseMapper.selectByQuestion(question.getId_question()));
+        }
+        quiz.setQuestions(questions);
         return quiz;
     }
 
@@ -106,26 +124,56 @@ public class QuizService {
     @POST
     @Path("quizInsert")
     @PermitAll
-    public void insert(Quiz quiz){
-        quizMapper.insert(quiz);
+    @Produces(MediaType.APPLICATION_JSON)
+    public int insert(Quiz quiz){
+        String user_cip = securityContext.getUserPrincipal().getName();
+        int row_affected = quizMapper.insert(quiz);
+        int id_quiz = quiz.getId_quiz();
+        if(row_affected != 0)
+            quizMapper.insertCollabQuiz(user_cip, id_quiz, 1);
+        return id_quiz;
     }
 
-    @PUT
+    @POST
     @Path("quiz/update")
     @PermitAll
     public void update(Quiz quiz){
-        Quiz dbQuiz =  quizMapper.selectByID(quiz.getId_quiz());
+        Quiz dbQuiz = getQuiz(quiz.getId_quiz());
 
         if(quiz.getNom_quiz() == null)
             quiz.setNom_quiz(dbQuiz.getNom_quiz());
+        if(quiz.getDescription_quiz() == null)
+            quiz.setDescription_quiz(dbQuiz.getDescription_quiz());
 
         quizMapper.update(quiz);
+
+        // suppression des questions qui ne sont plus présent dans le quiz
+        dbQuiz.getQuestions().forEach(question -> {
+            boolean question_exists = quiz.getQuestions().stream().anyMatch(q -> q.getId_question() == question.getId_question());
+            if(!question_exists) {
+                questionMapper.delete(question.getId_question());
+            }
+        });
+
+        // update des questions qui sont présent ou bien les ajoutes
+        quiz.getQuestions().forEach(question -> {
+            boolean question_exists = dbQuiz.getQuestions().stream().anyMatch(q -> q.getId_question() == question.getId_question());
+            if(!question_exists) {
+                questionMapper.insert(question);
+                question.getReponses().forEach(reponse -> {
+                    reponse.setId_question(question.getId_question());
+                    reponseMapper.insert(reponse);
+                });
+            } else {
+                questionService.updateQuestionReponses(question);
+            }
+        });
     }
 
     @DELETE
     @Path("quiz/delete/{id_quiz}")
     @PermitAll
-    public void delete(@PathParam("id_quiz") int id_quiz){
+    public void deleteQuiz(@PathParam("id_quiz") int id_quiz){
         quizMapper.delete(id_quiz);
     }
 

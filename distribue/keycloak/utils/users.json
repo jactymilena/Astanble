@@ -28,6 +28,7 @@
       "lastName": "L'Archevêque-Carrière",
       "email": "larn5378@usherbrooke.ca",
       "realmRoles": [
+        "admin",
         "student",
         "default-roles-master"
       ],
@@ -118,6 +119,7 @@
       "lastName": "Routhier-Chevrier",
       "email": "rouy2404@usherbrooke.ca",
       "realmRoles": [
+        "admin",
         "student",
         "default-roles-master"
       ],
@@ -208,6 +210,7 @@
       "lastName": "Paquin",
       "email": "paqv2407@usherbrooke.ca",
       "realmRoles": [
+        "admin",
         "student",
         "default-roles-master"
       ],
@@ -244,6 +247,7 @@
       "lastName": "Keita",
       "email": "keit1201@usherbrooke.ca",
       "realmRoles": [
+        "admin",
         "student",
         "default-roles-master"
       ],
@@ -460,6 +464,7 @@
       "lastName": "Milette",
       "email": "mill3003@usherbrooke.ca",
       "realmRoles": [
+        "admin",
         "student",
         "default-roles-master"
       ],
@@ -478,6 +483,7 @@
       "lastName": "Saenz Rosales",
       "email": "saej3101@usherbrooke.ca",
       "realmRoles": [
+        "admin",
         "student",
         "default-roles-master"
       ],

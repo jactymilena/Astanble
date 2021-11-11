@@ -63,7 +63,21 @@ VALUES ('Chien','description robot', 'Animal poilu domestiqué',
 
 --Thematique
 INSERT INTO thematique(nom_thematique)
-VALUES ('Espace'), ('Animaux');
+VALUES ('Espace'),
+       ('Arts, lettres et langues'),
+       ('Droit'),
+       ('Environnement et développement durable'),
+       ('Études plurisectorielles'),
+       ('Génie'),
+       ('Informatique'),
+       ('Musique'),
+       ('Sciences de l''activité physique'),
+       ('Sciences de la santé'),
+       ('Sciences de l''éducation'),
+       ('Sciences humaines'),
+       ('Sciences pures'),
+       ('Administration'),
+       ('Théologie et de sciences religieuses');
 
 --Article_thematique
 INSERT INTO article_thematique(id_article, id_thematique, numero_ordre)
@@ -131,7 +145,7 @@ VALUES (1,1);
 
 --type_question
 INSERT INTO type_question(nom_type)
-VALUES ('Choix multiple');
+VALUES ('Carte'),('Choix multiple');
 
 --Question
 INSERT INTO question(num_question, question_content, id_quiz, cip, id_type)
@@ -158,8 +172,8 @@ VALUES ('Auteur'),
        ('Éditeur');
 
 --usager_quiz
-INSERT INTO usager_quiz(cip, id_quiz, type_relation, id_relation)
-VALUES ('larn5378', 1, 1, 1);
+INSERT INTO usager_quiz(cip, id_quiz, id_relation)
+VALUES ('larn5378', 1, 1);
 
 --usager_article_collaboration
 INSERT INTO usager_article_collaboration(debut_collaboration, fin_collaboration, id_relation, cip, code_article)

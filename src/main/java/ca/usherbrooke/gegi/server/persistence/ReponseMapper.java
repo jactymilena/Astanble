@@ -16,5 +16,4 @@ public interface ReponseMapper {
     void insert(@Param("reponse") Reponse reponse);
     void update(@Param("reponse") Reponse reponse);
     void delete(@Param("id_reponse") int id_reponse);
-
 }

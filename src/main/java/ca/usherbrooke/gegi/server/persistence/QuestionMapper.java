@@ -12,7 +12,7 @@ public interface QuestionMapper {
     List<Question> selectByQuiz(@Param("id_quiz") int id_quiz);
     List<Question> selectByReponse(@Param("id_reponse") int id_reponse);
     List<Question> selectByName(@Param("name") String name);
-    List<Question> selectByID(@Param("id") int id);
+    Question selectByID(@Param("id_question") int id_question);
     List<Question> selectByType(@Param("type") int type);
     void insert(@Param("question") Question question);
     void update(@Param("question") Question question);

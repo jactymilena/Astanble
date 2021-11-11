@@ -72,12 +72,14 @@
             <hr>
             <button id="saveButton" class="decorated-button" onclick="saveEditorContent()" hidden>Save</button>
             <button id="toggleEditButton" class="decorated-button" onclick="toggleContentEdition()">Modifier</button>
+
+            <button id="deleteButton" class="decorated-button" style="background-color: red; float: right;" onclick="deleteArticle()">Supprimer</button>
         </div>
         <div class="col-sm-12 col-md-2">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Thématiques</h4>
-                    <div id="themeSelector" class="card-body">
+                    <div id="themeSelector" class="card-body d-flex flex-column">
 
                     </div>
                 </div>
@@ -119,9 +121,8 @@
 
 <div id="usericon" align="right">
     <div class="col-12">
-        <img src="../trimestre/images/UserIcon.png"
-             alt="Icone utilisateur"
-             style="width:50px; height: 50px; background: #FF8921; margin-top:20px"></div>
+        <img  class="image_user_icon" id="image_user_icon" src="../trimestre/images/UserIcon.png"
+             alt="Icone utilisateur"></div>
     <div class="col-12">
         <span id="user_profil_nav"></span>
     </div>

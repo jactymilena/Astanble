@@ -22,6 +22,11 @@ const header = {
                 window.location.href = "//localhost/quiz";
             }, css: "webix_transparent"
         },
+        {
+            view: "button", id: "admin_tab", value: "Admin", width: 100, hidden:true, click: function (id, event) {
+                window.location.href = "//localhost/admin";
+            }, css: "webix_transparent"
+        },
         {view: "template", borderless: true, content: "usericon", css: {"background": "#FF8921"}}
     ]
 }

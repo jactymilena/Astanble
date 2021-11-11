@@ -8,6 +8,10 @@ public class Thematique {
         return id_thematique;
     }
 
+    public void setId_thematique(String id_thematique) {
+        this.id_thematique = id_thematique;
+    }
+
     public String getNom_thematique() {
         return nom_thematique;
     }

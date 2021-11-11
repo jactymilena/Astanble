@@ -13,5 +13,7 @@ import java.util.List;
 public interface ThematiqueMapper {
     List<Thematique> select();
     List<Thematique> selectByArticleId(@Param("id_article") int id_article);
+    int insert(@Param("thematique") Thematique thematique);
+    void delete(@Param("id_thematique") int id_thematique);
 }
 

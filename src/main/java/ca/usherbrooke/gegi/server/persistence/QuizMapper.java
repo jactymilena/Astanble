@@ -14,8 +14,8 @@ public interface QuizMapper {
     List<QuizAuthor> selectByAuthor(@Param("auteur")String auteur);
     List<Usager> selectAuthorByQuiz(@Param("id_quiz") int id_quiz);
     List<Quiz> selectByQuestionRepondue(@Param("cip") String cip);
-    void insert(@Param("quiz") Quiz quiz);
+    int insert(@Param("quiz") Quiz quiz);
     void update(@Param("quiz") Quiz quiz);
     void delete(@Param("id_quiz") int id_quiz);
-
+    void insertCollabQuiz(@Param("cip") String cip, @Param("id_quiz") int id_quiz, @Param("id_relation") int id_relation);
 }

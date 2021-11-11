@@ -152,7 +152,7 @@ public class WikiService {
     @PUT
     @Path("wiki/update")
     @PermitAll
-    public void updateArticle(Article article){
+    public void updateArticle(ArticleAuthor article){
         String user_cip = securityContext.getUserPrincipal().getName();
         String id_article = article.getId_article();
         int id_article_int = Integer.parseInt(id_article);
@@ -173,7 +173,7 @@ public class WikiService {
         if(article.getDescription_robot_article() == null)
             article.setDescription_robot_article(dbArticle.getDescription_robot_article());
 
-        wikiMapper.update(article);
+        wikiMapper.update((Article) article);
     }
 
     @DELETE

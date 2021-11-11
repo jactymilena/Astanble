@@ -9,7 +9,7 @@
     </select>
 
     <select id="selectByQuiz" resultType="ca.usherbrooke.gegi.server.business.Question">
-        SELECT * FROM astanble.question WHERE id_quiz = #{id_quiz};
+        SELECT * FROM astanble.question WHERE id_quiz = #{id_quiz} ORDER BY num_question;
     </select>
 
     <select id="selectByReponse" resultType="ca.usherbrooke.gegi.server.business.Question">
@@ -50,8 +50,8 @@
     SET num_question= #{question.num_question},
         question_content = #{question.question_content},
         id_quiz= #{question.id_quiz},
-        cip= #{cip},
-        id_type= #{id_type}
+        cip= #{question.cip},
+        id_type= #{question.id_type}
     WHERE id_question = #{question.id_question}::int
     </update>
 

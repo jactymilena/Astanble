@@ -71,7 +71,8 @@ CREATE TABLE reference
 CREATE TABLE quiz
 (
     id_quiz   SERIAL PRIMARY KEY NOT NULL,
-    nom_quiz  VARCHAR(100) NOT NULL
+    nom_quiz  VARCHAR(100) NOT NULL,
+    description_quiz TEXT
 );
 
 -- Table TypeQuestion
@@ -164,7 +165,6 @@ CREATE TABLE article_quiz
 -- Table UsagerQuiz
 CREATE TABLE usager_quiz
 (
-    type_relation INT NOT NULL,
     CIP           CHAR(8) NOT NULL,
     id_quiz       INT NOT NULL,
     id_relation   INT NOT NULL,

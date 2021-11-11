@@ -44,5 +44,19 @@ public class ThematiqueService {
         return thematiques;
     }
 
+    @DELETE
+    @Path("thematique/delete/{id_thematique}")
+    @PermitAll
+    public void deleteThematique(@PathParam("id_thematique") int id_thematique){
+        thematiqueMapper.delete(id_thematique);
+    }
 
+    @POST
+    @Path("thematique/insert")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public Thematique insertThematique(Thematique thematique){
+        thematiqueMapper.insert(thematique);
+        return thematique;
+    }
 }

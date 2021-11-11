@@ -34,8 +34,9 @@ async function loadArticle() {
     loadCommentaires();
 }
 
-function createCommentaireHTML(commentaire, isReponse) {
+function createCommentaireHTML(commentaire, isReponse, liste) {
     const item = document.createElement('div');
+    item.setAttribute('commentaire', `${commentaire.id_commentaire}`);
     item.innerHTML = `
         <div commentaire="${commentaire.id_commentaire}">
             <img src="../trimestre/images/UserIcon.png"
@@ -47,7 +48,9 @@ function createCommentaireHTML(commentaire, isReponse) {
             <span style="align: right; font-size: smaller">
                 ${commentaire.date_commentaire}
             </span>
-            <input id="comment_button" type="button" value="x" onclick="deleteCommentaire(${commentaire.id_commentaire})"/>
+            <input id="delete_comment_button" type="button" value="x" onclick="deleteCommentaire(${commentaire.id_commentaire})"/>
+            <input id="comment_button" type="button" value="Répondre" onclick="addResponseOption(${commentaire.id_commentaire})" 
+            ${isReponse == true ? "hidden" : ''}/>
         </div>   
         
         ${commentaire.commentaire_content}
@@ -56,24 +59,35 @@ function createCommentaireHTML(commentaire, isReponse) {
 
     item.setAttribute('style', `margin-left: ${isReponse == true ? '30px' : '0px'};
                                                  border: solid black 1px; margin-top : 15px`);
-    liste_commentaires.appendChild(item);
+    liste.appendChild(item);
+}
 
-    if(isReponse == false) {
-        console.log("pas reponse");
-        const comment_option = document.createElement('div');
+function addResponseOption(id_commentaire) {
+    const comment_option = document.querySelector(`[optionResponse="${id_commentaire}"]`);
+    comment_option.toggleAttribute("hidden");
+}
 
-        comment_option.innerHTML += `
-        <div style="margin-left: 30px">
-            <img src="../trimestre/images/UserIcon.png"
-                 alt="Icone utilisateur"
-                 style="width:30px; height: 30px;">
-            <input id="champ_commentaire_reponse" parent="${commentaire.id_commentaire}" class="champ" type="text" placeholder="Répondre au commentaire..."/>
-            <input id="comment_button" type="button" value="Répondre" onclick="createCommentaireReponse(${commentaire.id_commentaire})"/>
-        </div>
-        `;
+function createResponseOption(id_commentaire) {
 
-        liste_commentaires.appendChild(comment_option);
-    }
+    const comment_option = document.createElement('div');
+    comment_option.setAttribute('optionResponse', `${id_commentaire}`);
+
+    comment_option.innerHTML += `
+    <div style="margin-left: 30px">
+        <img src="../trimestre/images/UserIcon.png"
+             alt="Icone utilisateur"
+             style="width:30px; height: 30px;">
+        <input id="champ_commentaire_reponse" parent="${id_commentaire}" class="champ" type="text" placeholder="Répondre au commentaire..."/>
+        <input id="comment_button" type="button" value="Répondre" onclick="createCommentaireReponse(${id_commentaire})"/>
+    </div>
+    `;
+
+    comment_option.setAttribute('style', `margin-top : 15px`);
+    // comment_option.setAttribute('hidden', 'true');
+    comment_option.toggleAttribute("hidden");
+
+    var liste_commentaire = document.querySelector(`[commentaire="${id_commentaire}"]`);
+    liste_commentaire.appendChild(comment_option);
 
 }
 
@@ -112,18 +126,19 @@ function loadCommentaires() {
             const commentaires = response.data;
 
             commentaires.forEach(com => {
-                createCommentaireHTML(com, false);
+                createCommentaireHTML(com, false, liste_commentaires);
                 console.log(com.reponses);
                 console.log('Grandeur ' + com.reponses.length);
 
                 if(com.reponses.length > 0) {
-                    // console.log('Grandeur ' + com.reponses.length);
+
+                    var liste_reponse = document.querySelector(`[commentaire="${com.id_commentaire}"]`);
                     console.log(com.reponses);
                     com.reponses.forEach(res => {
-                        createCommentaireHTML(res, true);
+                        createCommentaireHTML(res, true, liste_reponse);
                     });
                 }
-
+                createResponseOption(com.id_commentaire);
             });
         })
         .catch(function (error) {
@@ -159,6 +174,7 @@ function createCommentaireReponse(id_parent) {
         })
             .then(function (response) {
                 console.log("Response: ", response.status);
+                commentaire_content.value = "";
                 loadCommentaires();
             })
             .catch(function (error) {
@@ -198,6 +214,7 @@ function createCommentaire() {
         })
             .then(function (response) {
                 console.log("Response: ", response.status);
+                commentaire_content.value = "";
                 loadCommentaires();
             })
             .catch(function (error) {

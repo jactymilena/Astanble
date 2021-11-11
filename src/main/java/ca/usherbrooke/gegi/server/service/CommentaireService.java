@@ -68,4 +68,10 @@ public class CommentaireService {
         commentaireMapper.insertReponseCommentaire(commentaire);
     }
 
+    @DELETE
+    @Path("delete/commentaire/{id_commentaire}")
+    @PermitAll
+    public void deleteCommentaire(@PathParam("id_commentaire") int id_commentaire) {
+        commentaireMapper.delete(id_commentaire);
+    }
 }

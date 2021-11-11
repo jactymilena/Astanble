@@ -15,4 +15,5 @@ public interface CommentaireMapper {
     Usager selectAuthorOfCommentaire(@Param("cip") String cip);
     void insertCommentaire(@Param("commentaire") Commentaire commentaire);
     void insertReponseCommentaire(@Param("commentaire") ReponseCommentaire commentaire);
+    void delete(@Param("id_commentaire") int id_commentaire);
 }

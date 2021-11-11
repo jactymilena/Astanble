@@ -18,7 +18,6 @@ SELECT astanble.SIMILARITY('objet', 'objet');
 
 SELECT content % 'the' FROM astanble.article;
 
-CREATE INDEX CONCURRENTLY ON astanble.article USING GIN (content gin_trgm_ops);
 
 SELECT * FROM astanble.article
 WHERE SIMILARITY(nom_article,  'mi'::varchar) > 0.1

@@ -37,7 +37,7 @@ async function loadArticle() {
 function createCommentaireHTML(commentaire, isReponse) {
     const item = document.createElement('div');
     item.innerHTML = `
-        <div>
+        <div commentaire="${commentaire.id_commentaire}">
             <img src="../trimestre/images/UserIcon.png"
              alt="Icone utilisateur"
              style="width:30px; height: 30px;">
@@ -47,6 +47,7 @@ function createCommentaireHTML(commentaire, isReponse) {
             <span style="align: right; font-size: smaller">
                 ${commentaire.date_commentaire}
             </span>
+            <input id="comment_button" type="button" value="x" onclick="deleteCommentaire(${commentaire.id_commentaire})"/>
         </div>   
         
         ${commentaire.commentaire_content}
@@ -74,6 +75,26 @@ function createCommentaireHTML(commentaire, isReponse) {
         liste_commentaires.appendChild(comment_option);
     }
 
+}
+
+function deleteCommentaire(id_commentaire) {
+    axios.delete("http://localhost:8888/api/delete/commentaire/" + id_commentaire , {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token
+        }
+    })
+        .then(function (response) {
+            loadCommentaires();
+        })
+        .catch(function (error) {
+            console.log('refreshing');
+            keycloak.updateToken(5).then(function () {
+                console.log('Token refreshed');
+            }).catch(function () {
+                console.log('Failed to refresh token');
+            })
+            alert(error);
+        });
 }
 
 function loadCommentaires() {

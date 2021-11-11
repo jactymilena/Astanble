@@ -46,4 +46,9 @@
         VALUES (#{commentaire.commentaire_content}, #{commentaire.cip}, #{commentaire.id_article}, #{commentaire.id_reponse_commentaire}, #{commentaire.date_commentaire}::date);
     </insert>
 
+    <delete id="delete">
+        DELETE FROM astanble.commentaire
+        WHERE id_commentaire = #{id_commentaire} OR id_reponse_commentaire = #{id_commentaire};
+    </delete>
+
 </mapper>

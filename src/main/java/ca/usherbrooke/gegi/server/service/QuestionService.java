@@ -25,6 +25,14 @@ public class QuestionService {
     QuestionMapper questionMapper;
 
     @GET
+    @Path("questionByID/{id_question}")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Question> selectByID(@Param("id_question") int id_question){
+        return questionMapper.selectByID(id_question);
+    }
+
+    @GET
     @Path("questionType/{type}")
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)

@@ -15,8 +15,8 @@ function createQuestionHTML(q, liste_questions) {
         var reponseQuiz = q.reponses;
         for(var i = 0; i<reponseQuiz.length;i++){
             item.innerHTML += `
-            <input id=${reponseQuiz[i].id_reponse} type="radio" name={"reponse"+${q.id_question}} />
-            <label for=${reponseQuiz[i].id_reponse}>${reponseQuiz[i].reponse_content}</label>
+            <input id=${q.id_question} type="radio" name={"reponse"+${q.id_question}} />
+            <label for=${q.id_question}>${reponseQuiz[i].reponse_content}</label>
             `;
         }
     }
@@ -35,7 +35,7 @@ async function loadQuiz() {
         }
     })
         .then(function (response) {
-            const quiz = response.data;
+            var quiz = response.data;
             const nom_quiz = document.getElementById("nom_quiz");
             nom_quiz.innerHTML = quiz.nom_quiz;
             var liste_questions = document.getElementById("liste_questions");
@@ -60,9 +60,47 @@ async function loadQuiz() {
     getIdTypeQuestion(q);
 }*/
 function quiz_finish(){
-    quiz.questions.forEach(q => {
-        var question = document.getElementById(${q.id_question});
-        
+    const id_quiz = urlParams.get('quiz');
+    axios.get("http://localhost:8888/api/quizByID/" + id_quiz , {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token
+        }
     })
+        .then(function (response) {
+            console.log(response);
+            var quiz = response.data;
+            quiz.questions.forEach(q => {
+                creerReponseUsager(q)
+            })
+        })
+        .catch(function (error) {
+            console.log('refreshing');
+            keycloak.updateToken(5).then(function () {
+                console.log('Token refreshed');
+            }).catch(function () {
+                console.log('Failed to refresh token');
+            })
+            alert(error);
+        });
+
+    /*
+    quiz.questions.forEach(q => {
+        createFormSubmitObjet("insert", "http://localhost:8888/api/reponse/", "form-create-reponses", function (response) {
+            console.log(response.status);
+        }, () => creerReponseUsager(q));
+    })*/
+
+}
+function creerReponseUsager(q){
+    let content = document.getElementById(q.id_question);
+    var rep_bonne=false;
+    if(q.reponse_content == content)  rep_bonne = true;
+    let reponse = {
+        reponse_content: content,
+        bonne_mauvaise: rep_bonne
+    };
+   // if(id_reponse != "")
+   //     reponse.id_reponse = id_reponse;
+    //question.reponses.push(reponse);
 
 }

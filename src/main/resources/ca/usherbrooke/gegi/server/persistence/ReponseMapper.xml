@@ -38,6 +38,16 @@
                 #{reponse.bonne_mauvaise},
                 #{reponse.id_question})
     </insert>
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="reponse_usager_question.id_reponse" keyColumn="id_reponse">
+        INSERT INTO astanble.reponse_usager_question(
+            id_question,
+            id_reponse,
+            cip
+        )
+        VALUES (#{reponse.id_question},
+                #{reponse.id_reponse},
+                #{reponse.cip})
+    </insert>
 
     <update id="update">
         UPDATE astanble.reponse

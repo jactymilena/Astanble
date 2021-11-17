@@ -173,9 +173,10 @@ VALUES
 
 --reponse
 INSERT INTO reponse(reponse_content, bonne_mauvaise, id_question)
-VALUES ('Amas de gaz et de poussières interstellaires.', true, 1),
+VALUES ('poussières interstellaires.', true, 1),
        ('Une étoile.', false, 1),
        ('Amas de roches et deau.', false, 1),
+       ('objet', true, 2),
        ('oui', true, 3),
        ('non', false, 3);
 

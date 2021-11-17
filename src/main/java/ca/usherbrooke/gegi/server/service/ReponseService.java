@@ -2,6 +2,7 @@ package ca.usherbrooke.gegi.server.service;
 
 import ca.usherbrooke.gegi.server.business.Question;
 import ca.usherbrooke.gegi.server.business.Reponse;
+import ca.usherbrooke.gegi.server.business.ReponseUsager;
 import ca.usherbrooke.gegi.server.persistence.ReponseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.eclipse.microprofile.jwt.JsonWebToken;
@@ -38,6 +39,13 @@ public class ReponseService {
     @PermitAll
     public void insert(Reponse reponse){
         reponseMapper.insert(reponse);
+    }
+
+    @POST
+    @Path("reponse/user")
+    @PermitAll
+    public void insertUser(ReponseUsager reponseUser){
+        reponseMapper.insertUser(reponseUser);
     }
 
     @PUT

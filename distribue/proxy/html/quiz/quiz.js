@@ -7,7 +7,7 @@ function createQuestionHTML(q, liste_questions) {
     if(q.id_type == 1) {
         item.innerHTML += `
             <h3>Réponse</h3>
-            <input id=${q.id_question} type="text" placeholder="Réponse"/>
+            <input id=${q.id_question} type="text" placeholder="Réponse" />
             <br>
         `;
     }
@@ -15,8 +15,8 @@ function createQuestionHTML(q, liste_questions) {
         var reponseQuiz = q.reponses;
         for(var i = 0; i<reponseQuiz.length;i++){
             item.innerHTML += `
-            <input id=${q.id_question} type="radio" name={"reponse"+${q.id_question}} />
-            <label for=${q.id_question}>${reponseQuiz[i].reponse_content}</label>
+            <input id=${reponseQuiz[i].id_reponse} type="radio" name=${q.id_question} value=${reponseQuiz[i].reponse_content} />
+            <label for=${reponseQuiz[i].reponse_content}>${reponseQuiz[i].reponse_content}</label>
             `;
         }
     }
@@ -38,7 +38,7 @@ async function loadQuiz() {
             var quiz = response.data;
             const nom_quiz = document.getElementById("nom_quiz");
             nom_quiz.innerHTML = quiz.nom_quiz;
-            var liste_questions = document.getElementById("liste_questions");
+            const liste_questions = document.getElementById("liste_questions");
 
             quiz.questions.forEach(q => {
                 createQuestionHTML(q, liste_questions);
@@ -56,9 +56,6 @@ async function loadQuiz() {
         });
 
 }
-/*function getIdTypeQuestion(q){
-    getIdTypeQuestion(q);
-}*/
 function quiz_finish(){
     const id_quiz = urlParams.get('quiz');
     axios.get("http://localhost:8888/api/quizByID/" + id_quiz , {
@@ -70,7 +67,7 @@ function quiz_finish(){
             console.log(response);
             var quiz = response.data;
             quiz.questions.forEach(q => {
-                creerReponseUsager(q)
+                creerReponseUsager(q, liste_questions)
             })
         })
         .catch(function (error) {
@@ -83,24 +80,56 @@ function quiz_finish(){
             alert(error);
         });
 
-    /*
-    quiz.questions.forEach(q => {
-        createFormSubmitObjet("insert", "http://localhost:8888/api/reponse/", "form-create-reponses", function (response) {
-            console.log(response.status);
-        }, () => creerReponseUsager(q));
-    })*/
-
 }
-function creerReponseUsager(q){
-    let content = document.getElementById(q.id_question);
-    var rep_bonne=false;
-    if(q.reponse_content == content)  rep_bonne = true;
-    let reponse = {
-        reponse_content: content,
-        bonne_mauvaise: rep_bonne
-    };
-   // if(id_reponse != "")
-   //     reponse.id_reponse = id_reponse;
-    //question.reponses.push(reponse);
+function creerReponseUsager(q, liste_questions){
+    var content=0;
+    if(q.id_type == 1) {
+        content = document.getElementById(q.id_question).value;
+        console.log(content);
+    }
+    else if(q.id_type == 2) {
+        var ele = document.getElementsByName(q.id_question);
 
+        for(i = 0; i < ele.length; i++) {
+            if(ele[i].checked)
+               content= ele[i].value;
+        }
+        console.log(content);
+    }
+    var rep_bonne=1;
+    var reponseQuiz = q.reponses;
+    for(var i = 0; i<reponseQuiz.length;i++){
+        if(reponseQuiz[i].reponse_content == content)
+            rep_bonne = reponseQuiz[i].id_reponse;
+
+    }
+    //if(rep_bonne==5)
+       // rep_bonne = reponseQuiz.length+1;
+
+    //if(q.reponse_content == content)  rep_bonne = true;
+
+    let reponse_usager_question = {
+        "id_question": q.id_question,
+        "id_reponse": rep_bonne,
+        "cip": user_profil.cip
+
+    };
+    console.log(reponse_usager_question);
+    axios.post("http://localhost:8888/api/reponse/user", JSON.stringify(reponse_usager_question), {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token,
+            'Content-Type' : 'application/json'
+        }
+    })
+        .catch(function (error) {
+        console.log('refreshing');
+        keycloak.updateToken(5).then(function () {
+            console.log('Token refreshed');
+        }).catch(function () {
+            console.log('Failed to refresh token');
+        })
+        console.log('Sad ça fonctionne pas :(');
+        alert(error);
+
+    });
 }

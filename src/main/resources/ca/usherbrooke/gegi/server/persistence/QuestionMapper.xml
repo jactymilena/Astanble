@@ -57,7 +57,7 @@
 
     <delete id="delete">
     DELETE FROM astanble.question
-    WHERE id_question= #{question.id_question}::int
+    WHERE id_question= #{id_question}::int
     </delete>
 
 

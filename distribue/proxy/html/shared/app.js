@@ -177,10 +177,6 @@ function createFormSubmitObjet(crud, url, id_form, onsuccess, createObjectFunc) 
                         function(response) {
                             onsuccess(response);
                             form.classList.add('was-validated');
-                            if(response.status === 200) {
-                                form.reset();
-                                form.classList.remove('was-validated');
-                            }
                         }, createObjectFunc());
                     break;
                 case "update":

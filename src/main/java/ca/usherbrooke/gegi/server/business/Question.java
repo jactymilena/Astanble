@@ -11,6 +11,7 @@ public class Question {
     private int id_type;
     private List<Reponse> reponses;
     private List<ReponseUsager> reponses_usagers;
+    private List<QuestionType> questionTypes;
 
     public int getId_question() {
         return id_question;
@@ -38,6 +39,14 @@ public class Question {
 
     public int getId_quiz() {
         return id_quiz;
+    }
+
+    public List<QuestionType> getQuestionTypes() {
+        return questionTypes;
+    }
+
+    public void setQuestionTypes(List<QuestionType> questionTypes) {
+        this.questionTypes = questionTypes;
     }
 
     public void setId_quiz(int id_quiz) {

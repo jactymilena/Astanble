@@ -11,6 +11,8 @@ function loadIndex() {
             $("#nom_quiz").val(quiz.nom_quiz);
             $("#description_quiz").val(quiz.description_quiz);
             quiz.questions.forEach(q => {
+                if(window.questions_type == undefined)
+                    window.questions_type = q.questionTypes;
                 ajouterCarte(null, q);
             })
             $("#submit-quiz").text("Sauvegarder");
@@ -53,6 +55,7 @@ function ajouterCarte(num = null, question = null) {
             num = 1;
         var question = {
             num_question: num,
+            id_type: 1,
             question_content: "",
             reponses: [{
                 num_question: num,
@@ -79,11 +82,11 @@ function deleteCarte(num) {
     $("#cards").empty();
     window.list_carte.forEach(q => {
         if(q.num_question != num) {
-            var question = {
-                num_question: new_index,
-                question_content: q.question_content,
-                reponses: q.reponses
-            }
+            let question = q;
+            question.num_question = new_index;
+            question.reponses.forEach(r => {
+                r.num_question = new_index;
+            })
             new_list[new_index] = question;
             var carte = carte_Script(question);
             $("#cards").append(carte);
@@ -102,6 +105,35 @@ function updateReponse(input) {
     var question = window.list_carte[$(input).attr("data-question-num")];
     var reponse = question.reponses.find(r => r.num_reponse == $(input).attr("data-reponse-num"));
     reponse.reponse_content = $(input).val();
+}
+
+function changeQuestionType(num_question, id_type) {
+    var question = window.list_carte[num_question];
+    question.id_type = id_type;
+    resetQuestionContainer(num_question);
+}
+
+function ajouterReponsePossible(num_question) {
+    var question = window.list_carte[num_question];
+    let r = {
+        id_question: question.id_question,
+        num_question: num_question,
+        num_reponse: question.reponses.length + 1,
+        reponse_content: ""
+    }
+    question.reponses.push(r);
+    resetQuestionContainer(num_question);
+}
+
+function reponseSelectionCheck(input) {
+    input.setAttribute("data-checked", input.checked);
+}
+
+function resetQuestionContainer(num_question) {
+    var question = window.list_carte[num_question];
+    var carte = carte_Script(question);
+    $(`[data-card-container="${num_question}"]`).empty();
+    $(`[data-card-container="${num_question}"]`).replaceWith(carte);
 }
 
 function creerQuiz() {
@@ -127,6 +159,7 @@ function creerQuestions(id_quiz){
     axiosCreate("http://localhost:8888/api/question/insert/all", function (response) {
         console.log(response.status);
         console.log("questions inserted");
+        window.location = `/quiz/quiz.html?quiz=${id_quiz}`;
     }, questionsReponses);
 }
 
@@ -135,21 +168,27 @@ function createFormQuestions(id_quiz) {
     $("[id^=question-]").each(function() {
         let num_question = $(this).attr("data-question-num");
         let id_question = $(this).attr("data-question-id");
+        var _question = window.list_carte[num_question];
         let question = {
             id_quiz: id_quiz,
             cip: user_profil.cip,
             num_question: num_question,
             question_content: $(this).val(),
-            id_type: 1,
+            id_type: _question.id_type,
             reponses: []
         };
         if(id_question != "")
             question.id_question = id_question;
         $(`[data-question-num="${num_question}"][data-type="reponse"]`).each(function(){
             let id_reponse = $(this).attr("data-reponse-id");
+            let num_reponse = $(this).attr("data-reponse-num");
+            let bonne_mauvaise = true;
+            if(_question.id_type == 2) {
+                bonne_mauvaise = $(`#check-good-question-${num_reponse}`).attr("data-checked");
+            }
             let reponse = {
                 reponse_content: $(this).val(),
-                bonne_mauvaise: true
+                bonne_mauvaise: bonne_mauvaise
             };
             if(id_reponse != "")
                 reponse.id_reponse = id_reponse;

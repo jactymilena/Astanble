@@ -2,6 +2,7 @@ package ca.usherbrooke.gegi.server.service;
 
 import ca.usherbrooke.gegi.server.business.*;
 import ca.usherbrooke.gegi.server.persistence.QuestionMapper;
+import ca.usherbrooke.gegi.server.persistence.QuestionTypeMapper;
 import ca.usherbrooke.gegi.server.persistence.QuizMapper;
 import ca.usherbrooke.gegi.server.persistence.ReponseMapper;
 import org.apache.ibatis.annotations.Param;
@@ -31,6 +32,9 @@ public class QuizService {
 
     @Inject
     ReponseMapper reponseMapper;
+
+    @Inject
+    QuestionTypeMapper questionTypeMapper;
 
     @Inject
     QuestionService questionService;
@@ -68,9 +72,11 @@ public class QuizService {
     @Produces(MediaType.APPLICATION_JSON)
     public Quiz getQuiz(@PathParam("id_quiz") int id_quiz) {
         Quiz quiz = quizMapper.selectByID(id_quiz);
+        List<QuestionType> questionTypeList = questionTypeMapper.all();
         List<Question> questions = questionMapper.selectByQuiz(quiz.getId_quiz());
         for (Question question : questions) {
             question.setReponses(reponseMapper.selectByQuestion(question.getId_question()));
+            question.setQuestionTypes(questionTypeList);
         }
         quiz.setQuestions(questions);
         return quiz;

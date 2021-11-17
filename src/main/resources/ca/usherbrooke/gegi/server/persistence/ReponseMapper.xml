@@ -9,7 +9,7 @@
     </select>
 
     <select id="selectByQuestion" resultType="ca.usherbrooke.gegi.server.business.Reponse">
-        SELECT * FROM astanble.reponse WHERE id_question = #{id_question};
+        SELECT * FROM astanble.view_reponse_quizname WHERE id_question = #{id_question};
     </select>
 
     <select id="selectByName" resultType="ca.usherbrooke.gegi.server.business.Reponse">
@@ -49,7 +49,7 @@
 
     <delete id="delete">
         DELETE FROM astanble.reponse
-        WHERE id_reponse=#{reponse.id_reponse}::int
+        WHERE id_reponse=#{id_reponse}::int
     </delete>
 
 

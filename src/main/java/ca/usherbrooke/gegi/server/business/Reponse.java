@@ -5,6 +5,7 @@ public class Reponse {
     private String reponse_content;
     private boolean bonne_mauvaise;
     private int id_question;
+    private int num_question;
 
     public int getId_reponse() {
         return id_reponse;
@@ -36,5 +37,13 @@ public class Reponse {
 
     public void setId_question(int id_question) {
         this.id_question = id_question;
+    }
+
+    public int getNum_question() {
+        return num_question;
+    }
+
+    public void setNum_question(int num_question) {
+        this.num_question = num_question;
     }
 }

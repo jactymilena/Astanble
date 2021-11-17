@@ -96,17 +96,12 @@ function creerReponseUsager(q, liste_questions){
         }
         console.log(content);
     }
-    var rep_bonne=1;
+    var rep_bonne=0;
     var reponseQuiz = q.reponses;
     for(var i = 0; i<reponseQuiz.length;i++){
         if(reponseQuiz[i].reponse_content == content)
             rep_bonne = reponseQuiz[i].id_reponse;
-
     }
-    //if(rep_bonne==5)
-       // rep_bonne = reponseQuiz.length+1;
-
-    //if(q.reponse_content == content)  rep_bonne = true;
 
     let reponse_usager_question = {
         "id_question": q.id_question,

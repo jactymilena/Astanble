@@ -39,14 +39,17 @@ async function userProfil() {
                 if(user_profil.roles=="default-roles-master,student"){
                     document.getElementById("champRole").innerHTML = "Étudiant(e)";
                 }else document.getElementById("champRole").innerHTML = "Administrateur";
+
+                //document.getElementById("staticCipSPan").innerHTML = user_profil.cip;
+
                 document.getElementById("staticCourrielSpan").innerHTML= user_profil.email;
 
-
+                document.getElementById("inputCip5").value = user_profil.cip;
                 document.getElementById("firstname").value= user_profil.first_name;
                 document.getElementById("lastname").value= user_profil.last_name;
                 document.getElementById("inputEmail4").value= user_profil.email;
 
-                userProfilOthers(user_profil.email);
+                userProfilOthers(response.data.email);
 
             })
         .catch(function (error) {
@@ -70,12 +73,9 @@ async function userProfilOthers(inputEmail) {
         user_profil = window.user_profil = response.data;
 
 
-            document.getElementById("staticCipSPan").innerHTML = user_profil.cip;
-            document.getElementById("inputCip5").value = user_profil.cip;
-
-            if (user_profil.courriel2 != null) {
-                document.getElementById("staticCourriel1Span").innerHTML = user_profil.courriel2;
-                document.getElementById("inputEmail5").value = user_profil.courriel2;
+            if (response.data.courriel2 != null) {
+                document.getElementById("staticCourriel1Span").innerHTML = response.data.courriel2;
+                document.getElementById("inputEmail5").value = response.data.courriel2;
             } else {
                 document.getElementById("staticCourriel1Span").innerHTML = "";
                 document.getElementById("inputEmail5").value = "";
@@ -93,17 +93,18 @@ async function userProfilOthers(inputEmail) {
 }
 
 function setInfo() {
-    let usager = {
+    const usager = {
         "cip" : document.getElementById("inputCip5").value,
         "nom_usager" : document.getElementById("lastname").value,
         "prenom_usager" : document.getElementById("firstname").value,
         "courriel1" : document.getElementById("inputEmail4").value,
         "courriel2" : document.getElementById("inputEmail5").value,
-        "nom_complet_usager" : document.getElementById("firstname").value + document.getElementById("lastname").value
+        "nom_complet_usager" : document.getElementById("firstname").value + " " + document.getElementById("lastname").value
     }
-    axios.put("http://localhost:8888/api/usager/update/"+ usager, {
+    axios.put("http://localhost:8888/api/usager/update", JSON.stringify(usager), {
         headers: {
-            'Authorization': 'Bearer ' + keycloak.token
+            'Authorization': 'Bearer ' + keycloak.token,
+            'Content-Type' : 'application/json'
         }
     })
         .then(function (response) {
@@ -151,7 +152,7 @@ function modifInfoUser(){
                     event.stopPropagation();
                 }
                 form.classList.add('was-validated');
-
+                setInfo();
             }, false);
         });
     }, false);

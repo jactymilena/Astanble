@@ -4,6 +4,7 @@ public class ReponseUsager extends Reponse {
     private Usager usager;
     private int id_reponse;
     private int id_question;
+    private int id_reponse_usager_question;
 
     public Usager getUsager() {
         return usager;
@@ -28,4 +29,8 @@ public class ReponseUsager extends Reponse {
     public void setId_reponse(int id_reponse) {
         this.id_reponse = id_reponse;
     }
+
+    public void setId_reponse_usager_question(int id_reponse_usager_question){this.id_reponse_usager_question = id_reponse_usager_question;}
+
+    public int getId_reponse_usager_question(){return id_reponse_usager_question;}
 }

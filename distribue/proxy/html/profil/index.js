@@ -36,9 +36,8 @@ async function userProfil() {
 
                 user_profil_html.innerText = user_profil.first_name + " " + user_profil.last_name;
                 document.getElementById("nameTitle").innerHTML = user_profil.first_name + " " + user_profil.last_name;
-                if(user_profil.roles=="default-roles-master,student"){
-                    document.getElementById("champRole").innerHTML = "Étudiant(e)";
-                }else document.getElementById("champRole").innerHTML = "Administrateur";
+
+                document.getElementById("champRole").innerHTML = user_profil.roles.join(", ");;
 
                 //document.getElementById("staticCipSPan").innerHTML = user_profil.cip;
 

@@ -42,10 +42,9 @@ public class ReponseService {
     }
 
     @POST
-    @Path("reponse/user")
+    @Path("reponse/insert")
     @PermitAll
-    public void insertUser(ReponseUsager reponseUser){
-        reponseMapper.insertUser(reponseUser);
+    public void insertUser(ReponseUsager reponseUser){ reponseMapper.insertUser(reponseUser);
     }
 
     @PUT

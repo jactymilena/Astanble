@@ -102,15 +102,39 @@ function creerReponseUsager(q, liste_questions){
         if(reponseQuiz[i].reponse_content == content)
             rep_bonne = reponseQuiz[i].id_reponse;
     }
+    if(rep_bonne==0){
+        let reponse_mauvaise = {
+            "reponse_content": content,
+            "bonne_mauvaise" : false,
+            "id_question": q.id_question
+        };
+        axios.post("http://localhost:8888/api/reponse/", JSON.stringify(reponse_mauvaise), {
+            headers: {
+                'Authorization': 'Bearer ' + keycloak.token,
+                'Content-Type' : 'application/json'
+            }
+        })
+            .catch(function (error) {
+                console.log('refreshing');
+                keycloak.updateToken(5).then(function () {
+                    console.log('Token refreshed');
+                }).catch(function () {
+                    console.log('Failed to refresh token');
+                })
+                console.log('Sad ça fonctionne pas :(');
+                alert(error);
+
+            });
+    }
 
     let reponse_usager_question = {
         "id_question": q.id_question,
         "id_reponse": rep_bonne,
-        "cip": user_profil.cip
+        "usager": user_profil
 
     };
     console.log(reponse_usager_question);
-    axios.post("http://localhost:8888/api/reponse/user", JSON.stringify(reponse_usager_question), {
+    axios.post("http://localhost:8888/api/reponse/insert/", JSON.stringify(reponse_usager_question), {
         headers: {
             'Authorization': 'Bearer ' + keycloak.token,
             'Content-Type' : 'application/json'

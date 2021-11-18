@@ -42,11 +42,11 @@
         INSERT INTO astanble.reponse_usager_question(
             id_question,
             id_reponse,
-            cip
+            CIP
         )
-        VALUES (#{reponse.id_question},
-                #{reponse.id_reponse},
-                #{reponse.cip})
+        VALUES (#{reponseUser.id_question},
+                #{reponseUser.id_reponse},
+                #{reponseUser.usager.cip})
     </insert>
 
     <update id="update">

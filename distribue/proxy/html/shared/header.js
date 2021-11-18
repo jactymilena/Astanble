@@ -27,6 +27,11 @@ const header = {
                 window.location.href = "//localhost/admin";
             }, css: "webix_transparent"
         },
-        {view: "template", borderless: true, content: "usericon", css: {"background": "#FF8921"}}
+        {
+            view: "button", value: "Profil", width: 100, click: function (id, event) {
+                window.location.href = "//localhost/profil";
+            }, css: "webix_transparent"
+        },
+        {view: "template", borderless: true, content: "usericon",css: {"background": "#FF8921"}}
     ]
 }

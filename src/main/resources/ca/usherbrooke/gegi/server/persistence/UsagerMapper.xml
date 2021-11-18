@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ca.usherbrooke.gegi.server.persistence.UsagerMapper">
+
+    <select id="select" resultType="ca.usherbrooke.gegi.server.business.Usager">
+        SELECT * FROM astanble.usager;
+    </select>
+
+    <select id="selectByCIP" resultType="ca.usherbrooke.gegi.server.business.Usager">
+        SELECT * FROM astanble.usager WHERE usager.cip=#{cip}
+    </select>
+
+    <select id="selectByEmail" resultType="ca.usherbrooke.gegi.server.business.Usager">
+        SELECT * FROM astanble.usager WHERE usager.courriel1=#{courriel1}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="usager.cip" keyColumn="cip">
+    INSERT INTO astanble.usager(nom_usager, prenom_usager, date_suppression, courriel1, courriel2)
+    VALUES (#{usager.nom_usager},
+            #{usager.prenom_usager},
+            #{usager.date_suppression},
+            #{usager.courriel1},
+            #{usager.courriel2})
+    </insert>
+
+    <update id="update">
+    UPDATE astanble.usager
+    SET nom_usager = #{usager.nom_usager},
+        prenom_usager= #{usager.prenom_usager},
+        courriel1= #{usager.courriel1},
+        courriel2= #{usager.courriel2}
+    WHERE cip = #{usager.cip}::char(8)
+    </update>
+
+    <delete id="delete">
+    DELETE FROM astanble.usager
+    WHERE cip= #{usager.cip}::char(8)
+    </delete>
+
+
+</mapper>

@@ -4,6 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ca.usherbrooke.gegi.server.persistence.QuestionMapper">
 
+    <select id="selectByTypeQuestion" resultType="ca.usherbrooke.gegi.server.business.Question">
+        SELECT id_type FROM astanble.question WHERE id_question = #{id_question}
+    </select>
+
     <select id="select" resultType="ca.usherbrooke.gegi.server.business.Question">
         SELECT * FROM astanble.question;
     </select>

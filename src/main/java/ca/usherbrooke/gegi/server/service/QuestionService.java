@@ -3,6 +3,7 @@ package ca.usherbrooke.gegi.server.service;
 import ca.usherbrooke.gegi.server.business.Question;
 import ca.usherbrooke.gegi.server.persistence.QuestionMapper;
 import ca.usherbrooke.gegi.server.persistence.ReponseMapper;
+import org.apache.ibatis.annotations.Param;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import javax.annotation.security.PermitAll;
@@ -35,6 +36,34 @@ public class QuestionService {
         Question question = questionMapper.selectByID(id_question);
         question.setReponses(reponseMapper.selectByQuestion(question.getId_question()));
         return question;
+    }
+
+    @GET
+    @Path("questionByID/{id_question}")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public Question selectByID(@Param("id_question") int id_question){
+        return questionMapper.selectByID(id_question);
+    }
+
+    @GET
+    @Path("questionType/{type}")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Question> selectByType(@Param("type") int type){
+        List<Question> question = questionMapper.selectByType(type);
+
+        return question;
+    }
+
+    @GET
+    @Path("TypeQuestion/{question}")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public int selectByTypeQuestion(@Param("question") int question){
+        Question type = questionMapper.selectByTypeQuestion(question);
+        int id_type = type.getId_type();
+        return id_type;
     }
 
     @POST

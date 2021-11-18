@@ -17,10 +17,11 @@
 
         <!-- script basic externe + keycloack -->
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="http://localhost/auth/js/keycloak.js"></script>
+         <script src="http://localhost/auth/js/keycloak.js"></script>
 
         <!-- script personnel pour la page -->
         <script src="../shared/app.js"></script>
+        <script src="../shared/header.js"></script>
         <script src="./quiz.js"></script>
 <!--        <script src="../shared/header.js"></script>-->
     </head>
@@ -34,7 +35,9 @@
             <h2>Questions : </h2>
             <br>
         </div>
+        <input id="quiz_done" type="button" name="terminé" value="Terminé" onclick="quiz_finish()"/>
     </div>
+
 <!--    <script type="text/javascript" charset="utf-8">-->
 <!--        webix.ready(function () {-->
 <!--            webix.ui.fullScreen();-->

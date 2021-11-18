@@ -44,7 +44,8 @@ async function userProfil() {
 
                 document.getElementById("staticCourrielSpan").innerHTML= user_profil.email;
 
-                document.getElementById("inputCip5").value = user_profil.cip;
+                document.getElementById("staticCip").value = user_profil.cip;
+                document.getElementById("inputCIP").value = user_profil.cip;
                 document.getElementById("firstname").value= user_profil.first_name;
                 document.getElementById("lastname").value= user_profil.last_name;
                 document.getElementById("inputEmail4").value= user_profil.email;
@@ -94,7 +95,7 @@ async function userProfilOthers(inputEmail) {
 
 function setInfo() {
     const usager = {
-        "cip" : document.getElementById("inputCip5").value,
+        "cip" : document.getElementById("staticCip").value,
         "nom_usager" : document.getElementById("lastname").value,
         "prenom_usager" : document.getElementById("firstname").value,
         "courriel1" : document.getElementById("inputEmail4").value,

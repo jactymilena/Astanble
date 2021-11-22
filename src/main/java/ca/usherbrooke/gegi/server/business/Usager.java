@@ -8,10 +8,6 @@ public class Usager {
     private String courriel2;
     private String nom_complet_usager;
 
-    public String getNom_complet_usager() {
-        return nom_complet_usager;
-    }
-
     public String getCip() {
         return cip;
     }
@@ -50,5 +46,13 @@ public class Usager {
 
     public void setCourriel2(String courriel2) {
         this.courriel2 = courriel2;
+    }
+
+    public String getNom_complet_usager() {
+        return nom_complet_usager;
+    }
+
+    public void setNom_complet_usager(String nom_complet_usager) {
+        this.nom_complet_usager = nom_complet_usager;
     }
 }

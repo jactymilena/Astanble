@@ -62,20 +62,12 @@ public class UsagerService {
         usagerMapper.insert(usager);
     };
 
-    @PUT
+    @POST
     @Path("usager/update/")
     @PermitAll
     public void update(@Param("usager") Usager usager){
-        Person person= new Person();
         usager.setCip(securityContext.getUserPrincipal().getName());
-        person.email=usager.getCourriel1();
-        person.first_name=usager.getPrenom_usager();
-        person.last_name=usager.getNom_usager();
-
-        if(usager.getCip()!=null) {
-            usagerMapper.update(usager);
-
-        }else usagerMapper.insert(usager);
+        int hint = usagerMapper.update(usager);
     };
 
     @DELETE

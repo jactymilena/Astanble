@@ -14,7 +14,7 @@ public interface UsagerMapper {
     Usager selectByCIP(@Param("cip")String cip);
     Usager selectByEmail(@Param("courriel1")String courriel1);
     void insert(@Param("usager") Usager usager);
-    void update(@Param("usager") Usager usager);
+    int update(@Param("usager") Usager usager);
     void delete(@Param("cip") String cip);
 }
 

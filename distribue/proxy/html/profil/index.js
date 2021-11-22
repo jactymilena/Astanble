@@ -1,6 +1,7 @@
 async function loadIndex() {
     await initKeycloak();
     userProfil();
+    prep_form();
 }
 
 async function initKeycloak() {
@@ -92,8 +93,14 @@ async function userProfilOthers(inputEmail) {
     });
 }
 
-function setInfo() {
-    const usager = {
+function prep_form() {
+    createFormSubmitObjet("update", "http://localhost:8888/api/usager/update", "edit-profil-form", function (response) {
+        console.log(response.status);
+    }, () => updateUserObject());
+}
+
+function updateUserObject() {
+    let usager = {
         "cip" : document.getElementById("staticCip").value,
         "nom_usager" : document.getElementById("lastname").value,
         "prenom_usager" : document.getElementById("firstname").value,
@@ -101,28 +108,8 @@ function setInfo() {
         "courriel2" : document.getElementById("inputEmail5").value,
         "nom_complet_usager" : document.getElementById("firstname").value + " " + document.getElementById("lastname").value
     }
-    axios.put("http://localhost:8888/api/usager/update", JSON.stringify(usager), {
-        headers: {
-            'Authorization': 'Bearer ' + keycloak.token,
-            'Content-Type' : 'application/json'
-        }
-    })
-        .then(function (response) {
-            console.log("Response: ", response.status);
-
-        })
-        .catch(function (error) {
-            console.log('refreshing');
-            keycloak.updateToken(5).then(function () {
-                console.log('Token refreshed');
-            }).catch(function () {
-                console.log('Failed to refresh token');
-            })
-            console.log('Sad ça fonctionne pas :(');
-            alert(error);
-
-        });
-};
+    return usager;
+}
 
 function goBack(){
     window.location.href="//localhost/profil";
@@ -152,7 +139,6 @@ function modifInfoUser(){
                     event.stopPropagation();
                 }
                 form.classList.add('was-validated');
-                setInfo();
             }, false);
         });
     }, false);

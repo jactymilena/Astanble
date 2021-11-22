@@ -9,11 +9,11 @@
     </select>
 
     <select id="selectByCIP" resultType="ca.usherbrooke.gegi.server.business.Usager">
-        SELECT * FROM astanble.usager WHERE usager.cip=#{cip}
+        SELECT * FROM astanble.usager WHERE usager.cip=#{cip};
     </select>
 
     <select id="selectByEmail" resultType="ca.usherbrooke.gegi.server.business.Usager">
-        SELECT * FROM astanble.usager WHERE usager.courriel1=#{courriel1}
+        SELECT * FROM astanble.usager WHERE usager.courriel1=#{courriel1};
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="usager.cip" keyColumn="cip">
@@ -22,7 +22,7 @@
             #{usager.prenom_usager},
             #{usager.date_suppression},
             #{usager.courriel1},
-            #{usager.courriel2})
+            #{usager.courriel2});
     </insert>
 
     <update id="update">
@@ -31,12 +31,12 @@
         prenom_usager= #{usager.prenom_usager},
         courriel1= #{usager.courriel1},
         courriel2= #{usager.courriel2}
-    WHERE cip = #{usager.cip}::char(8)
+    WHERE usager.cip = #{usager.cip};
     </update>
 
     <delete id="delete">
     DELETE FROM astanble.usager
-    WHERE cip= #{usager.cip}::char(8)
+    WHERE cip= #{usager.cip}::char(8);
     </delete>
 
 

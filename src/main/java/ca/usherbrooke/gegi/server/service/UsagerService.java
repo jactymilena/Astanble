@@ -42,8 +42,9 @@ public class UsagerService {
     @Path("usagerByCip/{cip}")
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
-    public Usager selectByCIP(@Param("cip")String cip){
-        return usagerMapper.selectByCIP(cip);
+    public Usager selectByCIP(@PathParam("cip") String cip){
+        Usager usager = usagerMapper.selectByCIP(cip);
+        return usager;
     };
 
     @GET

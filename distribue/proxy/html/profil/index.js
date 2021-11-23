@@ -32,25 +32,11 @@ async function userProfil() {
             user_profil = window.user_profil = response.data;
 
             // prep user on ui
-            var user_profil_html = document.getElementById("user_profil_nav");
-            if(user_profil_html && user_profil)
+            document.getElementById("champRole").innerHTML = user_profil.roles.join(", ");
+            document.getElementById("staticCip").value = user_profil.cip;
+            document.getElementById("inputCIP").value = user_profil.cip;
 
-                user_profil_html.innerText = user_profil.first_name + " " + user_profil.last_name;
-                document.getElementById("nameTitle").innerHTML = user_profil.first_name + " " + user_profil.last_name;
-
-                document.getElementById("champRole").innerHTML = user_profil.roles.join(", ");;
-
-                //document.getElementById("staticCipSPan").innerHTML = user_profil.cip;
-
-                document.getElementById("staticCourrielSpan").innerHTML= user_profil.email;
-
-                document.getElementById("staticCip").value = user_profil.cip;
-                document.getElementById("inputCIP").value = user_profil.cip;
-                document.getElementById("firstname").value= user_profil.first_name;
-                document.getElementById("lastname").value= user_profil.last_name;
-                document.getElementById("inputEmail4").value= user_profil.email;
-
-                userProfilOthers(response.data.email);
+            userProfilOthers(response.data.cip);
 
             })
         .catch(function (error) {
@@ -63,8 +49,8 @@ async function userProfil() {
         });
 }
 
-async function userProfilOthers(inputEmail) {
-    axios.get("http://localhost:8888/api/usagerByCourriel/" + inputEmail, {
+async function userProfilOthers(cip) {
+    axios.get("http://localhost:8888/api/usagerByCip/" + cip, {
         headers: {
             'Authorization': 'Bearer ' + keycloak.token
         }
@@ -72,8 +58,6 @@ async function userProfilOthers(inputEmail) {
         .then(function (response) {
         console.log("Response: ", response.status);
         user_profil = window.user_profil = response.data;
-
-
             if (response.data.courriel2 != null) {
                 document.getElementById("staticCourriel1Span").innerHTML = response.data.courriel2;
                 document.getElementById("inputEmail5").value = response.data.courriel2;
@@ -81,6 +65,15 @@ async function userProfilOthers(inputEmail) {
                 document.getElementById("staticCourriel1Span").innerHTML = "";
                 document.getElementById("inputEmail5").value = "";
             }
+
+            var user_profil_html = document.getElementById("user_profil_nav");
+            if(user_profil_html && user_profil)
+                user_profil_html.innerText = user_profil.prenom_usager + " " + user_profil.nom_usager;
+            document.getElementById("nameTitle").innerHTML = user_profil.prenom_usager + " " + user_profil.nom_usager;
+            document.getElementById("firstname").value= user_profil.prenom_usager;
+            document.getElementById("lastname").value= user_profil.nom_usager;
+            document.getElementById("inputEmail4").value= user_profil.courriel1;
+            document.getElementById("staticCourrielSpan").innerHTML= user_profil.courriel1;
         
     })
         .catch(function (error) {

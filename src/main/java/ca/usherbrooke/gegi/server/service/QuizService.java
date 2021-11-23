@@ -120,6 +120,17 @@ public class QuizService {
     }
 
     @GET
+    @Path("quizNotAuthor/{user_cip}")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<QuizAuthor> getQuizNotAuthor(@PathParam("user_cip") String user_cip) {
+        List<QuizAuthor> quiz = quizMapper.selectNotAuthor(user_cip);
+        setListAuthors(quiz);
+
+        return quiz;
+    }
+
+    @GET
     @Path("quizByQuestionRepondue/{cip}")
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)

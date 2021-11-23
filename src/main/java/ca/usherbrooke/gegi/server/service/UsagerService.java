@@ -48,6 +48,18 @@ public class UsagerService {
     };
 
     @GET
+    @Path("userInfo")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public Usager userInfo(){
+        String cip = securityContext.getUserPrincipal().getName();
+        Usager usager = usagerMapper.selectByCIP(cip);
+        return usager;
+    };
+
+
+
+    @GET
     @Path("usagerByCourriel/{courriel1}")
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)

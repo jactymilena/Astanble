@@ -30,6 +30,11 @@
         WHERE cip = #{auteur} AND nom_relation = 'Auteur' OR nom_relation = 'Co-Auteur';
     </select>
 
+    <select id="selectNotAuthor" resultType="ca.usherbrooke.gegi.server.business.QuizAuthor">
+        SELECT * FROM astanble.view_usager_quiz_relation
+        WHERE cip != #{user_cip};
+    </select>
+
     <select id="selectByQuestionRepondue" resultType="ca.usherbrooke.gegi.server.business.Quiz">
         SELECT id_quiz, nom_quiz
         FROM astanble.view_quiz_usager_reponse

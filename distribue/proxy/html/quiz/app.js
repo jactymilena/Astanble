@@ -39,6 +39,7 @@ async function userProfil() {
                 $$("admin_tab").show();
 
             loadAuthorQuiz(window.user_profil.cip);
+            loadOthersQuiz(window.user_profil.cip);
         })
         .catch(function (error) {
             console.log('refreshing');
@@ -133,6 +134,38 @@ function loadAuthorQuiz(cip) {
                 quiz.forEach( q => {
                     var htmlLink = createQuizLinkWithAuthor(q);
                     liste_quiz_author.innerHTML += htmlLink;
+                })
+            }
+        })
+        .catch(function (error) {
+            console.log('refreshing');
+            keycloak.updateToken(5).then(function () {
+                console.log('Token refreshed');
+            }).catch(function () {
+                console.log('Failed to refresh token');
+            })
+            alert(error);
+        });
+}
+
+function loadOthersQuiz(cip) {
+    console.log("loadOthersQuiz");
+    axios.get("http://localhost:8888/api/quizNotAuthor/" + cip , {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token
+        }
+    })
+        .then(function (response) {
+            console.log(response.data);
+            console.log(response.status);
+
+            var quiz = response.data;
+            const list_quiz_disponible = document.getElementById("list_quiz_disponible");
+
+            if(list_quiz_disponible) {
+                quiz.forEach( q => {
+                    var htmlLink = createQuizLinkWithAuthor(q);
+                    list_quiz_disponible.innerHTML += htmlLink;
                 })
             }
         })

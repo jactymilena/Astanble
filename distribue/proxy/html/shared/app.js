@@ -25,7 +25,7 @@ async function initKeycloak() {
 }
 
 async function userProfil() {
-    await axios.get("http://localhost:8888/api/student", {
+    await axios.get("http://localhost:8888/api/userInfo", {
         headers: {
             'Authorization': 'Bearer ' + keycloak.token
         }
@@ -37,7 +37,7 @@ async function userProfil() {
             // prep user on ui
             var user_profil_html = document.getElementById("user_profil_nav");
             if(user_profil_html && user_profil)
-                user_profil_html.innerText = user_profil.first_name + " " + user_profil.last_name;
+                user_profil_html.innerText = user_profil.prenom_usager + " " + user_profil.nom_usager;
 
             if(user_profil.roles.includes("admin"))
                 $$("admin_tab").show();

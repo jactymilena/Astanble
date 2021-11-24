@@ -57,8 +57,6 @@ public class UsagerService {
         return usager;
     };
 
-
-
     @GET
     @Path("usagerByCourriel/{courriel1}")
     @PermitAll

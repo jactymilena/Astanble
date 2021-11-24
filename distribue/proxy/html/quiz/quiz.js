@@ -79,12 +79,17 @@ function quiz_finish(){
             })
             alert(error);
         });
+    window.location.href = "//localhost/quiz";
 
 }
 function creerReponseUsager(q, liste_questions){
     var content=0;
+    var rep_bonne=null;
+   // var bonne_reponse = false;
     if(q.id_type == 1) {
         content = document.getElementById(q.id_question).value;
+        if(q.reponses.reponse_content == content)
+            rep_bonne=q.reponses.id_reponse;
         console.log(content);
     }
     else if(q.id_type == 2) {
@@ -95,44 +100,25 @@ function creerReponseUsager(q, liste_questions){
                content= ele[i].value;
         }
         console.log(content);
-    }
-    var rep_bonne=0;
-    var reponseQuiz = q.reponses;
-    for(var i = 0; i<reponseQuiz.length;i++){
-        if(reponseQuiz[i].reponse_content == content)
-            rep_bonne = reponseQuiz[i].id_reponse;
-    }
-    if(rep_bonne==0){
-        let reponse_mauvaise = {
-            "reponse_content": content,
-            "bonne_mauvaise" : false,
-            "id_question": q.id_question
-        };
-        axios.post("http://localhost:8888/api/reponse/", JSON.stringify(reponse_mauvaise), {
-            headers: {
-                'Authorization': 'Bearer ' + keycloak.token,
-                'Content-Type' : 'application/json'
-            }
-        })
-            .catch(function (error) {
-                console.log('refreshing');
-                keycloak.updateToken(5).then(function () {
-                    console.log('Token refreshed');
-                }).catch(function () {
-                    console.log('Failed to refresh token');
-                })
-                console.log('Sad ça fonctionne pas :(');
-                alert(error);
+        var reponseQuiz = q.reponses;
+        for(var i = 0; i<reponseQuiz.length;i++){
 
-            });
+            if(reponseQuiz[i].reponse_content == content) {
+              //  bonne_reponse = true;
+                rep_bonne = reponseQuiz[i].id_reponse;
+            }
+        }
+
     }
 
     let reponse_usager_question = {
         "id_question": q.id_question,
-        "id_reponse": rep_bonne,
-        "usager": user_profil
-
+        "usager": user_profil,
+        "reponse_usager": content
+     //   "bonne_reponse": bonne_reponse
     };
+    if(rep_bonne != null)
+        reponse_usager_question.rep_bonne;
     console.log(reponse_usager_question);
     axios.post("http://localhost:8888/api/reponse/insert/", JSON.stringify(reponse_usager_question), {
         headers: {

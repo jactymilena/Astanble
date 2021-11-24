@@ -104,3 +104,17 @@ INSERT INTO astanble.commentaire(commentaire_content, cip, id_article)
 VALUES ('allo', 'saej3101', 1);
 
 SELECT * FROM astanble.commentaire;
+
+
+
+
+INSERT INTO astanble.reponse_usager_question(
+    id_question,
+    id_reponse,
+    CIP
+)
+VALUES (1,
+        1,
+        'saej3101');
+
+SELECT * FROM astanble.reponse;

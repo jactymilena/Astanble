@@ -3,6 +3,7 @@ package ca.usherbrooke.gegi.server.service;
 import ca.usherbrooke.gegi.server.business.Question;
 import ca.usherbrooke.gegi.server.business.Reponse;
 import ca.usherbrooke.gegi.server.business.ReponseUsager;
+import ca.usherbrooke.gegi.server.persistence.QuestionMapper;
 import ca.usherbrooke.gegi.server.persistence.ReponseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.eclipse.microprofile.jwt.JsonWebToken;
@@ -26,6 +27,10 @@ public class ReponseService {
     @Inject
     ReponseMapper reponseMapper;
 
+    @Inject
+    QuestionService questionService;
+
+
     @GET
     @Path("reponse/{id_question}")
     @PermitAll
@@ -44,7 +49,17 @@ public class ReponseService {
     @POST
     @Path("reponse/insert")
     @PermitAll
-    public void insertUser(ReponseUsager reponseUser){ reponseMapper.insertUser(reponseUser);
+    public void insertUser(ReponseUsager reponseUser){
+        Question question = questionService.getQuestion(reponseUser.getId_question());
+
+        if(question.getId_type() == 1) {
+            // Carte
+            Reponse bonneReponse = question.getReponses().get(0);
+
+            reponseUser.setBonne_reponse(bonneReponse.getReponse_content().equals(reponseUser.getReponse_usager()));
+        }
+
+        reponseMapper.insertUser(reponseUser);
     }
 
     @PUT

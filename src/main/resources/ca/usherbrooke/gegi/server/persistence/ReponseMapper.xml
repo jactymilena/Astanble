@@ -38,15 +38,23 @@
                 #{reponse.bonne_mauvaise},
                 #{reponse.id_question})
     </insert>
-    <insert id="insertUser" useGeneratedKeys="true" keyProperty="reponse_usager_question.id_reponse_usager_question" keyColumn="id_reponse_usager_question">
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="reponseUser.id_reponse_usager_question" keyColumn="id_reponse_usager_question">
         INSERT INTO astanble.reponse_usager_question(
             id_question,
+        <if test="reponseUser.id_reponse != 0">
             id_reponse,
-            CIP
+        </if>
+            CIP,
+            reponse_usager,
+            bonne_reponse
         )
         VALUES (#{reponseUser.id_question},
+            <if test="reponseUser.id_reponse != 0">
                 #{reponseUser.id_reponse},
-                #{reponseUser.usager.cip})
+            </if>
+                #{reponseUser.usager.cip},
+                #{reponseUser.reponse_usager},
+                #{reponseUser.bonne_reponse})
     </insert>
 
     <update id="update">

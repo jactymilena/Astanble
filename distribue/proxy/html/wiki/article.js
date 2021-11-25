@@ -99,14 +99,60 @@ function createResponseOption(id_commentaire) {
 
 }
 
-function deleteCommentaire(id_commentaire) {
-    axios.delete("http://localhost:8888/api/delete/commentaire/" + id_commentaire , {
+function verifCommentaireAuthor(id_commentaire) {
+    isSameUser = false;
+    axios.get("http://localhost:8888/api/commentaireAuthor/" + id_commentaire , {
         headers: {
             'Authorization': 'Bearer ' + keycloak.token
         }
     })
         .then(function (response) {
-            loadCommentaires();
+            console.log(window.user_profil.cip == response.data);
+            isSameUser = (window.user_profil.cip == response.data);
+            console.log("alloooo")
+            return isSameUser;
+        })
+        .catch(function (error) {
+            console.log('refreshing');
+            keycloak.updateToken(5).then(function () {
+                console.log('Token refreshed');
+            }).catch(function () {
+                console.log('Failed to refresh token');
+            })
+            alert(error);
+        });
+
+}
+
+function deleteCommentaire(id_commentaire) {
+
+    axios.get("http://localhost:8888/api/commentaireAuthor/" + id_commentaire , {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token
+        }
+    })
+        .then(function (response) {
+            if(window.user_profil.cip == response.data) {
+                axios.delete("http://localhost:8888/api/delete/commentaire/" + id_commentaire , {
+                    headers: {
+                        'Authorization': 'Bearer ' + keycloak.token
+                    }
+                })
+                    .then(function (response) {
+                        loadCommentaires();
+                    })
+                    .catch(function (error) {
+                        console.log('refreshing');
+                        keycloak.updateToken(5).then(function () {
+                            console.log('Token refreshed');
+                        }).catch(function () {
+                            console.log('Failed to refresh token');
+                        })
+                        alert(error);
+                    });
+            } else {
+                alert("Vous pouvez seulement supprimer vos propres commentaires.");
+            }
         })
         .catch(function (error) {
             console.log('refreshing');

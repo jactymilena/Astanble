@@ -11,6 +11,7 @@ import java.util.List;
 @Mapper
 public interface CommentaireMapper {
     List<Commentaire> selectByArticle(@Param("id_article") int id_article);
+    Usager selectByID(@Param("id_commentaire") int id_commentaire);
     List<ReponseCommentaire> selectReponseByCommentaire(@Param("id_commentaire") int id_commentaire);
     Usager selectAuthorOfCommentaire(@Param("cip") String cip);
     void insertCommentaire(@Param("commentaire") Commentaire commentaire);

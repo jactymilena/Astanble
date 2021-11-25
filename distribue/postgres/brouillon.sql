@@ -123,3 +123,5 @@ SELECT id_quiz, nom_quiz
 FROM astanble.view_quiz_usager_reponse
 WHERE cip = 'saej3101'
 GROUP BY id_quiz, nom_quiz;
+
+SELECT cip FROM astanble.commentaire WHERE id_commentaire = 2;

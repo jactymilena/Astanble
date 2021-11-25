@@ -1,6 +1,7 @@
 async function loadIndex() {
     await initKeycloak();
     userProfil();
+
 }
 
 async function initKeycloak() {

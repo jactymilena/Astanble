@@ -38,7 +38,8 @@
     <select id="selectByQuestionRepondue" resultType="ca.usherbrooke.gegi.server.business.Quiz">
         SELECT id_quiz, nom_quiz
         FROM astanble.view_quiz_usager_reponse
-        WHERE cip = #{cip};
+        WHERE cip = #{cip}
+        GROUP BY id_quiz, nom_quiz;
     </select>
 
     <select id="selectAuthorByQuiz" resultType="ca.usherbrooke.gegi.server.business.Usager">

@@ -67,7 +67,13 @@ public class ReponseService {
             if(question.getId_type() == 1) {
                 // Carte
                 Reponse bonneReponse = question.getReponses().get(0);
-                bonne_reponse = bonneReponse.getReponse_content().equals(reponseUsager.getReponse_usager());
+                try {
+                    int bonne_reponse_int = Integer.parseInt(bonneReponse.getReponse_content());
+                    int user_reponse_int = Integer.parseInt(reponseUsager.getReponse_usager().replaceAll(" ", ""));
+                    bonne_reponse = bonne_reponse_int == user_reponse_int;
+                } catch (Exception e) {
+                    bonne_reponse = bonneReponse.getReponse_content().equals(reponseUsager.getReponse_usager());
+                }
                 reponseUsager.setBonne_reponse(bonne_reponse);
             } else {
                 Reponse bonneReponse = question.getReponses().stream().filter(r -> r.isBonne_mauvaise()).findFirst().get();

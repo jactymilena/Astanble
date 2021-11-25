@@ -132,6 +132,9 @@ function sendAllResponses(responses) {
             'Authorization': 'Bearer ' + keycloak.token,
             'Content-Type' : 'application/json'
         }
+    }).then(function (response) {
+        let resultat_quiz = response.data;
+        alert(`Bravo vous avez obtenu: ${resultat_quiz.nombre_bonne_reponse} sur ${resultat_quiz.nombre_question}!`);
     })
         .catch(function (error) {
             console.log('refreshing');

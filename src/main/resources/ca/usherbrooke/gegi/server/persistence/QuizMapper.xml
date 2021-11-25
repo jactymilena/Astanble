@@ -36,10 +36,10 @@
     </select>
 
     <select id="selectByQuestionRepondue" resultType="ca.usherbrooke.gegi.server.business.Quiz">
-        SELECT id_quiz, nom_quiz
+        SELECT id_quiz, nom_quiz, date_time_response
         FROM astanble.view_quiz_usager_reponse
         WHERE cip = #{cip}
-        GROUP BY id_quiz, nom_quiz;
+        GROUP BY id_quiz,nom_quiz, date_time_response;
     </select>
 
     <select id="selectAuthorByQuiz" resultType="ca.usherbrooke.gegi.server.business.Usager">

@@ -3,6 +3,7 @@ package ca.usherbrooke.gegi.server.service;
 import ca.usherbrooke.gegi.server.business.Question;
 import ca.usherbrooke.gegi.server.business.Reponse;
 import ca.usherbrooke.gegi.server.business.ReponseUsager;
+import ca.usherbrooke.gegi.server.business.ResultatQuiz;
 import ca.usherbrooke.gegi.server.persistence.QuestionMapper;
 import ca.usherbrooke.gegi.server.persistence.ReponseMapper;
 import org.apache.ibatis.annotations.Param;
@@ -49,21 +50,32 @@ public class ReponseService {
     @POST
     @Path("reponse/insert")
     @PermitAll
-    public void insertUser(List<ReponseUsager> reponseUser){
+    public ResultatQuiz insertUser(List<ReponseUsager> reponseUser){
+        ResultatQuiz resultatQuiz = new ResultatQuiz();
         String timestamp = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date()).toString();
         reponseUser.forEach(reponseUsager -> {
+            resultatQuiz.nombre_question++;
             reponseUsager.setDate_time_response(timestamp);
             Question question = questionService.getQuestion(reponseUsager.getId_question());
 
+            boolean bonne_reponse;
             if(question.getId_type() == 1) {
                 // Carte
                 Reponse bonneReponse = question.getReponses().get(0);
-
-                reponseUsager.setBonne_reponse(bonneReponse.getReponse_content().equals(reponseUsager.getReponse_usager()));
+                bonne_reponse = bonneReponse.getReponse_content().equals(reponseUsager.getReponse_usager());
+                reponseUsager.setBonne_reponse(bonne_reponse);
+            } else {
+                Reponse bonneReponse = question.getReponses().stream().filter(r -> r.isBonne_mauvaise()).findFirst().get();
+                bonne_reponse = reponseUsager.getReponse_usager().equals(bonneReponse.getReponse_content());
+                reponseUsager.setBonne_reponse(bonne_reponse);
             }
+            if(bonne_reponse)
+                resultatQuiz.nombre_bonne_reponse++;
 
             reponseMapper.insertUser(reponseUsager);
         });
+
+        return resultatQuiz;
     }
 
     @PUT

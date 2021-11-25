@@ -211,9 +211,17 @@ meta{
     margin-top: 10px;
 }
 
+.webix_transparent .webix_button {
+    color: #000000 !important;
+}
+
+#user_profil_nav {
+    color: #000000 !important;
+}
+
 .image_user_icon {
     width:50px;
     height: 50px;
-    background: #FF8921;
+    background: #51aa3a;
     margin-top:20px
 }

@@ -1,5 +1,5 @@
 const header = {
-    view: "toolbar", paddingY: 2, css: {"background": "#FF8921"},
+    view: "toolbar", paddingY: 2, css: {"background": "#51aa3a"},
     cols: [
         {
             view: "button", type: "image",
@@ -32,6 +32,8 @@ const header = {
                 window.location.href = "//localhost/profil";
             }, css: "webix_transparent"
         },
-        {view: "template", borderless: true, content: "usericon",css: {"background": "#FF8921"}}
+        {
+            view: "template", borderless: true, content: "usericon",css: {"background": "#51aa3a"}
+        }
     ]
 }

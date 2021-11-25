@@ -79,10 +79,15 @@ function createQuizLinkWithAuthor(quiz) {
 
 function createQuizLink(quiz) {
     return `
-        <div class="card col-sm-12 col-md-6">
-          <div class="card-body">
-            <span><a href="quiz.html?quiz=${quiz.id_quiz}">${quiz.nom_quiz}</a></span><br>
-          </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <span style="font-size: smaller">Date fait: ${quiz.date_time_response}</span>
+            </div>
+              <div class="card-body">
+                <span><a href="quiz.html?quiz=${quiz.id_quiz}">${quiz.nom_quiz}</a></span><br>
+              </div>
+            </div>
         </div>
         `
 }

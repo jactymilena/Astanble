@@ -124,6 +124,7 @@ public class QuizService {
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public List<QuizAuthor> getQuizNotAuthor(@PathParam("user_cip") String user_cip) {
+        user_cip = securityContext.getUserPrincipal().getName();
         List<QuizAuthor> quiz = quizMapper.selectNotAuthor(user_cip);
         setListAuthors(quiz);
 
@@ -134,8 +135,10 @@ public class QuizService {
     @Path("quizByQuestionRepondue/{cip}")
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Quiz> getQuizByQuestionRepondue(@PathParam("cip") String cip) {
-        return quizMapper.selectByQuestionRepondue(cip);
+    public List<QuizFait> getQuizByQuestionRepondue(@PathParam("cip") String cip) {
+        cip = securityContext.getUserPrincipal().getName();
+        List<QuizFait> quizFaits = quizMapper.selectByQuestionRepondue(cip);
+        return quizFaits;
     }
 
     @POST

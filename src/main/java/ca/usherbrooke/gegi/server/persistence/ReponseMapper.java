@@ -11,6 +11,7 @@ import java.util.List;
 public interface ReponseMapper {
     List<Reponse> select();
     List<Reponse> selectByQuestion(@Param("id_question") int id_question);
+    List<ReponseUsager> selectByUserDateQuiz(@Param("cip") String cip, @Param("id_quiz") int id_quiz, @Param("time") String time);
     List<Reponse> selectByName(@Param("name") String name);
     List<Reponse> selectByID(@Param("id") int id);
     List<Reponse> selectByAuthor(@Param("auteur") String auteur);

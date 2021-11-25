@@ -28,6 +28,14 @@
 
     </select>
 
+    <select id="selectByUserDateQuiz" resultType="ca.usherbrooke.gegi.server.business.ReponseUsager">
+        SELECT reponse_usager_question.* FROM astanble.question
+        LEFT JOIN astanble.reponse_usager_question ruq ON ruq.id_question = question.id_question
+        WHERE reponse_usager_question.cip = #{cip}
+                  AND  id_quiz = #{id_quiz}
+                    AND date_time_response = #{time}
+    </select>
+
     <insert id="insert" useGeneratedKeys="true" keyProperty="reponse.id_reponse" keyColumn="id_reponse">
         INSERT INTO astanble.reponse(
             reponse_content,
@@ -46,7 +54,8 @@
         </if>
             CIP,
             reponse_usager,
-            bonne_reponse
+            bonne_reponse,
+            date_time_response
         )
         VALUES (#{reponseUser.id_question},
             <if test="reponseUser.id_reponse != 0">
@@ -54,7 +63,8 @@
             </if>
                 #{reponseUser.usager.cip},
                 #{reponseUser.reponse_usager},
-                #{reponseUser.bonne_reponse})
+                #{reponseUser.bonne_reponse},
+                #{reponseUser.date_time_response}::timestamp)
     </insert>
 
     <update id="update">

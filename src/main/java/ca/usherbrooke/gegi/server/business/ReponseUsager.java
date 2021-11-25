@@ -2,6 +2,7 @@ package ca.usherbrooke.gegi.server.business;
 
 public class ReponseUsager extends Reponse {
     private Usager usager;
+    private String cip;
     private int id_reponse_usager_question;
     private String reponse_usager;
     private boolean bonne_reponse;
@@ -45,5 +46,13 @@ public class ReponseUsager extends Reponse {
 
     public void setDate_time_response(String date_time_response) {
         this.date_time_response = date_time_response;
+    }
+
+    public String getCip() {
+        return cip;
+    }
+
+    public void setCip(String cip) {
+        this.cip = cip;
     }
 }

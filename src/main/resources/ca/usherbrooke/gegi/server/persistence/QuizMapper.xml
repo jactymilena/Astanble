@@ -35,7 +35,7 @@
         WHERE cip != #{user_cip};
     </select>
 
-    <select id="selectByQuestionRepondue" resultType="ca.usherbrooke.gegi.server.business.Quiz">
+    <select id="selectByQuestionRepondue" resultType="ca.usherbrooke.gegi.server.business.QuizFait">
         SELECT id_quiz, nom_quiz, date_time_response
         FROM astanble.view_quiz_usager_reponse
         WHERE cip = #{cip}

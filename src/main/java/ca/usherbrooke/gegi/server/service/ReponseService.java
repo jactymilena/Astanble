@@ -15,6 +15,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Path("/api")
@@ -52,7 +55,9 @@ public class ReponseService {
     @PermitAll
     public ResultatQuiz insertUser(List<ReponseUsager> reponseUser){
         ResultatQuiz resultatQuiz = new ResultatQuiz();
-        String timestamp = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date()).toString();
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String timestamp = formatter.format(date);
         reponseUser.forEach(reponseUsager -> {
             resultatQuiz.nombre_question++;
             reponseUsager.setDate_time_response(timestamp);

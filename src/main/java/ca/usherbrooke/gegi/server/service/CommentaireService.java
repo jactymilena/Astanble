@@ -1,9 +1,6 @@
 package ca.usherbrooke.gegi.server.service;
 
-import ca.usherbrooke.gegi.server.business.ArticleAuthor;
-import ca.usherbrooke.gegi.server.business.Commentaire;
-import ca.usherbrooke.gegi.server.business.Question;
-import ca.usherbrooke.gegi.server.business.ReponseCommentaire;
+import ca.usherbrooke.gegi.server.business.*;
 import ca.usherbrooke.gegi.server.persistence.CommentaireMapper;
 import ca.usherbrooke.gegi.server.persistence.QuestionMapper;
 import org.eclipse.microprofile.jwt.JsonWebToken;
@@ -46,6 +43,16 @@ public class CommentaireService {
         }
 
         return commentaires;
+    }
+
+    @GET
+    @Path("commentaireAuthor/{id_commentaire}")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getByID(@PathParam("id_commentaire") int id_commentaire) {
+        Usager usager = commentaireMapper.selectByID(id_commentaire);
+
+        return usager.getCip();
     }
 
     @POST

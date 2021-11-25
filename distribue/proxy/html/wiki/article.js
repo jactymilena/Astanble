@@ -3,7 +3,7 @@ var keycloak;
 var editor5;
 
 async function loadArticle() {
-    // call init from app1.js
+    // call init from app.js
     await init();
     // load all themes on side nav
     loadThemesOnSideNav();
@@ -26,15 +26,23 @@ async function loadArticle() {
         $('#saveButton').attr("onclick", "createArticle();");
         editor5.isReadOnly = false;
         document.getElementById("description_article").removeAttribute("disabled");
+
+        // Cacher commentaires et liens articles
+        const comment_option = document.getElementById('section_commentaire');
+        comment_option.toggleAttribute("hidden")
+
+        const liens_quiz = document.getElementById('liens_quiz');
+        liens_quiz.toggleAttribute("hidden");
     }
     else {
         requestWiki(urlParams.get('article'));
         editor5.isReadOnly = true;
+        loadCommentaires();
+        loadQuizref();
     }
 
     loadThemesSelector();
-    loadCommentaires();
-    loadQuizref();
+
 }
 
 function commentOnKeyDown(event) {

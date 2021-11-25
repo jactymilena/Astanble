@@ -49,17 +49,21 @@ public class ReponseService {
     @POST
     @Path("reponse/insert")
     @PermitAll
-    public void insertUser(ReponseUsager reponseUser){
-        Question question = questionService.getQuestion(reponseUser.getId_question());
+    public void insertUser(List<ReponseUsager> reponseUser){
+        String timestamp = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date()).toString();
+        reponseUser.forEach(reponseUsager -> {
+            reponseUsager.setDate_time_response(timestamp);
+            Question question = questionService.getQuestion(reponseUsager.getId_question());
 
-        if(question.getId_type() == 1) {
-            // Carte
-            Reponse bonneReponse = question.getReponses().get(0);
+            if(question.getId_type() == 1) {
+                // Carte
+                Reponse bonneReponse = question.getReponses().get(0);
 
-            reponseUser.setBonne_reponse(bonneReponse.getReponse_content().equals(reponseUser.getReponse_usager()));
-        }
+                reponseUsager.setBonne_reponse(bonneReponse.getReponse_content().equals(reponseUsager.getReponse_usager()));
+            }
 
-        reponseMapper.insertUser(reponseUser);
+            reponseMapper.insertUser(reponseUsager);
+        });
     }
 
     @PUT

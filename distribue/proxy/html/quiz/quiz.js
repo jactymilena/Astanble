@@ -43,7 +43,6 @@ async function loadQuiz() {
             quiz.questions.forEach(q => {
                 createQuestionHTML(q, liste_questions);
             })
-
         })
         .catch(function (error) {
             console.log('refreshing');
@@ -66,9 +65,14 @@ function quiz_finish(){
         .then(function (response) {
             console.log(response);
             var quiz = response.data;
+
+
+            let responses = []
             quiz.questions.forEach(q => {
-                creerReponseUsager(q, liste_questions)
+                let r = creerReponseUsager(q, liste_questions);
+                responses.push(r);
             })
+            sendAllResponses(responses);
         })
         .catch(function (error) {
             console.log('refreshing');
@@ -79,7 +83,6 @@ function quiz_finish(){
             })
             alert(error);
         });
-    window.location.href = "//localhost/quiz";
 
 }
 function creerReponseUsager(q, liste_questions){
@@ -120,21 +123,25 @@ function creerReponseUsager(q, liste_questions){
     if(rep_bonne != null)
         reponse_usager_question.rep_bonne;
     console.log(reponse_usager_question);
-    axios.post("http://localhost:8888/api/reponse/insert/", JSON.stringify(reponse_usager_question), {
+    return reponse_usager_question;
+}
+
+function sendAllResponses(responses) {
+    axios.post("http://localhost:8888/api/reponse/insert/", JSON.stringify(responses), {
         headers: {
             'Authorization': 'Bearer ' + keycloak.token,
             'Content-Type' : 'application/json'
         }
     })
         .catch(function (error) {
-        console.log('refreshing');
-        keycloak.updateToken(5).then(function () {
-            console.log('Token refreshed');
-        }).catch(function () {
-            console.log('Failed to refresh token');
-        })
-        console.log('Sad ça fonctionne pas :(');
-        alert(error);
+            console.log('refreshing');
+            keycloak.updateToken(5).then(function () {
+                console.log('Token refreshed');
+            }).catch(function () {
+                console.log('Failed to refresh token');
+            })
+            console.log('Sad ça fonctionne pas :(');
+            alert(error);
 
-    });
+        });
 }

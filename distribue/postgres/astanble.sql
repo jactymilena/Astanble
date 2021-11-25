@@ -226,6 +226,7 @@ CREATE TABLE reponse_usager_question
     CIP                        CHAR(8) NOT NULL,
     reponse_usager             TEXT,
     bonne_reponse              BOOLEAN,
+    date_time_response         TIMESTAMP,
     FOREIGN KEY (id_question) REFERENCES question(id_question) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (id_reponse) REFERENCES reponse(id_reponse) ON UPDATE CASCADE ON DELETE SET NULL,
     FOREIGN KEY (CIP) REFERENCES usager(CIP) ON UPDATE CASCADE ON DELETE CASCADE

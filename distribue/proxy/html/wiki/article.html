@@ -74,14 +74,14 @@
             <div id="editor">
                 <p>This is the initial editor content.</p>
             </div>
-            <div>
+            <div id="section_commentaire">
                 <br>
                 <h3>Commentaires</h3>
                 <div>
                     <img src="../trimestre/images/UserIcon.png"
                          alt="Icone utilisateur"
                          style="width:30px; height: 30px;">
-                    <input id="champ_commentaire" class="champ" type="text" placeholder="Écrire un commentaire..."/>
+                    <input id="champ_commentaire" class="champ" type="text" onkeydown="commentOnKeyDown(event);" placeholder="Écrire un commentaire..."/>
                     <input id="comment_button" type="button" value="Commenter" onclick="createCommentaire()"/>
                 </div>
                 <br>
@@ -89,7 +89,7 @@
 
                 </div>
             </div>
-            <div>
+            <div id="liens_quiz">
                 <h3>Testez vos connaissances avec les questionnaires recommandés suivants :</h3>
                 <div id="liste_quiz_article">
 

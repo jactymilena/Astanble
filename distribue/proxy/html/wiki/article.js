@@ -3,7 +3,7 @@ var keycloak;
 var editor5;
 
 async function loadArticle() {
-    // call init from app1.js
+    // call init from app.js
     await init();
     // load all themes on side nav
     loadThemesOnSideNav();
@@ -26,15 +26,36 @@ async function loadArticle() {
         $('#saveButton').attr("onclick", "createArticle();");
         editor5.isReadOnly = false;
         document.getElementById("description_article").removeAttribute("disabled");
+
+        // Cacher commentaires et liens articles
+        const comment_option = document.getElementById('section_commentaire');
+        comment_option.toggleAttribute("hidden")
+
+        const liens_quiz = document.getElementById('liens_quiz');
+        liens_quiz.toggleAttribute("hidden");
     }
     else {
         requestWiki(urlParams.get('article'));
         editor5.isReadOnly = true;
+        loadCommentaires();
+        loadQuizref();
     }
 
     loadThemesSelector();
-    loadCommentaires();
-    loadQuizref();
+
+}
+
+function commentOnKeyDown(event) {
+    if(event.keyCode === 13) {
+        $("#comment_button").click();
+    }
+}
+
+function respondeOnKeyDown(event, id_commentaire) {
+    if(event.keyCode === 13) {
+        // $(`#comment_button${id_commentaire}`).click();
+        createCommentaireReponse(id_commentaire);
+    }
 }
 
 function createCommentaireHTML(commentaire, isReponse, liste) {
@@ -54,7 +75,7 @@ function createCommentaireHTML(commentaire, isReponse, liste) {
                     ${commentaire.date_commentaire}
                 </span>
                 <input id="delete_comment_button" type="button" value="x" onclick="deleteCommentaire(${commentaire.id_commentaire})"/>
-                <input id="comment_button" type="button" value="Répondre" onclick="addResponseOption(${commentaire.id_commentaire})" 
+                <input id="comment_button${commentaire.id_commentaire}" type="button" value="Répondre" onclick="addResponseOption(${commentaire.id_commentaire})" 
                 ${isReponse == true ? "hidden" : ''}/>
                 <br>
                 ${commentaire.commentaire_content}
@@ -85,42 +106,16 @@ function createResponseOption(id_commentaire) {
         <img src="../trimestre/images/UserIcon.png"
              alt="Icone utilisateur"
              style="width:30px; height: 30px;">
-        <input id="champ_commentaire_reponse" parent="${id_commentaire}" class="champ" type="text" placeholder="Répondre au commentaire..."/>
+        <input id="champ_commentaire_reponse" parent="${id_commentaire}" class="champ" onkeydown="respondeOnKeyDown(event, ${id_commentaire})" type="text" placeholder="Répondre au commentaire..."/>
         <input id="comment_button" type="button" value="Répondre" onclick="createCommentaireReponse(${id_commentaire})"/>
     </div>
     `;
-
     comment_option.setAttribute('style', `margin-top : 15px`);
     // comment_option.setAttribute('hidden', 'true');
     comment_option.toggleAttribute("hidden");
 
     var liste_commentaire = document.querySelector(`[commentaire="${id_commentaire}"]`);
     liste_commentaire.appendChild(comment_option);
-
-}
-
-function verifCommentaireAuthor(id_commentaire) {
-    isSameUser = false;
-    axios.get("http://localhost:8888/api/commentaireAuthor/" + id_commentaire , {
-        headers: {
-            'Authorization': 'Bearer ' + keycloak.token
-        }
-    })
-        .then(function (response) {
-            console.log(window.user_profil.cip == response.data);
-            isSameUser = (window.user_profil.cip == response.data);
-            console.log("alloooo")
-            return isSameUser;
-        })
-        .catch(function (error) {
-            console.log('refreshing');
-            keycloak.updateToken(5).then(function () {
-                console.log('Token refreshed');
-            }).catch(function () {
-                console.log('Failed to refresh token');
-            })
-            alert(error);
-        });
 
 }
 

@@ -86,6 +86,7 @@ function createQuizLink(quiz) {
             </div>
               <div class="card-body">
                 <span><a href="quiz.html?quiz=${quiz.id_quiz}">${quiz.nom_quiz}</a></span><br>
+                Score: ${quiz.nombre_bonne_reponse}/${quiz.nombre_question}
               </div>
             </div>
         </div>

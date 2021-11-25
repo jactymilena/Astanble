@@ -29,11 +29,13 @@
     </select>
 
     <select id="selectByUserDateQuiz" resultType="ca.usherbrooke.gegi.server.business.ReponseUsager">
-        SELECT reponse_usager_question.* FROM astanble.question
-        LEFT JOIN astanble.reponse_usager_question ruq ON ruq.id_question = question.id_question
+        SELECT reponse_usager_question.id_reponse_usager_question, reponse_usager_question.id_question, reponse_usager_question.id_reponse,
+               reponse_usager_question.cip, reponse_usager_question.reponse_usager, reponse_usager_question.bonne_reponse,
+               reponse_usager_question.date_time_response FROM astanble.question
+        LEFT JOIN astanble.reponse_usager_question ON reponse_usager_question.id_question = question.id_question
         WHERE reponse_usager_question.cip = #{cip}
                   AND  id_quiz = #{id_quiz}
-                    AND date_time_response = #{time}
+                    AND date_time_response = #{time}::timestamp
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="reponse.id_reponse" keyColumn="id_reponse">

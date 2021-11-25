@@ -136,8 +136,12 @@ public class QuizService {
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public List<QuizFait> getQuizByQuestionRepondue(@PathParam("cip") String cip) {
-        cip = securityContext.getUserPrincipal().getName();
         List<QuizFait> quizFaits = quizMapper.selectByQuestionRepondue(cip);
+        quizFaits.forEach(quizFait -> {
+            List<ReponseUsager> reponsesUsager = reponseMapper.selectByUserDateQuiz(cip, quizFait.getId_quiz(), quizFait.getDate_time_response());
+            quizFait.nombre_question = reponsesUsager.size();
+            quizFait.nombre_bonne_reponse = (int) reponsesUsager.stream().filter(r -> r.isBonne_reponse()).count();
+        });
         return quizFaits;
     }
 

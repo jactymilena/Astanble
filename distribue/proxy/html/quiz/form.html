@@ -157,15 +157,17 @@
         </script>
 
         <script id="handlebars-response-carte" type="text/x-handlebars-template">
-            <div class="col-12">
+            <div data-reponse-container="{{num_question}}:{{num_reponse}}" class="col-12">
+                <input type="button" value="x" onclick="deleteResponse('{{num_question}}:{{num_reponse}}')"/>
                 <input id="reponse-{{id_reponse}}" data-type="reponse" data-question-num="{{num_question}}" data-reponse-num="{{num_reponse}}" data-question-id="{{id_question}}" data-reponse-id="{{id_reponse}}" class="form-control" value="{{reponse_content}}" onkeyup="updateReponse(this)" required>
                 <label for="reponse-{{id_reponse}}" class="form-label">Réponse</label>
             </div>
         </script>
 
         <script id="handlebars-response-multi" type="text/x-handlebars-template">
-            <div class="col-12">
+            <div data-reponse-container="{{num_question}}:{{num_reponse}}" data-reponse-container-id="{{num_reponse}}" class="col-12">
                 <div class="form-check">
+                    <input type="button" value="x" onclick="deleteResponse('{{num_question}}:{{num_reponse}}')"/>
                     <input onclick="reponseSelectionCheck(this);" class="form-check-input" type="checkbox" id="check-good-question-{{num_reponse}}" {{#if bonne_mauvaise}} data-checked='true' checked {{else}} data-checked='false' {{/if}}>
                     <label class="form-check-label" for="check-good-question-{{num_reponse}}" style="width: 100%;">
                         <input id="reponse-{{id_reponse}}" data-type="reponse" data-question-num="{{num_question}}" data-reponse-num="{{num_reponse}}" data-question-id="{{id_question}}" data-reponse-id="{{id_reponse}}" class="form-control" value="{{reponse_content}}" onkeyup="updateReponse(this)" required>

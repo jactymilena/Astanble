@@ -198,3 +198,7 @@ function createFormQuestions(id_quiz) {
     });
     return questionsReponses;
 }
+
+function deleteResponse(id_reponse_container) {
+    $(`[data-reponse-container="${id_reponse_container}"]`).remove();
+}

@@ -1,6 +1,7 @@
 async function loadIndex() {
     await initKeycloak();
     userProfil();
+
 }
 
 async function initKeycloak() {
@@ -40,6 +41,7 @@ async function userProfil() {
 
             loadAuthorQuiz(window.user_profil.cip);
             loadOthersQuiz(window.user_profil.cip);
+            loadHistorique(window.user_profil.cip);
         })
         .catch(function (error) {
             console.log('refreshing');

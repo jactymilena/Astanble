@@ -118,3 +118,8 @@ VALUES (1,
         'saej3101');
 
 SELECT * FROM astanble.reponse;
+
+SELECT id_quiz, nom_quiz
+FROM astanble.view_quiz_usager_reponse
+WHERE cip = 'saej3101'
+GROUP BY id_quiz, nom_quiz;

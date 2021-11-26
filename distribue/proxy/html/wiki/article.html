@@ -84,8 +84,8 @@
                     <img src="../trimestre/images/UserIcon.png"
                          alt="Icone utilisateur"
                          style="width:30px; height: 30px;">
-                    <input id="champ_commentaire" class="champ" type="text" onkeydown="commentOnKeyDown(event);" placeholder="Écrire un commentaire..."/>
-                    <input id="comment_button" type="button" value="Commenter" onclick="createCommentaire()"/>
+                    <input id="champ_commentaire" class="champ" type="textarea" rows="4" cols="50"  onkeydown="commentOnKeyDown(event);" placeholder="Écrire un commentaire..."/>
+                    <input id="comment_button" class="rep-btn" type="button" value="Commenter" onclick="createCommentaire()"/>
                 </div>
                 <br>
                 <div id="liste_commentaires" class="comments">

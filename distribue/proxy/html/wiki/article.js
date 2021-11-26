@@ -58,82 +58,10 @@ function respondeOnKeyDown(event, id_commentaire) {
     }
 }
 
-/*
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-<body>
-
-  <section class="comments">
-    <section class="comment-container">
-      <img src="https://techcommunity.microsoft.com/t5/image/serverpage/image-id/217078i525F6A9EF292601F/image-size/large?v=v2&px=999" alt="">
-      <div class="box">
-        <div class="box-header">
-          <span class="box--title">Laurence Milette</span>
-          <span class="box--date">2021-11-04 08:10:06</span>
-          <div class="box--tools">
-            <button class="delete-btn"><i class="fas fa-trash"></i></button>
-          </div>
-        </div>
-        <span>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur rem asperiores odio similique voluptate. Ex quae aliquam deserunt. Officia ducimus quisquam pariatur! Cum eveniet ullam, illo perferendis tempore asperiores ea?
-        </span>
-        <div class="box--tools" style="margin-top: 1.75em; margin-right: 1.05em">
-          <button class="rep-btn"><span>Répondre</span></button>
-        </div>
-      </div>
-    </section>
-
-    <section class="comment-container" style="--ml: 30px;">
-      <img src="https://techcommunity.microsoft.com/t5/image/serverpage/image-id/217078i525F6A9EF292601F/image-size/large?v=v2&px=999" alt="">
-      <div class="box">
-        <div class="box-header">
-          <span class="box--title">Laurence Milette</span>
-          <span class="box--date">2021-11-04 08:10:06</span>
-          <div class="box--tools">
-            <button class="delete-btn"><i class="fas fa-trash"></i></button>
-          </div>
-        </div>
-        <span>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur rem asperiores odio similique voluptate. Ex quae aliquam deserunt. Officia ducimus quisquam pariatur! Cum eveniet ullam, illo perferendis tempore asperiores ea?
-        </span>
-      </div>
-    </section>
-  </section>
-
-  <section class="comment-container" style="--ml: 60px;">
-    <img src="https://techcommunity.microsoft.com/t5/image/serverpage/image-id/217078i525F6A9EF292601F/image-size/large?v=v2&px=999" alt="">
-    <div class="box">
-      <div class="box-header">
-        <span class="box--title">Laurence Milette</span>
-        <span class="box--date">2021-11-04 08:10:06</span>
-        <div class="box--tools">
-          <button class="delete-btn"><i class="fas fa-trash"></i></button>
-        </div>
-      </div>
-      <span>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur rem asperiores odio similique voluptate. Ex quae aliquam deserunt. Officia ducimus quisquam pariatur! Cum eveniet ullam, illo perferendis tempore asperiores ea?
-      </span>
-    </div>
-  </section>
-</section>
-
-</body>
-</html>
- */
-
 function createCommentaireHTML(commentaire, isReponse, liste) {
     const item = document.createElement('section');
     item.setAttribute('commentaire', `${commentaire.id_commentaire}`);
-    item.setAttribute('class', 'comment_container');
+    item.setAttribute('class', 'comment-container');
 
     item.innerHTML = `
         <img id="comment_icon" src="../trimestre/images/UserIcon.png"
@@ -215,10 +143,10 @@ function createResponseOption(id_commentaire) {
              alt="Icone utilisateur"
              style="width:30px; height: 30px;">
         <input id="champ_commentaire_reponse" parent="${id_commentaire}" class="champ" onkeydown="respondeOnKeyDown(event, ${id_commentaire})" type="text" placeholder="Répondre au commentaire..."/>
-        <input id="comment_button" type="button" value="Répondre" onclick="createCommentaireReponse(${id_commentaire})"/>
+        <input id="comment_button" class="rep-btn" type="button" value="Répondre" onclick="createCommentaireReponse(${id_commentaire})"/>
     </div>
     `;
-    comment_option.setAttribute('style', `margin-top : 15px`);
+    comment_option.setAttribute('style', `margin-top : 15px; flex: 0 0 100%; margin-bottom: 2.25em`);
     // comment_option.setAttribute('hidden', 'true');
     comment_option.toggleAttribute("hidden");
 
@@ -283,7 +211,10 @@ function loadCommentaires() {
             const commentaires = response.data;
 
             commentaires.forEach(com => {
-                createCommentaireHTML(com, false, liste_commentaires);
+                const comments_section = document.createElement("section");
+                comments_section.setAttribute("class", "comments");
+
+                createCommentaireHTML(com, false, comments_section);
                 console.log(com.reponses);
                 console.log('Grandeur ' + com.reponses.length);
 
@@ -292,9 +223,11 @@ function loadCommentaires() {
                     var liste_reponse = document.querySelector(`[commentaire="${com.id_commentaire}"]`);
                     console.log(com.reponses);
                     com.reponses.forEach(res => {
-                        createCommentaireHTML(res, true, liste_reponse);
+                        createCommentaireHTML(res, true, comments_section);
                     });
                 }
+
+                liste_commentaires.innerHTML += comments_section.innerHTML;
                 createResponseOption(com.id_commentaire);
             });
         })

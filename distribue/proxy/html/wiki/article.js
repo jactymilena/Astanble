@@ -58,38 +58,146 @@ function respondeOnKeyDown(event, id_commentaire) {
     }
 }
 
+/*
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+  <section class="comments">
+    <section class="comment-container">
+      <img src="https://techcommunity.microsoft.com/t5/image/serverpage/image-id/217078i525F6A9EF292601F/image-size/large?v=v2&px=999" alt="">
+      <div class="box">
+        <div class="box-header">
+          <span class="box--title">Laurence Milette</span>
+          <span class="box--date">2021-11-04 08:10:06</span>
+          <div class="box--tools">
+            <button class="delete-btn"><i class="fas fa-trash"></i></button>
+          </div>
+        </div>
+        <span>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur rem asperiores odio similique voluptate. Ex quae aliquam deserunt. Officia ducimus quisquam pariatur! Cum eveniet ullam, illo perferendis tempore asperiores ea?
+        </span>
+        <div class="box--tools" style="margin-top: 1.75em; margin-right: 1.05em">
+          <button class="rep-btn"><span>Répondre</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="comment-container" style="--ml: 30px;">
+      <img src="https://techcommunity.microsoft.com/t5/image/serverpage/image-id/217078i525F6A9EF292601F/image-size/large?v=v2&px=999" alt="">
+      <div class="box">
+        <div class="box-header">
+          <span class="box--title">Laurence Milette</span>
+          <span class="box--date">2021-11-04 08:10:06</span>
+          <div class="box--tools">
+            <button class="delete-btn"><i class="fas fa-trash"></i></button>
+          </div>
+        </div>
+        <span>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur rem asperiores odio similique voluptate. Ex quae aliquam deserunt. Officia ducimus quisquam pariatur! Cum eveniet ullam, illo perferendis tempore asperiores ea?
+        </span>
+      </div>
+    </section>
+  </section>
+
+  <section class="comment-container" style="--ml: 60px;">
+    <img src="https://techcommunity.microsoft.com/t5/image/serverpage/image-id/217078i525F6A9EF292601F/image-size/large?v=v2&px=999" alt="">
+    <div class="box">
+      <div class="box-header">
+        <span class="box--title">Laurence Milette</span>
+        <span class="box--date">2021-11-04 08:10:06</span>
+        <div class="box--tools">
+          <button class="delete-btn"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+      <span>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur rem asperiores odio similique voluptate. Ex quae aliquam deserunt. Officia ducimus quisquam pariatur! Cum eveniet ullam, illo perferendis tempore asperiores ea?
+      </span>
+    </div>
+  </section>
+</section>
+
+</body>
+</html>
+ */
+
 function createCommentaireHTML(commentaire, isReponse, liste) {
-    const item = document.createElement('div');
+    const item = document.createElement('section');
     item.setAttribute('commentaire', `${commentaire.id_commentaire}`);
+    item.setAttribute('class', 'comment_container');
+
     item.innerHTML = `
-        <div commentaire="${commentaire.id_commentaire}">
-            <img src="../trimestre/images/UserIcon.png"
+        <img id="comment_icon" src="../trimestre/images/UserIcon.png"
              alt="Icone utilisateur"
              style="width:30px; height: 30px;">
-             <div style="border: solid #5f5f5f 1px;">
-                
-                <span style="font-size: large; font-weight: bold">
+        <div class="box" commentaire="${commentaire.id_commentaire}">
+            <div class="box-header">
+                <span class="box--title">
                     ${commentaire.auteur.prenom_usager} ${commentaire.auteur.nom_usager}
                 </span>
-                <span style="align: right; font-size: smaller">
+                <span class="box--date">
                     ${commentaire.date_commentaire}
                 </span>
-                <input id="delete_comment_button" type="button" value="x" onclick="deleteCommentaire(${commentaire.id_commentaire})"/>
-                <input id="comment_button${commentaire.id_commentaire}" type="button" value="Répondre" onclick="addResponseOption(${commentaire.id_commentaire})" 
-                ${isReponse == true ? "hidden" : ''}/>
-                <br>
-                ${commentaire.commentaire_content}
+                <div class="box--tools">
+                    <button class="delete-btn" onclick="deleteCommentaire(${commentaire.id_commentaire})"><i class="fas fa-trash"></i></button>
+                </div>
             </div>
-            
-        </div>   
-        
-        <br>
+            <span>
+                ${commentaire.commentaire_content}
+            </span>
+            <div class="box--tools" style="margin-top: 1.75em; margin-right: 1.05em">
+                <button id="comment_button${commentaire.id_commentaire}" class="rep-btn" onclick="addResponseOption(${commentaire.id_commentaire})" 
+                ${isReponse == true ? "hidden" : ''}><span>Répondre</span></button>
+            </div>
+        </div>
     `;
 
     item.setAttribute('style', `margin-left: ${isReponse == true ? '30px' : '0px'};
                                                   margin-top : 15px`);
     liste.appendChild(item);
 }
+
+// function createCommentaireHTML(commentaire, isReponse, liste) {
+//     const item = document.createElement('div');
+//     item.setAttribute('commentaire', `${commentaire.id_commentaire}`);
+//     item.innerHTML = `
+//         <div id="comment_box" commentaire="${commentaire.id_commentaire}">
+//             <img id="comment_icon" src="../trimestre/images/UserIcon.png"
+//                      alt="Icone utilisateur"
+//                      style="width:30px; height: 30px;">
+//              <div id="info_comment" style="border: solid #5f5f5f 1px;">
+//
+//                 <span style="font-size: large; font-weight: bold">
+//                     ${commentaire.auteur.prenom_usager} ${commentaire.auteur.nom_usager}
+//                 </span>
+//                 <span style="align: right; font-size: smaller">
+//                     ${commentaire.date_commentaire}
+//                 </span>
+//                 <input id="delete_comment_button" type="button" value="x" onclick="deleteCommentaire(${commentaire.id_commentaire})"/>
+//                 <input id="comment_button${commentaire.id_commentaire}" type="button" value="Répondre" onclick="addResponseOption(${commentaire.id_commentaire})"
+//                 ${isReponse == true ? "hidden" : ''}/>
+//                 <br>
+//                 ${commentaire.commentaire_content}
+//             </div>
+//
+//         </div>
+//
+//         <br>
+//     `;
+//
+//     item.setAttribute('style', `margin-left: ${isReponse == true ? '30px' : '0px'};
+//                                                   margin-top : 15px`);
+//     liste.appendChild(item);
+// }
 
 function addResponseOption(id_commentaire) {
     const comment_option = document.querySelector(`[optionResponse="${id_commentaire}"]`);

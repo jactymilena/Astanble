@@ -1,5 +1,5 @@
 const header = {
-    view: "toolbar", paddingY: 2, css: {"background": "#51aa3a"},
+    view: "toolbar", paddingY: 2, css: {"background": "#10b981"},
     cols: [
         {
             view: "button", type: "image",
@@ -33,7 +33,7 @@ const header = {
             }, css: "webix_transparent"
         },
         {
-            view: "template", borderless: true, content: "usericon",css: {"background": "#51aa3a"}
+            view: "template", borderless: true, content: "usericon",css: {"background": "#10b981"}
         }
     ]
 }

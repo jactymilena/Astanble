@@ -32,6 +32,14 @@
           AND nom_relation = 'Auteur' OR nom_relation = 'Co-Auteur'
     </select>
 
+    <select id="selectAuthorAndCoAuthorOfArticleAndCIP" resultType="ca.usherbrooke.gegi.server.business.Usager">
+        SELECT usager.cip, usager.nom_usager, usager.prenom_usager, usager.courriel1, usager.courriel2, nom_complet_usager
+        FROM astanble.view_usager_wiki
+                 LEFT JOIN astanble.usager ON astanble.view_usager_wiki.cip = astanble.usager.cip
+        WHERE id_article = #{id}::int AND view_usager_wiki.cip = #{cip}
+          AND nom_relation = 'Auteur' OR nom_relation = 'Co-Auteur'
+    </select>
+
     <select id="selectAllCollabOfArticle" resultType="ca.usherbrooke.gegi.server.business.Usager">
         SELECT usager.cip, usager.nom_usager, usager.prenom_usager, usager.courriel1, usager.courriel2, nom_complet_usager
         FROM astanble.view_usager_wiki

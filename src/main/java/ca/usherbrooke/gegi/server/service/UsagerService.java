@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -67,7 +68,7 @@ public class UsagerService {
 
     @POST
     @Path("usagerInsert")
-    @PermitAll
+    @RolesAllowed("admin")
     @Produces(MediaType.APPLICATION_JSON)
     public void insert(@Param("usager") Usager usager){
         usagerMapper.insert(usager);
@@ -77,14 +78,19 @@ public class UsagerService {
     @Path("usager/update/")
     @PermitAll
     public void update(@Param("usager") Usager usager){
-        usager.setCip(securityContext.getUserPrincipal().getName());
-        int hint = usagerMapper.update(usager);
+        String user_cip = securityContext.getUserPrincipal().getName();
+        boolean admin = securityContext.isUserInRole("admin");
+        if(usager.getCip().equals(user_cip) || admin)
+            usagerMapper.update(usager);
     };
 
     @DELETE
     @Path("usager/delete/{cip}")
     @PermitAll
     public void delete(@Param("cip") String cip){
-        usagerMapper.delete(cip);
+        String user_cip = securityContext.getUserPrincipal().getName();
+        boolean admin = securityContext.isUserInRole("admin");
+        if(cip.equals(user_cip) || admin)
+            usagerMapper.delete(cip);
     };
 }

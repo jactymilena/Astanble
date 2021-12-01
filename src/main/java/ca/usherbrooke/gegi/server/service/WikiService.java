@@ -180,6 +180,9 @@ public class WikiService {
     @Path("wiki/delete/{id_article}")
     @PermitAll
     public void deleteArticle(@PathParam("id_article") int id_article){
-        wikiMapper.delete(id_article);
+        String user_cip = securityContext.getUserPrincipal().getName();
+        boolean admin = securityContext.isUserInRole("admin");
+        if(!wikiMapper.selectAuthorAndCoAuthorOfArticleAndCIP(id_article, user_cip).isEmpty() || admin)
+            wikiMapper.delete(id_article);
     }
 }

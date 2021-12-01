@@ -16,6 +16,7 @@ public interface WikiMapper {
     List<Usager> selectAuthorOfArticle(@Param("id") String id);
     List<Usager> selectAuthorAndCoAuthorOfArticle(@Param("id") String id);
     List<Usager> selectAllCollabOfArticle(@Param("id") String id);
+    List<Usager> selectAuthorAndCoAuthorOfArticleAndCIP(@Param("id") int id, @Param("cip") String cip);
     List<Article> selectByName(@Param("article")String article);
     List<Article> selectByAuthor(@Param("auteur")String auteur);
     List<ArticleAuthor> selectByThematique(@Param("id_thematique")Integer id_thematique);

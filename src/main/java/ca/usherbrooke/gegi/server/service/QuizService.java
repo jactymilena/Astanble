@@ -14,6 +14,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
+import java.security.Principal;
 import java.util.List;
 
 @Path("/api")
@@ -171,6 +172,10 @@ public class QuizService {
     @Path("quiz/update")
     @PermitAll
     public void update(Quiz quiz){
+        String user_cip = securityContext.getUserPrincipal().getName();
+        boolean admin = securityContext.isUserInRole("admin");
+        if(quizMapper.selectByQuizAndAutor(quiz.getId_quiz(), user_cip).isEmpty() && !admin)
+            return;
         Quiz dbQuiz = getQuiz(quiz.getId_quiz());
 
         if(quiz.getNom_quiz() == null)
@@ -207,7 +212,10 @@ public class QuizService {
     @Path("quiz/delete/{id_quiz}")
     @PermitAll
     public void deleteQuiz(@PathParam("id_quiz") int id_quiz){
-        quizMapper.delete(id_quiz);
+        String user_cip = securityContext.getUserPrincipal().getName();
+        boolean admin = securityContext.isUserInRole("admin");
+        if(!quizMapper.selectByQuizAndAutor(id_quiz, user_cip).isEmpty() || admin)
+            quizMapper.delete(id_quiz);
     }
 
 }

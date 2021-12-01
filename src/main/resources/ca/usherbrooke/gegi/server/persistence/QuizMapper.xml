@@ -53,6 +53,17 @@
         AND nom_relation = 'Auteur' OR nom_relation = 'Co-Auteur';
     </select>
 
+    <select id="selectByQuizAndAutor" resultType="ca.usherbrooke.gegi.server.business.Usager">
+        SELECT
+        cip,
+        prenom_usager,
+        nom_usager,
+        nom_complet_usager
+        FROM astanble.view_usager_quiz_relation
+        WHERE id_quiz = #{id_quiz} AND cip = #{cip}
+        AND nom_relation = 'Auteur' OR nom_relation = 'Co-Auteur';
+    </select>
+
     <insert id="insert" useGeneratedKeys="true" keyProperty="quiz.id_quiz" keyColumn="id_quiz">
         INSERT INTO astanble.quiz(
         nom_quiz,

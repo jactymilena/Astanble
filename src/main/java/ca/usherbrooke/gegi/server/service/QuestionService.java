@@ -2,6 +2,7 @@ package ca.usherbrooke.gegi.server.service;
 
 import ca.usherbrooke.gegi.server.business.Question;
 import ca.usherbrooke.gegi.server.persistence.QuestionMapper;
+import ca.usherbrooke.gegi.server.persistence.QuizMapper;
 import ca.usherbrooke.gegi.server.persistence.ReponseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.eclipse.microprofile.jwt.JsonWebToken;
@@ -27,6 +28,9 @@ public class QuestionService {
 
     @Inject
     ReponseMapper reponseMapper;
+
+    @Inject
+    QuizMapper quizMapper;
 
     @GET
     @Path("question/{id_question}")
@@ -70,6 +74,12 @@ public class QuestionService {
     @Path("questionInsert")
     @PermitAll
     public void insert(Question question){
+        if(securityContext != null) {
+            String user_cip = securityContext.getUserPrincipal().getName();
+            boolean admin = securityContext.isUserInRole("admin");
+            if(quizMapper.selectByQuizAndAutor(question.getId_quiz(), user_cip).isEmpty() && !admin)
+                return;
+        }
         questionMapper.insert(question);
     }
 
@@ -77,6 +87,12 @@ public class QuestionService {
     @Path("question/reponses/insert")
     @PermitAll
     public void insertQuestionReponses(Question question){
+        if(securityContext != null) {
+            String user_cip = securityContext.getUserPrincipal().getName();
+            boolean admin = securityContext.isUserInRole("admin");
+            if(quizMapper.selectByQuizAndAutor(question.getId_quiz(), user_cip).isEmpty() && !admin)
+                return;
+        }
         questionMapper.insert(question);
         question.getReponses().forEach(reponse -> {
             reponse.setId_question(question.getId_question());
@@ -88,6 +104,12 @@ public class QuestionService {
     @Path("question/insert/all")
     @PermitAll
     public void insertQuestionsReponses(List<Question> questions){
+        if(securityContext != null) {
+            String user_cip = securityContext.getUserPrincipal().getName();
+            boolean admin = securityContext.isUserInRole("admin");
+            if(quizMapper.selectByQuizAndAutor(questions.get(0).getId_quiz(), user_cip).isEmpty() && !admin)
+                return;
+        }
         questions.forEach(question -> {
             questionMapper.insert(question);
             question.getReponses().forEach(reponse -> {
@@ -101,6 +123,12 @@ public class QuestionService {
     @Path("question/update")
     @PermitAll
     public void update(Question question){
+        if(securityContext != null) {
+            String user_cip = securityContext.getUserPrincipal().getName();
+            boolean admin = securityContext.isUserInRole("admin");
+            if(quizMapper.selectByQuizAndAutor(question.getId_quiz(), user_cip).isEmpty() && !admin)
+                return;
+        }
         questionMapper.update(question);
     }
 
@@ -108,6 +136,13 @@ public class QuestionService {
     @Path("question/reponses/update")
     @PermitAll
     public void updateQuestionReponses(Question question){
+        if(securityContext != null) {
+            String user_cip = securityContext.getUserPrincipal().getName();
+            boolean admin = securityContext.isUserInRole("admin");
+            if(quizMapper.selectByQuizAndAutor(question.getId_quiz(), user_cip).isEmpty() && !admin)
+                return;
+        }
+
         Question dbQuestion = getQuestion(question.getId_question());
         questionMapper.update(question);
 
@@ -140,6 +175,13 @@ public class QuestionService {
     @Path("question/delete/{id_question}")
     @PermitAll
     public void delete(@PathParam("id_question") int id_question){
+        if(securityContext != null) {
+            Question question = questionMapper.selectByID(id_question);
+            String user_cip = securityContext.getUserPrincipal().getName();
+            boolean admin = securityContext.isUserInRole("admin");
+            if(quizMapper.selectByQuizAndAutor(question.getId_quiz(), user_cip).isEmpty() && !admin)
+                return;
+        }
         questionMapper.delete(id_question);
     }
 }

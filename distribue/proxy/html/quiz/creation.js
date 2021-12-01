@@ -28,6 +28,33 @@ function loadIndex() {
             prep_form("create");
         });
     }
+    $("#cards").sortable({
+        revert: true,
+        update: function(event, ui) {
+            //create the array that hold the positions...
+            var order = [];
+            let new_list = [undefined];
+            //loop trought each div...
+            $('#cards > div').each( function(e) {
+                let currentNum = $(this).attr("data-card-container-floater");
+                if(currentNum != undefined) {
+                    let new_num = $(this).index() + 1;
+                    let question = window.list_carte[currentNum];
+                    question.num_question = new_num;
+                    question.reponses.forEach(reponse => {
+                        reponse.num_question = new_num;
+                    });
+                    new_list[new_num] = question;
+                }
+            });
+            window.list_carte = [];
+            new_list.forEach(e => {
+                if(e != undefined)
+                    window.list_carte[e.num_question] = e;
+            })
+            updateCartes();
+        }
+    });
 }
 
 function prep_form(crud) {
@@ -101,6 +128,14 @@ function deleteCarte(num) {
     window.list_carte = new_list;
 }
 
+function updateCartes() {
+    $("#cards").empty();
+    window.list_carte.forEach(question => {
+        var carte = carte_Script(question);
+        $("#cards").append(carte);
+    });
+}
+
 function updateQuestion(num) {
     var question = window.list_carte[num];
     question.question_content = $(`[data-type="question"][data-question-num="${num}"]`).val();
@@ -108,7 +143,10 @@ function updateQuestion(num) {
 
 function updateReponse(input) {
     var question = window.list_carte[$(input).attr("data-question-num")];
-    var reponse = question.reponses.find(r => r.num_reponse == $(input).attr("data-reponse-num"));
+    let num_reponse = parseInt($(input).attr("data-reponse-num"));
+    var reponse = question.reponses.find(r => {
+        return r.num_reponse == num_reponse;
+    })
     reponse.reponse_content = $(input).val();
 }
 

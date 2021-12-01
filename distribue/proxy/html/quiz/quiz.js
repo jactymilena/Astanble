@@ -134,7 +134,32 @@ function sendAllResponses(responses) {
         }
     }).then(function (response) {
         let resultat_quiz = response.data;
-        alert(`Bravo vous avez obtenu: ${resultat_quiz.nombre_bonne_reponse} sur ${resultat_quiz.nombre_question}!`);
+        let pourcent = Math.floor((parseInt(resultat_quiz.nombre_bonne_reponse)/parseInt(resultat_quiz.nombre_question))* 100) ;
+        if(pourcent == 100) {
+            Swal.fire(
+                'Wow bon travail!',
+                `Tu as obtenu ${pourcent}% excellent!`,
+                'success'
+            )
+        } else if(pourcent >= 70) {
+            Swal.fire(
+                'Bon travail!',
+                `Tu as obtenu ${pourcent}% près de 100, continue tes efforts!`,
+                'success'
+            )
+        } else if(pourcent >= 50) {
+            Swal.fire(
+                'Tu peux faire mieux!',
+                `Tu as obtenu ${pourcent}% révise et continue tes efforts!`,
+                'warning'
+            )
+        } else {
+            Swal.fire(
+                'Va réviser!',
+                `Tu as obtenu ${pourcent}% ne lâche pas tu as du chemin à faire.`,
+                'error'
+            )
+        }
     })
         .catch(function (error) {
             console.log('refreshing');

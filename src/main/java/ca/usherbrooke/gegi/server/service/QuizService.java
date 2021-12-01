@@ -15,6 +15,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 import java.security.Principal;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Path("/api")
@@ -216,6 +217,14 @@ public class QuizService {
         boolean admin = securityContext.isUserInRole("admin");
         if(!quizMapper.selectByQuizAndAutor(id_quiz, user_cip).isEmpty() || admin)
             quizMapper.delete(id_quiz);
+    }
+
+    @DELETE
+    @Path("/quiz/history/delete/{id_quiz}/{date}")
+    @PermitAll
+    public void deleteHistory(@PathParam("id_quiz") int id_quiz, @PathParam("date") Timestamp date){
+        String user_cip = securityContext.getUserPrincipal().getName();
+        reponseMapper.deleteUserReponses(id_quiz, date, user_cip);
     }
 
 }

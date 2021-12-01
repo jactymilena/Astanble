@@ -77,12 +77,29 @@ function createQuizLinkWithAuthor(quiz) {
         `
 }
 
+function createQuizLinkNotAuthor(quiz) {
+    return `
+<div class="col-sm-12 col-md-6">
+        <div class="card">
+            <div class="card-header" align="right">
+            </div>
+          <div class="card-body">
+            <span><a href="quiz.html?quiz=${quiz.id_quiz}">${quiz.nom_quiz}</a> [${quiz.authors.map(q => q.nom_complet_usager).join(', ')}]</span><br>
+          </div>
+        </div>
+        </div>
+        `
+}
+
 function createQuizLink(quiz) {
     return `
         <div class="col-sm-12 col-md-6">
             <div class="card">
               <div class="card-header">
                 <span style="font-size: smaller">Date fait: ${quiz.date_time_response}</span>
+                <span style="float: right">
+                    <button type="button" style="font-size: smaller; color: white; background-color: red; border-radius: 10px" onclick="removeHistory(${quiz.id_quiz}, '${quiz.date_time_response}')">effacer</button> 
+                </span>
             </div>
               <div class="card-body">
                 <span><a href="quiz.html?quiz=${quiz.id_quiz}">${quiz.nom_quiz}</a></span><br>
@@ -172,7 +189,7 @@ function loadOthersQuiz(cip) {
 
             if(list_quiz_disponible) {
                 quiz.forEach( q => {
-                    var htmlLink = createQuizLinkWithAuthor(q);
+                    var htmlLink = createQuizLinkNotAuthor(q);
                     list_quiz_disponible.innerHTML += htmlLink;
                 })
             }
@@ -188,6 +205,13 @@ function loadOthersQuiz(cip) {
         });
 }
 
+function removeHistory(id_quiz, date) {
+    axiosDelete("http://localhost:8888/api/quiz/history/delete/" + id_quiz + "/" + date, function () {
+        clearHistory();
+        loadHistorique(user_profil.cip);
+    });
+}
+
 function deleteQuiz(id_quiz) {
     axiosDelete("http://localhost:8888/api/quiz/delete/" + id_quiz, function () {
         clearAuthorQuizList();
@@ -198,4 +222,9 @@ function deleteQuiz(id_quiz) {
 function clearAuthorQuizList() {
     let liste_quiz_author = document.getElementById("liste_quiz_author");
     liste_quiz_author.innerHTML = "";
+}
+
+function clearHistory() {
+    let liste_history = document.getElementById("liste_quiz_historique");
+    liste_history.innerHTML = "";
 }

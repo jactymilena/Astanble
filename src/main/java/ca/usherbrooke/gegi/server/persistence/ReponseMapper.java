@@ -5,6 +5,7 @@ import ca.usherbrooke.gegi.server.business.ReponseUsager;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Mapper
@@ -19,4 +20,5 @@ public interface ReponseMapper {
     void insert(@Param("reponse") Reponse reponse);
     void update(@Param("reponse") Reponse reponse);
     void delete(@Param("id_reponse") int id_reponse);
+    void deleteUserReponses(@Param("id_quiz") int id_quiz, @Param("date") Timestamp date, @Param("cip") String user_cip);
 }

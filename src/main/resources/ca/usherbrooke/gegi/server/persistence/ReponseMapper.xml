@@ -69,6 +69,13 @@
                 #{reponseUser.date_time_response}::timestamp)
     </insert>
 
+    <delete id="deleteUserReponses">
+        DELETE FROM astanble.reponse_usager_question
+        USING astanble.question
+        WHERE reponse_usager_question.cip=#{cip} AND astanble.reponse_usager_question.date_time_response = #{date}
+                AND question.id_quiz = #{id_quiz}
+    </delete>
+
     <update id="update">
         UPDATE astanble.reponse
         SET reponse_content= #{reponse.reponse_content},

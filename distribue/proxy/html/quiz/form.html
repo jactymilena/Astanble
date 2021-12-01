@@ -135,12 +135,28 @@
                                 <div data-question-responses-col="{{num_question}}" class="row">
                                     {{#ifEquals id_type 1}}
                                         {{#each reponses}}
-                                            {{> type_1 this}}
+                                            <div data-reponse-container="{{num_question}}:{{num_reponse}}" class="col-12">
+                                                {{#ifNotEquals ../reponses.length 1}}
+                                                    <input type="button" value="x" onclick="deleteResponse('{{num_question}}:{{num_reponse}}')"/>
+                                                {{/ifNotEquals}}
+                                                <input id="reponse-{{id_reponse}}" data-type="reponse" data-question-num="{{num_question}}" data-reponse-num="{{num_reponse}}" data-question-id="{{id_question}}" data-reponse-id="{{id_reponse}}" class="form-control" value="{{reponse_content}}" onkeyup="updateReponse(this)" required>
+                                                <label for="reponse-{{id_reponse}}" class="form-label">Réponse</label>
+                                            </div>
                                         {{/each}}
                                     {{/ifEquals}}
                                     {{#ifEquals id_type 2}}
                                         {{#each reponses}}
-                                            {{> type_2 this}}
+                                            <div data-reponse-container="{{num_question}}:{{num_reponse}}" data-reponse-container-id="{{num_reponse}}" class="col-12">
+                                                <div class="form-check">
+                                                    {{#ifNotEquals ../reponses.length 1}}
+                                                        <input type="button" value="x" onclick="deleteResponse('{{num_question}}:{{num_reponse}}')"/>
+                                                    {{/ifNotEquals}}
+                                                    <input onclick="reponseSelectionCheck(this);" class="form-check-input" type="checkbox" id="check-good-question-{{num_reponse}}" {{#if bonne_mauvaise}} data-checked='true' checked {{else}} data-checked='false' {{/if}}>
+                                                    <label class="form-check-label" for="check-good-question-{{num_reponse}}" style="width: 100%;">
+                                                        <input id="reponse-{{id_reponse}}" data-type="reponse" data-question-num="{{num_question}}" data-reponse-num="{{num_reponse}}" data-question-id="{{id_question}}" data-reponse-id="{{id_reponse}}" class="form-control" value="{{reponse_content}}" onkeyup="updateReponse(this)" required>
+                                                    </label>
+                                                </div>
+                                            </div>
                                         {{/each}}
                                         <div class="col-12 mt-3">
                                             <button type="button" class="w-100 p-0" onclick="ajouterReponsePossible({{num_question}})">
@@ -156,39 +172,16 @@
             </div>
         </script>
 
-        <script id="handlebars-response-carte" type="text/x-handlebars-template">
-            <div data-reponse-container="{{num_question}}:{{num_reponse}}" class="col-12">
-                <input type="button" value="x" onclick="deleteResponse('{{num_question}}:{{num_reponse}}')"/>
-                <input id="reponse-{{id_reponse}}" data-type="reponse" data-question-num="{{num_question}}" data-reponse-num="{{num_reponse}}" data-question-id="{{id_question}}" data-reponse-id="{{id_reponse}}" class="form-control" value="{{reponse_content}}" onkeyup="updateReponse(this)" required>
-                <label for="reponse-{{id_reponse}}" class="form-label">Réponse</label>
-            </div>
-        </script>
-
-        <script id="handlebars-response-multi" type="text/x-handlebars-template">
-            <div data-reponse-container="{{num_question}}:{{num_reponse}}" data-reponse-container-id="{{num_reponse}}" class="col-12">
-                <div class="form-check">
-                    <input type="button" value="x" onclick="deleteResponse('{{num_question}}:{{num_reponse}}')"/>
-                    <input onclick="reponseSelectionCheck(this);" class="form-check-input" type="checkbox" id="check-good-question-{{num_reponse}}" {{#if bonne_mauvaise}} data-checked='true' checked {{else}} data-checked='false' {{/if}}>
-                    <label class="form-check-label" for="check-good-question-{{num_reponse}}" style="width: 100%;">
-                        <input id="reponse-{{id_reponse}}" data-type="reponse" data-question-num="{{num_question}}" data-reponse-num="{{num_reponse}}" data-question-id="{{id_question}}" data-reponse-id="{{id_reponse}}" class="form-control" value="{{reponse_content}}" onkeyup="updateReponse(this)" required>
-                    </label>
-                </div>
-            </div>
-        </script>
-
         <script>
             Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
                 return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
             });
+            Handlebars.registerHelper('ifNotEquals', function(arg1, arg2, options) {
+                return (arg1 != arg2) ? options.fn(this) : options.inverse(this);
+            });
 
             var carte_html = document.getElementById('handlebars-carte').innerHTML;
             var carte_Script = Handlebars.compile(carte_html);
-
-            var carte_type_card_html = document.getElementById('handlebars-response-carte').innerHTML;
-            Handlebars.registerPartial('type_1',carte_type_card_html);
-
-            var carte_type_multi_html = document.getElementById('handlebars-response-multi').innerHTML;
-            Handlebars.registerPartial('type_2',carte_type_multi_html);
         </script>
     </body>
 </html>

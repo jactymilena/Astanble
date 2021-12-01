@@ -83,6 +83,15 @@ public class QuizService {
     }
 
     @GET
+    @Path("quiz/prepform")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<QuestionType> prep() {
+        List<QuestionType> questionTypeList = questionTypeMapper.all();
+        return questionTypeList;
+    }
+
+    @GET
     @Path("quizByName/{name}")
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)

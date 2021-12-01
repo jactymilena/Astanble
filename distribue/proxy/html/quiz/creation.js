@@ -19,10 +19,14 @@ function loadIndex() {
             prep_form("update");
         });
     } else {
-        for (let i = 1; i < 4; i++) {
-            ajouterCarte(i);
-        }
-        prep_form("create");
+        axiosGet(`http://localhost:8888/api/quiz/prepform`, function (response){
+            console.log(response.status);
+            window.questions_type = response.data;
+            for (let i = 1; i < 4; i++) {
+                ajouterCarte(i);
+            }
+            prep_form("create");
+        });
     }
 }
 
@@ -54,6 +58,7 @@ function ajouterCarte(num = null, question = null) {
         if(num == 0)
             num = 1;
         var question = {
+            questionTypes: window.questions_type,
             num_question: num,
             id_type: 1,
             question_content: "",
@@ -123,6 +128,27 @@ function ajouterReponsePossible(num_question) {
     }
     question.reponses.push(r);
     resetQuestionContainer(num_question);
+}
+
+function deleteResponse(id_reponse_container) {
+    let reponse_container = $(`[data-reponse-container="${id_reponse_container}"]`);
+    let num_question = id_reponse_container.split(":")[0];
+    let num_reponse = id_reponse_container.split(":")[1];
+
+    var new_list = [];
+    var new_index = 1;
+    let question = window.list_carte[num_question];
+    question.reponses.forEach(r => {
+        if(r.num_reponse != num_reponse) {
+            let reponse = r;
+            reponse.num_reponse = new_index;
+            new_list[new_index] = reponse;
+            new_index++;
+        }
+    });
+    window.list_carte[num_question].reponses = new_list;
+    reponse_container.remove();
+    console.log(num_question);
 }
 
 function reponseSelectionCheck(input) {
@@ -197,8 +223,4 @@ function createFormQuestions(id_quiz) {
         questionsReponses.push(question);
     });
     return questionsReponses;
-}
-
-function deleteResponse(id_reponse_container) {
-    $(`[data-reponse-container="${id_reponse_container}"]`).remove();
 }

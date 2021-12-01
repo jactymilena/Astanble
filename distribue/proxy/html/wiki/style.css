@@ -22,18 +22,18 @@
 
 .response-box {
     flex: 1 1 0;
+    margin-left: 30px;
+}
+
+.comment-box-area {
+    flex: 1 1 0;
 }
 
 .response-area {
     margin-left: 30px;
     width: 95%;
+    border-radius: .55em;
 }
-
-/*.box--comment {*/
-/*    flex: 1 1 0;*/
-/*    display: flex;*/
-/*    justify-content: flex-end;*/
-/*}*/
 
 .box {
     box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
@@ -77,15 +77,18 @@
 }
 
 .delete-btn {
-    border: none;
+    /*border: none;*/
     padding: .65em;
     border-radius: .55em;
-    background-color: hsla(1.46, 83.67%, 90.39%, 1.00);
-    color: hsla(3.71, 58.79%, 32.35%, 1.00);
+    background-color: #FFFFFF;
+    color: rgba(255, 0, 0, 0.69);
     cursor: pointer;
 }
 
-
+.delete-btn:hover {
+    background-color: #FF0000;
+    color: #FFFFFF;
+}
 
 .comment-container img {
     box-shadow: rgba(8, 58, 29, 0.25) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
@@ -107,5 +110,14 @@
     background: hsl(200, 20%, 99%);
     border-radius: .35em;
     cursor: pointer;
+}
+
+.rep-btn:hover {
+    background-color: #00AEFF;
+    color: #FFFFFF;
+}
+
+#section_commentaire {
+    margin-bottom: 30px;
 }
 

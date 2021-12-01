@@ -113,9 +113,9 @@ function createResponseOption(id_commentaire) {
                          style="width:30px; height: 30px;">
                     <span id="comment_username" class="box--title">${user_profil.prenom_usager + " " + user_profil.nom_usager}</span>
                 </div>
-                <textarea id="champ_commentaire" class="response-area" onkeydown="commentOnKeyDown(event);" rows="3" placeholder="Écrire un commentaire..."></textarea>
+                <textarea id="champ_commentaire_reponse" class="response-area" parent="${id_commentaire}" onkeydown="respondeOnKeyDown(event, ${id_commentaire})" rows="3" placeholder="Écrire un commentaire..."></textarea>
                 <div class="box--tools">
-                    <input id="comment_button" class="rep-btn" type="button" value="Commenter" onclick="createCommentaire()"/>
+                    <input id="comment_button" class="rep-btn" type="button" value="Répondre" onclick="createCommentaireReponse(${id_commentaire})"/>
                 </div>
             </div>
          </div>
@@ -221,7 +221,7 @@ function loadCommentaires() {
 
 function createCommentaireReponse(id_parent) {
     console.log("Réponse à un commentaire " + id_parent);
-    const commentaire_content = document.querySelector(`input[parent="${id_parent}"]`);
+    const commentaire_content = document.querySelector(`textarea[parent="${id_parent}"]`);
 
     if(commentaire_content.value != "") {
         var commentaire = {

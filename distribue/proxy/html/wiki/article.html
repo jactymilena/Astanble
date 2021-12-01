@@ -80,12 +80,19 @@
             <div id="section_commentaire">
                 <br>
                 <h3>Commentaires</h3>
-                <div>
-                    <img src="../trimestre/images/UserIcon.png"
-                         alt="Icone utilisateur"
-                         style="width:30px; height: 30px;">
-                    <input id="champ_commentaire" class="champ" type="textarea" rows="4" cols="50"  onkeydown="commentOnKeyDown(event);" placeholder="Écrire un commentaire..."/>
-                    <input id="comment_button" class="rep-btn" type="button" value="Commenter" onclick="createCommentaire()"/>
+                <div class="comment-container" >
+                    <div class="response-box">
+                        <div class="box-header">
+                            <img src="../trimestre/images/UserIcon.png"
+                                 alt="Icone utilisateur"
+                                 style="width:30px; height: 30px;">
+                            <span id="comment_username" class="box--title"></span>
+                        </div>
+                        <textarea id="champ_commentaire" class="response-area" onkeydown="commentOnKeyDown(event);" rows="3" placeholder="Écrire un commentaire..."></textarea>
+                        <div class="box--tools">
+                            <input id="comment_button" class="rep-btn" type="button" value="Commenter" onclick="createCommentaire()"/>
+                        </div>
+                    </div>
                 </div>
                 <br>
                 <div id="liste_commentaires" class="comments">

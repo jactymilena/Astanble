@@ -94,39 +94,6 @@ function createCommentaireHTML(commentaire, isReponse, liste) {
     liste.appendChild(item);
 }
 
-// function createCommentaireHTML(commentaire, isReponse, liste) {
-//     const item = document.createElement('div');
-//     item.setAttribute('commentaire', `${commentaire.id_commentaire}`);
-//     item.innerHTML = `
-//         <div id="comment_box" commentaire="${commentaire.id_commentaire}">
-//             <img id="comment_icon" src="../trimestre/images/UserIcon.png"
-//                      alt="Icone utilisateur"
-//                      style="width:30px; height: 30px;">
-//              <div id="info_comment" style="border: solid #5f5f5f 1px;">
-//
-//                 <span style="font-size: large; font-weight: bold">
-//                     ${commentaire.auteur.prenom_usager} ${commentaire.auteur.nom_usager}
-//                 </span>
-//                 <span style="align: right; font-size: smaller">
-//                     ${commentaire.date_commentaire}
-//                 </span>
-//                 <input id="delete_comment_button" type="button" value="x" onclick="deleteCommentaire(${commentaire.id_commentaire})"/>
-//                 <input id="comment_button${commentaire.id_commentaire}" type="button" value="Répondre" onclick="addResponseOption(${commentaire.id_commentaire})"
-//                 ${isReponse == true ? "hidden" : ''}/>
-//                 <br>
-//                 ${commentaire.commentaire_content}
-//             </div>
-//
-//         </div>
-//
-//         <br>
-//     `;
-//
-//     item.setAttribute('style', `margin-left: ${isReponse == true ? '30px' : '0px'};
-//                                                   margin-top : 15px`);
-//     liste.appendChild(item);
-// }
-
 function addResponseOption(id_commentaire) {
     const comment_option = document.querySelector(`[optionResponse="${id_commentaire}"]`);
     comment_option.toggleAttribute("hidden");
@@ -138,16 +105,22 @@ function createResponseOption(id_commentaire) {
     comment_option.setAttribute('optionResponse', `${id_commentaire}`);
 
     comment_option.innerHTML += `
-    <div style="margin-left: 30px">
-        <img src="../trimestre/images/UserIcon.png"
-             alt="Icone utilisateur"
-             style="width:30px; height: 30px;">
-        <input id="champ_commentaire_reponse" parent="${id_commentaire}" class="champ" onkeydown="respondeOnKeyDown(event, ${id_commentaire})" type="text" placeholder="Répondre au commentaire..."/>
-        <input id="comment_button" class="rep-btn" type="button" value="Répondre" onclick="createCommentaireReponse(${id_commentaire})"/>
-    </div>
+        <div class="comment-container" >
+            <div class="response-box">
+                <div class="box-header">
+                    <img src="../trimestre/images/UserIcon.png"
+                         alt="Icone utilisateur"
+                         style="width:30px; height: 30px;">
+                    <span id="comment_username" class="box--title">${user_profil.prenom_usager + " " + user_profil.nom_usager}</span>
+                </div>
+                <textarea id="champ_commentaire" class="response-area" onkeydown="commentOnKeyDown(event);" rows="3" placeholder="Écrire un commentaire..."></textarea>
+                <div class="box--tools">
+                    <input id="comment_button" class="rep-btn" type="button" value="Commenter" onclick="createCommentaire()"/>
+                </div>
+            </div>
+         </div>
     `;
     comment_option.setAttribute('style', `margin-top : 15px; flex: 0 0 100%; margin-bottom: 2.25em`);
-    // comment_option.setAttribute('hidden', 'true');
     comment_option.toggleAttribute("hidden");
 
     var liste_commentaire = document.querySelector(`[commentaire="${id_commentaire}"]`);
@@ -197,6 +170,10 @@ function deleteCommentaire(id_commentaire) {
 }
 
 function loadCommentaires() {
+    //     user_profil.prenom_usager + " " + user_profil.nom_usager
+    const comment_username = document.getElementById('comment_username');
+    comment_username.innerText = user_profil.prenom_usager + " " + user_profil.nom_usager;
+
     const id_article = urlParams.get('article');
 
     axios.get("http://localhost:8888/api/commentaire/" + id_article , {

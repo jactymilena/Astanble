@@ -24,6 +24,12 @@ async function initKeycloak() {
     });
 }
 
+function logout() {
+    let logoutURL = "http://localhost/auth/realms/usager/protocol/openid-connect/logout?" +
+        "redirect_uri=http://localhost/logout.html"
+    window.location.href = logoutURL;
+}
+
 async function userProfil() {
     await axios.get("http://localhost:8888/api/userInfo", {
         headers: {

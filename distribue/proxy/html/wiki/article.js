@@ -59,31 +59,34 @@ function respondeOnKeyDown(event, id_commentaire) {
 }
 
 function createCommentaireHTML(commentaire, isReponse, liste) {
-    const item = document.createElement('div');
+    const item = document.createElement('section');
     item.setAttribute('commentaire', `${commentaire.id_commentaire}`);
+    item.setAttribute('class', 'comment-container');
+
     item.innerHTML = `
-        <div commentaire="${commentaire.id_commentaire}">
-            <img src="../trimestre/images/UserIcon.png"
+        <img id="comment_icon" src="../trimestre/images/UserIcon.png"
              alt="Icone utilisateur"
              style="width:30px; height: 30px;">
-             <div style="border: solid #5f5f5f 1px;">
-                
-                <span style="font-size: large; font-weight: bold">
+        <div class="box" commentaire="${commentaire.id_commentaire}">
+            <div class="box-header">
+                <span class="box--title">
                     ${commentaire.auteur.prenom_usager} ${commentaire.auteur.nom_usager}
                 </span>
-                <span style="align: right; font-size: smaller">
+                <span class="box--date">
                     ${commentaire.date_commentaire}
                 </span>
-                <input id="delete_comment_button" type="button" value="x" onclick="deleteCommentaire(${commentaire.id_commentaire})"/>
-                <input id="comment_button${commentaire.id_commentaire}" type="button" value="Répondre" onclick="addResponseOption(${commentaire.id_commentaire})" 
-                ${isReponse == true ? "hidden" : ''}/>
-                <br>
-                ${commentaire.commentaire_content}
+                <div class="box--tools">
+                    <button class="delete-btn" onclick="deleteCommentaire(${commentaire.id_commentaire})"><i class="fas fa-trash"></i></button>
+                </div>
             </div>
-            
-        </div>   
-        
-        <br>
+            <span>
+                ${commentaire.commentaire_content}
+            </span>
+            <div class="box--tools" style="margin-top: 1.75em; margin-right: 1.05em">
+                <button id="comment_button${commentaire.id_commentaire}" class="rep-btn" onclick="addResponseOption(${commentaire.id_commentaire})" 
+                ${isReponse == true ? "hidden" : ''}><span>Répondre</span></button>
+            </div>
+        </div>
     `;
 
     item.setAttribute('style', `margin-left: ${isReponse == true ? '30px' : '0px'};
@@ -102,16 +105,22 @@ function createResponseOption(id_commentaire) {
     comment_option.setAttribute('optionResponse', `${id_commentaire}`);
 
     comment_option.innerHTML += `
-    <div style="margin-left: 30px">
-        <img src="../trimestre/images/UserIcon.png"
-             alt="Icone utilisateur"
-             style="width:30px; height: 30px;">
-        <input id="champ_commentaire_reponse" parent="${id_commentaire}" class="champ" onkeydown="respondeOnKeyDown(event, ${id_commentaire})" type="text" placeholder="Répondre au commentaire..."/>
-        <input id="comment_button" type="button" value="Répondre" onclick="createCommentaireReponse(${id_commentaire})"/>
-    </div>
+        <div class="comment-container" >
+            <div class="response-box">
+                <div class="box-header">
+                    <img src="../trimestre/images/UserIcon.png"
+                         alt="Icone utilisateur"
+                         style="width:30px; height: 30px;">
+                    <span id="comment_username" class="box--title">${user_profil.prenom_usager + " " + user_profil.nom_usager}</span>
+                </div>
+                <textarea id="champ_commentaire_reponse" class="response-area" parent="${id_commentaire}" onkeydown="respondeOnKeyDown(event, ${id_commentaire})" rows="3" placeholder="Écrire un commentaire..."></textarea>
+                <div class="box--tools">
+                    <input id="comment_button" class="rep-btn" type="button" value="Répondre" onclick="createCommentaireReponse(${id_commentaire})"/>
+                </div>
+            </div>
+         </div>
     `;
-    comment_option.setAttribute('style', `margin-top : 15px`);
-    // comment_option.setAttribute('hidden', 'true');
+    comment_option.setAttribute('style', `margin-top : 15px; flex: 0 0 100%; margin-bottom: 2.25em`);
     comment_option.toggleAttribute("hidden");
 
     var liste_commentaire = document.querySelector(`[commentaire="${id_commentaire}"]`);
@@ -161,6 +170,10 @@ function deleteCommentaire(id_commentaire) {
 }
 
 function loadCommentaires() {
+    //     user_profil.prenom_usager + " " + user_profil.nom_usager
+    const comment_username = document.getElementById('comment_username');
+    comment_username.innerText = user_profil.prenom_usager + " " + user_profil.nom_usager;
+
     const id_article = urlParams.get('article');
 
     axios.get("http://localhost:8888/api/commentaire/" + id_article , {
@@ -175,7 +188,10 @@ function loadCommentaires() {
             const commentaires = response.data;
 
             commentaires.forEach(com => {
-                createCommentaireHTML(com, false, liste_commentaires);
+                const comments_section = document.createElement("section");
+                comments_section.setAttribute("class", "comments");
+
+                createCommentaireHTML(com, false, comments_section);
                 console.log(com.reponses);
                 console.log('Grandeur ' + com.reponses.length);
 
@@ -184,9 +200,11 @@ function loadCommentaires() {
                     var liste_reponse = document.querySelector(`[commentaire="${com.id_commentaire}"]`);
                     console.log(com.reponses);
                     com.reponses.forEach(res => {
-                        createCommentaireHTML(res, true, liste_reponse);
+                        createCommentaireHTML(res, true, comments_section);
                     });
                 }
+
+                liste_commentaires.innerHTML += comments_section.innerHTML;
                 createResponseOption(com.id_commentaire);
             });
         })
@@ -203,7 +221,7 @@ function loadCommentaires() {
 
 function createCommentaireReponse(id_parent) {
     console.log("Réponse à un commentaire " + id_parent);
-    const commentaire_content = document.querySelector(`input[parent="${id_parent}"]`);
+    const commentaire_content = document.querySelector(`textarea[parent="${id_parent}"]`);
 
     if(commentaire_content.value != "") {
         var commentaire = {

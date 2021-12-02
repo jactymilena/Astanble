@@ -56,7 +56,7 @@ async function userProfil() {
 function createQuizLinkWithAuthor(quiz) {
     return `
 <div class="col-sm-12 col-md-6">
-        <div class="card">
+        <div class="card card-4">
             <div class="card-header" align="right">
                 <div class="btn-group">
                   <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -70,7 +70,8 @@ function createQuizLinkWithAuthor(quiz) {
                 </div>
             </div>
           <div class="card-body">
-            <span><a href="quiz.html?quiz=${quiz.id_quiz}">${quiz.nom_quiz}</a> [${quiz.authors.map(q => q.nom_complet_usager).join(', ')}]</span><br>
+            <h4 class="card__title">${quiz.nom_quiz}</h4>
+            <span><a class="card__link" href="quiz.html?quiz=${quiz.id_quiz}">Tester vos connaissances!</a></span><br>
           </div>
         </div>
         </div>
@@ -80,11 +81,11 @@ function createQuizLinkWithAuthor(quiz) {
 function createQuizLinkNotAuthor(quiz) {
     return `
 <div class="col-sm-12 col-md-6">
-        <div class="card">
-            <div class="card-header" align="right">
-            </div>
+        <div class="card card-4">
           <div class="card-body">
-            <span><a href="quiz.html?quiz=${quiz.id_quiz}">${quiz.nom_quiz}</a> [${quiz.authors.map(q => q.nom_complet_usager).join(', ')}]</span><br>
+            <h4 class="card__title">${quiz.nom_quiz}</h4>
+            <span>Par ${quiz.authors.map(q => q.nom_complet_usager).join(', ')}</span><br>
+            <span><a class="card__link" href="quiz.html?quiz=${quiz.id_quiz}">Tester vos connaissances!</a></span><br>
           </div>
         </div>
         </div>
@@ -94,16 +95,19 @@ function createQuizLinkNotAuthor(quiz) {
 function createQuizLink(quiz) {
     return `
         <div class="col-sm-12 col-md-6">
-            <div class="card">
+            <div class="card card-4">
               <div class="card-header">
                 <span style="font-size: smaller">Date fait: ${quiz.date_time_response}</span>
                 <span style="float: right">
-                    <button type="button" style="font-size: smaller; color: white; background-color: red; border-radius: 10px" onclick="removeHistory(${quiz.id_quiz}, '${quiz.date_time_response}')">effacer</button> 
+                    <span class="card__exit">
+                        <span onclick="removeHistory(${quiz.id_quiz}, '${quiz.date_time_response}')"><i class="fas fa-times"></i></span>
+                        </span>
+                    
                 </span>
             </div>
               <div class="card-body">
-                <span><a href="quiz.html?quiz=${quiz.id_quiz}">${quiz.nom_quiz}</a></span><br>
-                Score: ${quiz.nombre_bonne_reponse}/${quiz.nombre_question}
+                Score: ${quiz.nombre_bonne_reponse}/${quiz.nombre_question} <br>
+                <span><a class="card__link" href="quiz.html?quiz=${quiz.id_quiz}">Refaire le test!</a></span><br>
               </div>
             </div>
         </div>

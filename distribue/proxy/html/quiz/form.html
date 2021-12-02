@@ -48,19 +48,21 @@
     <body onload="loadIndex();" style="width: 100%;">
         <div id="main" class="container mt-5">
             <form id="form-create-quiz">
-                <div id="creation">
-                    <h1>Création de quiz</h1>
-                </div>
-                <div id="1" class="row col-md-7 col-sm-12">
-                    <div class="col-6">
-                        <h4>Titre</h4>
-                        <input type="titre" id="nom_quiz" class="form-control" name="titre" required>
+                <h1>Création de quiz</h1>
+                <div class="card card-4">
+                    <div class="card-body">
+                        <div id="1" class="row col-md-7 col-sm-12">
+                            <div class="col-6">
+                                <h4>Titre</h4>
+                                <input type="titre" id="nom_quiz" class="form-control" name="titre" required>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-12">
+                            <h4>Description</h4>
+                            <textarea type="description" id="description_quiz" class="form-control" name="description"></textarea>
+                        </div>
                     </div>
-                </div>
-                <br>
-                <div class="col-md-7 col-sm-12">
-                    <h4>Description</h4>
-                    <textarea type="description" id="description_quiz" class="form-control" name="description"></textarea>
                 </div>
                 <hr>
                 <h4>Ajout cartes</h4>
@@ -68,7 +70,7 @@
                 </div>
                 <div class="col-12 mt-3">
                     <button class="w-100 p-0" onclick="ajouterCarte()">
-                        <div class="card">
+                        <div class="card card-3">
                             <div class="card-body">
                                 Ajouter carte
                             </div>
@@ -106,7 +108,7 @@
         </script>
         <script id="handlebars-carte" type="text/x-handlebars-template">
             <div data-card-container-floater="{{num_question}}" class="col-12 mt-3">
-                <div data-card-container="{{num_question}}" class="card">
+                <div data-card-container="{{num_question}}" class="card card-4">
                     <div class="card-header">
                         <div class="row">
                             <div id="num-{{num_question}}" data-question-num="{{num_question}}" class="col-6">{{num_question}}</div>

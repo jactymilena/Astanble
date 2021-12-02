@@ -1,27 +1,30 @@
 function createQuestionHTML(q, liste_questions) {
-    const item = document.createElement('span');
+    const container = document.createElement('div');
+    const item = document.createElement('div');
     item.innerHTML = `
         <h3>Question ${q.num_question}</h3>   
         ${q.question_content} <br>
     `;
     if(q.id_type == 1) {
         item.innerHTML += `
-            <h3>Réponse</h3>
             <input id=${q.id_question} type="text" placeholder="Réponse" />
-            <br>
         `;
     }
     else if(q.id_type==2){
         var reponseQuiz = q.reponses;
         for(var i = 0; i<reponseQuiz.length;i++){
             item.innerHTML += `
-            <input id=${reponseQuiz[i].id_reponse} type="radio" name=${q.id_question} value=${reponseQuiz[i].reponse_content} />
-            <label for=${reponseQuiz[i].reponse_content}>${reponseQuiz[i].reponse_content}</label>
+                <input id=${reponseQuiz[i].id_reponse} type="radio" name=${q.id_question} value=${reponseQuiz[i].reponse_content} />
+                <label for=${reponseQuiz[i].reponse_content}>${reponseQuiz[i].reponse_content}</label>
             `;
         }
     }
-
-    liste_questions.appendChild(item);
+    item.classList.add("card-body");
+    container.classList.add("card");
+    container.classList.add("card-4");
+    container.classList.add("m-5");
+    container.appendChild(item);
+    liste_questions.appendChild(container);
 }
 
 async function loadQuiz() {

@@ -39,15 +39,16 @@
 
 <body onload="loadQuiz()" style="width: 100%;">
 <div id="main" class="container">
-    <h1 id="nom_quiz">Titre du quiz</h1>
+    <h1 id="nom_quiz" align="center" class="mt-5">Titre du quiz</h1>
     <hr>
 
+    <h2 style="margin-left: 2em">Questions : </h2>
     <div id="liste_questions">
-        <h2>Questions : </h2>
-        <br>
     </div>
-    <input id="quiz_done" type="button" name="terminé" value="Terminé" onclick="quiz_finish()"/>
-    <a type="button" href="/quiz">Retour</a>
+    <div style="float: right; margin-right: 3em">
+        <input id="quiz_done" type="button" name="terminé" value="Terminé" onclick="quiz_finish()"/>
+        <a type="button" href="/quiz">Retour</a>
+    </div>
 </div>
 
 <div id="usericon" align="right" style="width: 100%;">

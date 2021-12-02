@@ -6,7 +6,7 @@ async function loadArticle() {
     // call init from app.js
     await init();
     // load all themes on side nav
-    loadThemesOnSideNav();
+    loadThemesSelector();
     await ClassicEditor
         .create( document.querySelector( '#editor' ) )
         .then( editor => {
@@ -16,8 +16,6 @@ async function loadArticle() {
             console.error( error );
         } );
     // load wiki in page
-
-    await loadThemesSelector();
     if(urlParams.get('create') == 'true')
     {
         clearAll();
@@ -40,9 +38,6 @@ async function loadArticle() {
         loadCommentaires();
         loadQuizref();
     }
-
-    loadThemesSelector();
-
 }
 
 function commentOnKeyDown(event) {

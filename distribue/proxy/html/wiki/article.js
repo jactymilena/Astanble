@@ -492,10 +492,13 @@ function createThemeSelect(theme, checked) {
 
 function createQuizLink(quiz) {
     return `
-        <div class="card col-sm-12 col-md-6">
-          <div class="card-body">
-            <span><a href="../quiz/quiz.html?quiz=${quiz.id_quiz}">${quiz.nom_quiz}</a></span><br>
-          </div>
+        <div class="col-sm-12 col-md-6 mt-3">
+            <div class="card card-4">
+              <div class="card-body">
+                <h4 class="card__title">${quiz.nom_quiz}</h4>
+                <span><a class="card__link" href="/quiz/quiz.html?quiz=${quiz.id_quiz}">Tester vos connaissances!</a></span><br>
+              </div>
+            </div>
         </div>
         `
 }

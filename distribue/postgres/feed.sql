@@ -107,6 +107,8 @@ VALUES
        ('mill3003', 'Milette', 'Laurence', 'mill3003@usherbrooke.ca', NULL),
        ('paqv2407', 'Paquin', 'Veronique', 'paqv2407@usherbrooke.ca', NULL),
        ('saej3101', 'Milena Saenz Rosales', 'Jacty', 'saej3101@usherbrooke.ca', NULL),
+       ('stla0801', 'Antho', 'Antho', 'Antho@usherbrooke.ca', NULL),
+       ('lers0601', 'simon', 'simon', 'simon@usherbrooke.ca', NULL),
        ('stgt0901', ' St-Gelais', 'Thomas', 'stgt0901@usherbrooke.ca', NULL);
 
 --Usager_thematique
